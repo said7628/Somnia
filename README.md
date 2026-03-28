@@ -119,8 +119,6 @@ Ejemplos:
 
 Haz clic en Push origin  
 
-<img src="readmeAssets/push-button.png" width="700">
-
 ---
 
 # Resumen
