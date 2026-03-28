@@ -49,13 +49,13 @@ Instala la versión correcta del proyecto.
 2. Ve a:
 File > Clone repository  
 
-<img src="readmeAssets/clone-repo-menu.png" width="700">
+<img src="readmeAssets/clone-repo-menu.jpg" width="700">
 
 3. Busca el repositorio Somnia  
 4. Elige una carpeta en tu computadora  
 5. Haz clic en Clone  
 
-<img src="readmeAssets/clone-repo-button.png" width="700">
+<img src="readmeAssets/clone-repo-button.jpg" width="700">
 
 ---
 
@@ -66,7 +66,7 @@ File > Clone repository
 3. Selecciona la carpeta del proyecto  
 4. Ábrelo  
 
-<img src="readmeAssets/unity-open-project.png" width="700">
+<img src="readmeAssets/unity-open-project.jpg" width="700">
 
 ---
 
