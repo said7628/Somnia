@@ -39,7 +39,8 @@ https://desktop.github.com/
 
 https://unity.com/download
 
-Instala la versión correcta del proyecto.
+Instala la versión correcta del proyecto:  
+**Unity 6000.3.7f1 (IMPORTANTE)**
 
 ---
 
