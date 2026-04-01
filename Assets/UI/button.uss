@@ -1,3 +1,20 @@
 :root {
-
 }
+
+.button {
+    font-size: 500%;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/tipografias_somnia/SaintCarellClean_PERSONAL_USE_ONLY.otf?fileID=12800000&guid=ded706b8d6ed12a40ae819f687f5c78e&type=3#SaintCarellClean_PERSONAL_USE_ONLY");
+    -unity-font-style: normal;
+    width: 65%;
+    height: 10%;
+    background-color: rgba(0, 0, 0, 0);
+    padding-bottom: 0;
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+
