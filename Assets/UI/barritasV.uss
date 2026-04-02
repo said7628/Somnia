@@ -1,0 +1,7 @@
+:root {
+}
+
+.barritas {
+    width: 110px;
+    height: 180px;
+}

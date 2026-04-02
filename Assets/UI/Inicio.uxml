@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/button.uss?fileID=7433441132597879392&amp;guid=231ce6c480d88fc47ae286a385ae8570&amp;type=3#button"/>
+    <ui:VisualElement name="Fondo" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Menu%20Principal/fondo%20con%20titulo%201920x1080PNG.PNG?fileID=2800000&amp;guid=8aa7d342318d8b74989c9bfdfaddbda0&amp;type=3#fondo con titulo 1920x1080PNG&quot;); justify-content: center; -unity-background-image-tint-color: rgb(255, 255, 255); align-items: center; top: 0%;">
+        <ui:VisualElement name="Contenedor" style="flex-grow: 1; align-items: center; justify-content: flex-end; padding-top: 0; padding-right: 0; padding-bottom: 50px; padding-left: 0;">
+            <ui:Button text="NUEVO JUEGO&#10;" name="nuevo-juego" class="button" style="width: 60%;"/>
+            <ui:Button text="CONTINUAR&#10;" name="continuar" style="font-size: 150%; -unity-font-definition: url(&quot;project://database/Assets/tipografias_somnia/SaintCarellClean_PERSONAL_USE_ONLY.otf?fileID=12800000&amp;guid=ded706b8d6ed12a40ae819f687f5c78e&amp;type=3#SaintCarellClean_PERSONAL_USE_ONLY&quot;); color: rgb(255, 255, 255); -unity-font-style: normal; background-color: rgba(188, 188, 188, 0); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 25px; padding-top: 25px; padding-right: 0; padding-left: 0; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
+            <ui:Button text="CONFIGURACIÓN&#10;" name="configuracion" class="button"/>
+            <ui:Button text="SALIR&#10;" name="salir" class="button" style="width: 25%;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
