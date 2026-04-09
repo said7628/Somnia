@@ -1,0 +1,1430 @@
+fileFormatVersion: 2
+guid: 7542f599500c88a488d2e6ecd0210d97
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5914458553654318395
+    second: isla 2 1414x804_0
+  - first:
+      213: -6178403901551969368
+    second: isla 2 1414x804_1
+  - first:
+      213: -4899069838354503502
+    second: isla 2 1414x804_2
+  - first:
+      213: 8527853648113135401
+    second: isla 2 1414x804_3
+  - first:
+      213: 8507262794314686943
+    second: isla 2 1414x804_4
+  - first:
+      213: -8928951311409260883
+    second: isla 2 1414x804_5
+  - first:
+      213: 380446808734126299
+    second: isla 2 1414x804_6
+  - first:
+      213: -5737232490874446522
+    second: isla 2 1414x804_7
+  - first:
+      213: -544476904109105391
+    second: isla 2 1414x804_8
+  - first:
+      213: -1533675043626827844
+    second: isla 2 1414x804_9
+  - first:
+      213: -1981457534696957440
+    second: isla 2 1414x804_10
+  - first:
+      213: 4870429168229370324
+    second: isla 2 1414x804_11
+  - first:
+      213: 7836555230814465368
+    second: isla 2 1414x804_12
+  - first:
+      213: -486636164855514197
+    second: isla 2 1414x804_13
+  - first:
+      213: 5167224085809141454
+    second: isla 2 1414x804_14
+  - first:
+      213: -563468997606614534
+    second: isla 2 1414x804_15
+  - first:
+      213: -6405903476126397975
+    second: isla 2 1414x804_16
+  - first:
+      213: 6441220562774861937
+    second: isla 2 1414x804_17
+  - first:
+      213: -1828697876640610874
+    second: isla 2 1414x804_18
+  - first:
+      213: -682975426819107443
+    second: isla 2 1414x804_19
+  - first:
+      213: 4012401764454116116
+    second: isla 2 1414x804_20
+  - first:
+      213: 7154179926058814978
+    second: isla 2 1414x804_21
+  - first:
+      213: 2637045959753614198
+    second: isla 2 1414x804_22
+  - first:
+      213: -5209433308269154593
+    second: isla 2 1414x804_23
+  - first:
+      213: 6337140411745026149
+    second: isla 2 1414x804_24
+  - first:
+      213: 2252238610298711233
+    second: isla 2 1414x804_25
+  - first:
+      213: 2220271726334488731
+    second: isla 2 1414x804_26
+  - first:
+      213: 2937179902579081941
+    second: isla 2 1414x804_27
+  - first:
+      213: 2019526915707333694
+    second: isla 2 1414x804_28
+  - first:
+      213: -6656041538189135145
+    second: isla 2 1414x804_29
+  - first:
+      213: 7887774485970910895
+    second: isla 2 1414x804_30
+  - first:
+      213: -3957323936954512901
+    second: isla 2 1414x804_31
+  - first:
+      213: -9100847732408618985
+    second: isla 2 1414x804_32
+  - first:
+      213: 8067780582498763615
+    second: isla 2 1414x804_33
+  - first:
+      213: 6780715763418381941
+    second: isla 2 1414x804_34
+  - first:
+      213: -741125238171415059
+    second: isla 2 1414x804_35
+  - first:
+      213: 7634751001258606310
+    second: isla 2 1414x804_36
+  - first:
+      213: 8741821863378150932
+    second: isla 2 1414x804_37
+  - first:
+      213: 4970752298086923870
+    second: isla 2 1414x804_38
+  - first:
+      213: 7529780843487047683
+    second: isla 2 1414x804_39
+  - first:
+      213: -1269879641325999696
+    second: isla 2 1414x804_40
+  - first:
+      213: -319299212698364184
+    second: isla 2 1414x804_41
+  - first:
+      213: -5043526011544458587
+    second: isla 2 1414x804_42
+  - first:
+      213: 5979425497787948232
+    second: isla 2 1414x804_43
+  - first:
+      213: -2947398146842224896
+    second: isla 2 1414x804_44
+  - first:
+      213: -2104716108639218989
+    second: isla 2 1414x804_45
+  - first:
+      213: 5830377537144981155
+    second: isla 2 1414x804_46
+  - first:
+      213: -3361155877833710805
+    second: isla 2 1414x804_47
+  - first:
+      213: -1404053215675758526
+    second: isla 2 1414x804_48
+  - first:
+      213: 1569773669776426799
+    second: isla 2 1414x804_49
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: isla 2 1414x804_0
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 754
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b351659e7b0641250800000000000000
+      internalID: 5914458553654318395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_1
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 700
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab7b19d266e14aa0800000000000000
+      internalID: -6178403901551969368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 724
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b8ac0b30f1030cb0800000000000000
+      internalID: -4899069838354503502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_3
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 674
+        width: 69
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92f6d40e5b5095670800000000000000
+      internalID: 8527853648113135401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_4
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 674
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd12602207edf0670800000000000000
+      internalID: 8507262794314686943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_5
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 708
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da651b2071ef51480800000000000000
+      internalID: -8928951311409260883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_6
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 691
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd0578a5b5e974500800000000000000
+      internalID: 380446808734126299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_7
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 600
+        width: 70
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d599b52714160b0800000000000000
+      internalID: -5737232490874446522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_8
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 673
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11f1c26f321a178f0800000000000000
+      internalID: -544476904109105391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_9
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 595
+        width: 128
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbfbdbf6caa47bae0800000000000000
+      internalID: -1533675043626827844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_10
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 641
+        width: 60
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00addd2ded27084e0800000000000000
+      internalID: -1981457534696957440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_11
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 619
+        width: 69
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d9430c168d379340800000000000000
+      internalID: 4870429168229370324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_12
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 617
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85dec6b667901cc60800000000000000
+      internalID: 7836555230814465368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_13
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 562
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: babbde28cfe1f39f0800000000000000
+      internalID: -486636164855514197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_14
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 549
+        width: 83
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec61f7dcdeaa5b740800000000000000
+      internalID: 5167224085809141454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_15
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 535
+        width: 60
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af956bb9ee72e28f0800000000000000
+      internalID: -563468997606614534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_16
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 452
+        width: 69
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e9cb087ab8a917a0800000000000000
+      internalID: -6405903476126397975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_17
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 487
+        width: 104
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 178232c89ffc36950800000000000000
+      internalID: 6441220562774861937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_18
+      rect:
+        serializedVersion: 2
+        x: 1246
+        y: 497
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c5435558f82f96e0800000000000000
+      internalID: -1828697876640610874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_19
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 426
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d855026c7759586f0800000000000000
+      internalID: -682975426819107443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_20
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 451
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41b207a652aeea730800000000000000
+      internalID: 4012401764454116116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_21
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 486
+        width: 24
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e47fffcb0c84360800000000000000
+      internalID: 7154179926058814978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_22
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 402
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6734e77245ba89420800000000000000
+      internalID: 2637045959753614198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_23
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 387
+        width: 60
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fde6783c10064b7b0800000000000000
+      internalID: -5209433308269154593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_24
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 384
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 560c5ddf0ab02f750800000000000000
+      internalID: 6337140411745026149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_25
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 395
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cc264c451f814f10800000000000000
+      internalID: 2252238610298711233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_26
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 417
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b90b2012f5dffce10800000000000000
+      internalID: 2220271726334488731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_27
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 308
+        width: 92
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d284ae3f85f2c820800000000000000
+      internalID: 2937179902579081941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_28
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 356
+        width: 103
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c6319a70dc60c10800000000000000
+      internalID: 2019526915707333694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_29
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 355
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d2fdf97c7df0a3a0800000000000000
+      internalID: -6656041538189135145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_30
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 333
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fae7fa09a11077d60800000000000000
+      internalID: 7887774485970910895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_31
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 313
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf90dac98d2c419c0800000000000000
+      internalID: -3957323936954512901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_32
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 238
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7107ddaa43b43b180800000000000000
+      internalID: -9100847732408618985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_33
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 255
+        width: 103
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5302a1e1b386ff60800000000000000
+      internalID: 8067780582498763615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_34
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 254
+        width: 25
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57eb171af01f91e50800000000000000
+      internalID: 6780715763418381941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_35
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 194
+        width: 103
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ded47b4c58ef6b5f0800000000000000
+      internalID: -741125238171415059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_36
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 209
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eeb392c59514f960800000000000000
+      internalID: 7634751001258606310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_37
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 43
+        width: 62
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 416e5682ba0315970800000000000000
+      internalID: 8741821863378150932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_38
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 42
+        width: 80
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5e7de101e8abf440800000000000000
+      internalID: 4970752298086923870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_39
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 122
+        width: 59
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 300369c58c72f7860800000000000000
+      internalID: 7529780843487047683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_40
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 128
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b9634fb13b706ee0800000000000000
+      internalID: -1269879641325999696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_41
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 150
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e65d0ace0f919bf0800000000000000
+      internalID: -319299212698364184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_42
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 103
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aa237270dbc10ab0800000000000000
+      internalID: -5043526011544458587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_43
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 119
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cc50945fcf2bf250800000000000000
+      internalID: 5979425497787948232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_44
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 42
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00713dd500db817d0800000000000000
+      internalID: -2947398146842224896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_45
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 7
+        width: 104
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d25487b9db8ac2e0800000000000000
+      internalID: -2104716108639218989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_46
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 41
+        width: 60
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a681f7ba79a9e050800000000000000
+      internalID: 5830377537144981155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_47
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 32
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b23610b8986ca51d0800000000000000
+      internalID: -3361155877833710805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_48
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 3
+        width: 160
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 248c6e11a0dc38ce0800000000000000
+      internalID: -1404053215675758526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 2 1414x804_49
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 6
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2709cce5d4f8c510800000000000000
+      internalID: 1569773669776426799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      isla 2 1414x804_0: 5914458553654318395
+      isla 2 1414x804_1: -6178403901551969368
+      isla 2 1414x804_10: -1981457534696957440
+      isla 2 1414x804_11: 4870429168229370324
+      isla 2 1414x804_12: 7836555230814465368
+      isla 2 1414x804_13: -486636164855514197
+      isla 2 1414x804_14: 5167224085809141454
+      isla 2 1414x804_15: -563468997606614534
+      isla 2 1414x804_16: -6405903476126397975
+      isla 2 1414x804_17: 6441220562774861937
+      isla 2 1414x804_18: -1828697876640610874
+      isla 2 1414x804_19: -682975426819107443
+      isla 2 1414x804_2: -4899069838354503502
+      isla 2 1414x804_20: 4012401764454116116
+      isla 2 1414x804_21: 7154179926058814978
+      isla 2 1414x804_22: 2637045959753614198
+      isla 2 1414x804_23: -5209433308269154593
+      isla 2 1414x804_24: 6337140411745026149
+      isla 2 1414x804_25: 2252238610298711233
+      isla 2 1414x804_26: 2220271726334488731
+      isla 2 1414x804_27: 2937179902579081941
+      isla 2 1414x804_28: 2019526915707333694
+      isla 2 1414x804_29: -6656041538189135145
+      isla 2 1414x804_3: 8527853648113135401
+      isla 2 1414x804_30: 7887774485970910895
+      isla 2 1414x804_31: -3957323936954512901
+      isla 2 1414x804_32: -9100847732408618985
+      isla 2 1414x804_33: 8067780582498763615
+      isla 2 1414x804_34: 6780715763418381941
+      isla 2 1414x804_35: -741125238171415059
+      isla 2 1414x804_36: 7634751001258606310
+      isla 2 1414x804_37: 8741821863378150932
+      isla 2 1414x804_38: 4970752298086923870
+      isla 2 1414x804_39: 7529780843487047683
+      isla 2 1414x804_4: 8507262794314686943
+      isla 2 1414x804_40: -1269879641325999696
+      isla 2 1414x804_41: -319299212698364184
+      isla 2 1414x804_42: -5043526011544458587
+      isla 2 1414x804_43: 5979425497787948232
+      isla 2 1414x804_44: -2947398146842224896
+      isla 2 1414x804_45: -2104716108639218989
+      isla 2 1414x804_46: 5830377537144981155
+      isla 2 1414x804_47: -3361155877833710805
+      isla 2 1414x804_48: -1404053215675758526
+      isla 2 1414x804_49: 1569773669776426799
+      isla 2 1414x804_5: -8928951311409260883
+      isla 2 1414x804_6: 380446808734126299
+      isla 2 1414x804_7: -5737232490874446522
+      isla 2 1414x804_8: -544476904109105391
+      isla 2 1414x804_9: -1533675043626827844
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

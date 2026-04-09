@@ -1,0 +1,1690 @@
+fileFormatVersion: 2
+guid: 2827c01075ed92d41afd45f939585476
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7292268547207585513
+    second: isla 3 1414x804_0
+  - first:
+      213: 1305051040703358165
+    second: isla 3 1414x804_1
+  - first:
+      213: 3059170334468688931
+    second: isla 3 1414x804_2
+  - first:
+      213: 956913126568360203
+    second: isla 3 1414x804_3
+  - first:
+      213: -690655633232191993
+    second: isla 3 1414x804_4
+  - first:
+      213: 7242828301193673070
+    second: isla 3 1414x804_5
+  - first:
+      213: 6981723161962931452
+    second: isla 3 1414x804_6
+  - first:
+      213: -3187164406601414154
+    second: isla 3 1414x804_7
+  - first:
+      213: 2233728661803693530
+    second: isla 3 1414x804_8
+  - first:
+      213: -6784690194595903284
+    second: isla 3 1414x804_9
+  - first:
+      213: -7413427296300462689
+    second: isla 3 1414x804_10
+  - first:
+      213: 7741302349962651321
+    second: isla 3 1414x804_11
+  - first:
+      213: -1718998180456412195
+    second: isla 3 1414x804_12
+  - first:
+      213: -2237391788413898804
+    second: isla 3 1414x804_13
+  - first:
+      213: 5089993817172656857
+    second: isla 3 1414x804_14
+  - first:
+      213: 8688053195180586381
+    second: isla 3 1414x804_15
+  - first:
+      213: -2017712181858791654
+    second: isla 3 1414x804_16
+  - first:
+      213: 2828902086326502130
+    second: isla 3 1414x804_17
+  - first:
+      213: 740301157440868913
+    second: isla 3 1414x804_18
+  - first:
+      213: 3805269497147384598
+    second: isla 3 1414x804_19
+  - first:
+      213: -5093734761898745409
+    second: isla 3 1414x804_20
+  - first:
+      213: 4667029204547302712
+    second: isla 3 1414x804_21
+  - first:
+      213: 4949812344821579257
+    second: isla 3 1414x804_22
+  - first:
+      213: -3975487888481737760
+    second: isla 3 1414x804_23
+  - first:
+      213: -8339375868560655637
+    second: isla 3 1414x804_24
+  - first:
+      213: 1638492534990647306
+    second: isla 3 1414x804_25
+  - first:
+      213: -4297858598019856707
+    second: isla 3 1414x804_26
+  - first:
+      213: -2428054349426642728
+    second: isla 3 1414x804_27
+  - first:
+      213: 852643063571111746
+    second: isla 3 1414x804_28
+  - first:
+      213: 1153891273432729264
+    second: isla 3 1414x804_29
+  - first:
+      213: -3259994622546194077
+    second: isla 3 1414x804_30
+  - first:
+      213: 2425362906645185329
+    second: isla 3 1414x804_31
+  - first:
+      213: 1010974926717426024
+    second: isla 3 1414x804_32
+  - first:
+      213: 6025780464960783418
+    second: isla 3 1414x804_33
+  - first:
+      213: 7573316324508323565
+    second: isla 3 1414x804_34
+  - first:
+      213: 8395407783528570621
+    second: isla 3 1414x804_35
+  - first:
+      213: 7191487368976211905
+    second: isla 3 1414x804_36
+  - first:
+      213: 1467054809927195424
+    second: isla 3 1414x804_37
+  - first:
+      213: -83536334772734208
+    second: isla 3 1414x804_38
+  - first:
+      213: -6310909671115308973
+    second: isla 3 1414x804_39
+  - first:
+      213: -5910663653060545785
+    second: isla 3 1414x804_40
+  - first:
+      213: 5398114562344007626
+    second: isla 3 1414x804_41
+  - first:
+      213: -1365371611830038503
+    second: isla 3 1414x804_42
+  - first:
+      213: -7385999577456129940
+    second: isla 3 1414x804_43
+  - first:
+      213: 7511107636760436122
+    second: isla 3 1414x804_44
+  - first:
+      213: 936722568293103388
+    second: isla 3 1414x804_45
+  - first:
+      213: -5739693744739702048
+    second: isla 3 1414x804_46
+  - first:
+      213: -4485601905744185731
+    second: isla 3 1414x804_47
+  - first:
+      213: 8359229487911605452
+    second: isla 3 1414x804_48
+  - first:
+      213: 5753434656608781495
+    second: isla 3 1414x804_49
+  - first:
+      213: 1870420117962261199
+    second: isla 3 1414x804_50
+  - first:
+      213: -5039472593236421537
+    second: isla 3 1414x804_51
+  - first:
+      213: 6628462430941690889
+    second: isla 3 1414x804_52
+  - first:
+      213: 6693448047786721298
+    second: isla 3 1414x804_53
+  - first:
+      213: -2808795285626904057
+    second: isla 3 1414x804_54
+  - first:
+      213: 2840785796274992289
+    second: isla 3 1414x804_55
+  - first:
+      213: 388002898917413812
+    second: isla 3 1414x804_56
+  - first:
+      213: -7778869331915662926
+    second: isla 3 1414x804_57
+  - first:
+      213: -8399423410020370382
+    second: isla 3 1414x804_58
+  - first:
+      213: -3814167439075603906
+    second: isla 3 1414x804_59
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: isla 3 1414x804_0
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 756
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71120f47468acca90800000000000000
+      internalID: -7292268547207585513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_1
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 618
+        width: 167
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d4a0eec1097c1210800000000000000
+      internalID: 1305051040703358165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_2
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 692
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c4b65063b547a20800000000000000
+      internalID: 3059170334468688931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_3
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 703
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09f30e2b63a74d00800000000000000
+      internalID: 956913126568360203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_4
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 682
+        width: 24
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70e921f5c5c4a66f0800000000000000
+      internalID: -690655633232191993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_5
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 696
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e697bcd37f1b38460800000000000000
+      internalID: 7242828301193673070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_6
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 662
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf4eaec993014e060800000000000000
+      internalID: 6981723161962931452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_7
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 660
+        width: 49
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f901c7cbdae4c3d0800000000000000
+      internalID: -3187164406601414154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_8
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 596
+        width: 42
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad5fa63126ccffe10800000000000000
+      internalID: 2233728661803693530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 589
+        width: 54
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc809000730f7d1a0800000000000000
+      internalID: -6784690194595903284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_10
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 612
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d83dbe6273e1990800000000000000
+      internalID: -7413427296300462689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_11
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 570
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b6ab6cd871ae6b60800000000000000
+      internalID: 7741302349962651321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_12
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 579
+        width: 42
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb4a543344e428e0800000000000000
+      internalID: -1718998180456412195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_13
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 549
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccfa63cc50033f0e0800000000000000
+      internalID: -2237391788413898804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_14
+      rect:
+        serializedVersion: 2
+        x: 1118
+        y: 530
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d2c285a86a43a640800000000000000
+      internalID: 5089993817172656857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_15
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 440
+        width: 77
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d85bf68895a229870800000000000000
+      internalID: 8688053195180586381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_16
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 494
+        width: 42
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1f045df575aff3e0800000000000000
+      internalID: -2017712181858791654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_17
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 448
+        width: 58
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f24ad79577424720800000000000000
+      internalID: 2828902086326502130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_18
+      rect:
+        serializedVersion: 2
+        x: 1230
+        y: 514
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 132d21cfaf3164a00800000000000000
+      internalID: 740301157440868913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_19
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 388
+        width: 142
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 613691c42780fc430800000000000000
+      internalID: 3805269497147384598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_20
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 479
+        width: 42
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb167f8c83b6f49b0800000000000000
+      internalID: -5093734761898745409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_21
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 470
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8357a65a55e94c040800000000000000
+      internalID: 4667029204547302712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_22
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 454
+        width: 42
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fdfee53a1441b440800000000000000
+      internalID: 4949812344821579257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_23
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 457
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e3ad2614da34d8c0800000000000000
+      internalID: -3975487888481737760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_24
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 388
+        width: 54
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea3af9d4d5944c80800000000000000
+      internalID: -8339375868560655637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_25
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 433
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a003f3b87481db610800000000000000
+      internalID: 1638492534990647306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_26
+      rect:
+        serializedVersion: 2
+        x: 892
+        y: 433
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db60b2a4060fa54c0800000000000000
+      internalID: -4297858598019856707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_27
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 425
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d0351ffe61dd4ed0800000000000000
+      internalID: -2428054349426642728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_28
+      rect:
+        serializedVersion: 2
+        x: 1102
+        y: 394
+        width: 51
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24f5b5c495235db00800000000000000
+      internalID: 852643063571111746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_29
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 418
+        width: 42
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b68166eff1730010800000000000000
+      internalID: 1153891273432729264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_30
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 375
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3615379b92c22c2d0800000000000000
+      internalID: -3259994622546194077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_31
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 382
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 133cef5a6be98a120800000000000000
+      internalID: 2425362906645185329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_32
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 396
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86991d7e654b70e00800000000000000
+      internalID: 1010974926717426024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_33
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 305
+        width: 80
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a34c97c286fdf9350800000000000000
+      internalID: 6025780464960783418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_34
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 358
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dee4cfd6213d91960800000000000000
+      internalID: 7573316324508323565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_35
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 324
+        width: 25
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfe15c9f5ea728470800000000000000
+      internalID: 8395407783528570621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_36
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 327
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cf1982f8ab4dc360800000000000000
+      internalID: 7191487368976211905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_37
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 236
+        width: 117
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02b1dbba3960c5410800000000000000
+      internalID: 1467054809927195424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_38
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 276
+        width: 86
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0077808652837def0800000000000000
+      internalID: -83536334772734208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_39
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 279
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350489b37152b68a0800000000000000
+      internalID: -6310909671115308973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_40
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 258
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 703738c39ba19fda0800000000000000
+      internalID: -5910663653060545785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_41
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 207
+        width: 56
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac7b0611894f9ea40800000000000000
+      internalID: 5398114562344007626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_42
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 246
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 910d77ac0c93d0de0800000000000000
+      internalID: -1365371611830038503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_43
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 216
+        width: 89
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c68ca8a5488af7990800000000000000
+      internalID: -7385999577456129940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_44
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 213
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9d54de9990dc3860800000000000000
+      internalID: 7511107636760436122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_45
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 187
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c17b3308638effc00800000000000000
+      internalID: 936722568293103388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_46
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 69
+        width: 54
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ea224903f28850b0800000000000000
+      internalID: -5739693744739702048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_47
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 81
+        width: 127
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d767d4c15d0ffb1c0800000000000000
+      internalID: -4485601905744185731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_48
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 14
+        width: 154
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc411fe1ee2f10470800000000000000
+      internalID: 8359229487911605452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_49
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 106
+        width: 25
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b48691565e48df40800000000000000
+      internalID: 5753434656608781495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_50
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 40
+        width: 54
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc282e7ff2115f910800000000000000
+      internalID: 1870420117962261199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_51
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 94
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5493d07062301ab0800000000000000
+      internalID: -5039472593236421537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_52
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 17
+        width: 54
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c3d4b36770dfb50800000000000000
+      internalID: 6628462430941690889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_53
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 52
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2100cda3987e3ec50800000000000000
+      internalID: 6693448047786721298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_54
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 45
+        width: 25
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 702aa61c1972509d0800000000000000
+      internalID: -2808795285626904057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_55
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 72
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a432fd61af7c6720800000000000000
+      internalID: 2840785796274992289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_56
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 46
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b35bc1b496726500800000000000000
+      internalID: 388002898917413812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_57
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 28
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b99cfc8e87eb0490800000000000000
+      internalID: -7778869331915662926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_58
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 8
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238b2af19e04f6b80800000000000000
+      internalID: -8399423410020370382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: isla 3 1414x804_59
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 17
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3a89082cea511bc0800000000000000
+      internalID: -3814167439075603906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      isla 3 1414x804_0: -7292268547207585513
+      isla 3 1414x804_1: 1305051040703358165
+      isla 3 1414x804_10: -7413427296300462689
+      isla 3 1414x804_11: 7741302349962651321
+      isla 3 1414x804_12: -1718998180456412195
+      isla 3 1414x804_13: -2237391788413898804
+      isla 3 1414x804_14: 5089993817172656857
+      isla 3 1414x804_15: 8688053195180586381
+      isla 3 1414x804_16: -2017712181858791654
+      isla 3 1414x804_17: 2828902086326502130
+      isla 3 1414x804_18: 740301157440868913
+      isla 3 1414x804_19: 3805269497147384598
+      isla 3 1414x804_2: 3059170334468688931
+      isla 3 1414x804_20: -5093734761898745409
+      isla 3 1414x804_21: 4667029204547302712
+      isla 3 1414x804_22: 4949812344821579257
+      isla 3 1414x804_23: -3975487888481737760
+      isla 3 1414x804_24: -8339375868560655637
+      isla 3 1414x804_25: 1638492534990647306
+      isla 3 1414x804_26: -4297858598019856707
+      isla 3 1414x804_27: -2428054349426642728
+      isla 3 1414x804_28: 852643063571111746
+      isla 3 1414x804_29: 1153891273432729264
+      isla 3 1414x804_3: 956913126568360203
+      isla 3 1414x804_30: -3259994622546194077
+      isla 3 1414x804_31: 2425362906645185329
+      isla 3 1414x804_32: 1010974926717426024
+      isla 3 1414x804_33: 6025780464960783418
+      isla 3 1414x804_34: 7573316324508323565
+      isla 3 1414x804_35: 8395407783528570621
+      isla 3 1414x804_36: 7191487368976211905
+      isla 3 1414x804_37: 1467054809927195424
+      isla 3 1414x804_38: -83536334772734208
+      isla 3 1414x804_39: -6310909671115308973
+      isla 3 1414x804_4: -690655633232191993
+      isla 3 1414x804_40: -5910663653060545785
+      isla 3 1414x804_41: 5398114562344007626
+      isla 3 1414x804_42: -1365371611830038503
+      isla 3 1414x804_43: -7385999577456129940
+      isla 3 1414x804_44: 7511107636760436122
+      isla 3 1414x804_45: 936722568293103388
+      isla 3 1414x804_46: -5739693744739702048
+      isla 3 1414x804_47: -4485601905744185731
+      isla 3 1414x804_48: 8359229487911605452
+      isla 3 1414x804_49: 5753434656608781495
+      isla 3 1414x804_5: 7242828301193673070
+      isla 3 1414x804_50: 1870420117962261199
+      isla 3 1414x804_51: -5039472593236421537
+      isla 3 1414x804_52: 6628462430941690889
+      isla 3 1414x804_53: 6693448047786721298
+      isla 3 1414x804_54: -2808795285626904057
+      isla 3 1414x804_55: 2840785796274992289
+      isla 3 1414x804_56: 388002898917413812
+      isla 3 1414x804_57: -7778869331915662926
+      isla 3 1414x804_58: -8399423410020370382
+      isla 3 1414x804_59: -3814167439075603906
+      isla 3 1414x804_6: 6981723161962931452
+      isla 3 1414x804_7: -3187164406601414154
+      isla 3 1414x804_8: 2233728661803693530
+      isla 3 1414x804_9: -6784690194595903284
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
