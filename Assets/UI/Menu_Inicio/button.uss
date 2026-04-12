@@ -17,4 +17,19 @@
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
+.button:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+}
 
+#continuar {
+    scale: 1 1;
+    transition-property: scale;
+    transition-duration: 1000ms;
+    transition-timing-function: ease-in-out;
+}
+
+.continuar-grande {
+    scale: 1.5 1.5;
+}

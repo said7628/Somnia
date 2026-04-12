@@ -394,7 +394,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1981269184}
   - component: {fileID: 1981269183}
-  - component: {fileID: 1981269185}
+  - component: {fileID: 1981269186}
+  - component: {fileID: 1981269187}
   m_Layer: 5
   m_Name: Escena
   m_TagString: Untagged
@@ -440,7 +441,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1981269185
+--- !u!114 &1981269186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981269182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1afb99c6d27a4546a4d92b887c341e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PalpitarContinuar
+--- !u!114 &1981269187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,7 +464,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc76f885098f6d442a0771526c03894a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuPrincipal
+  m_EditorClassIdentifier: Assembly-CSharp::MenuManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

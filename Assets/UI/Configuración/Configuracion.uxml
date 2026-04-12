@@ -1,5 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/barritasV.uss?fileID=7433441132597879392&amp;guid=06260d7fcc0240a49b1354ddb93ec03a&amp;type=3#barritasV"/>
+    <Style src="project://database/Assets/UI/Configuraci%C3%B3n/barritasV.uss?fileID=7433441132597879392&amp;guid=06260d7fcc0240a49b1354ddb93ec03a&amp;type=3#barritasV"/>
+    <Style src="project://database/Assets/UI/Menu_Inicio/button.uss?fileID=7433441132597879392&amp;guid=231ce6c480d88fc47ae286a385ae8570&amp;type=3#button"/>
     <ui:VisualElement name="Contenedor" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Configuraci%C3%B3n/fondo%20%201920x1080.png?fileID=2800000&amp;guid=499439fcebde99c499bf3dae45fefc10&amp;type=3#fondo  1920x1080&quot;); align-items: center; justify-content: flex-end; flex-shrink: 0; width: 100%; height: 100%; padding-top: 250px;">
         <ui:Label text="CONFIGURACIÓN " style="-unity-font-definition: url(&quot;project://database/Assets/tipografias_somnia/SaintCarellClean_PERSONAL_USE_ONLY.otf?fileID=12800000&amp;guid=ded706b8d6ed12a40ae819f687f5c78e&amp;type=3#SaintCarellClean_PERSONAL_USE_ONLY&quot;); font-size: 150%;"/>
         <ui:VisualElement name="Contenedor1" style="justify-content: center; width: 90%; height: 85%; flex-direction: column; align-items: center;">
@@ -17,10 +18,10 @@
                 <ui:Image name="Volumen4" class="barritas" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Configuraci%C3%B3n/barrita%20vacia%2096x219.png?fileID=2800000&amp;guid=1166546a89ae8b546a73ec2dfbdc8bdb&amp;type=3#barrita vacia 96x219&quot;);"/>
                 <ui:Image name="Volumen5" class="barritas" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Configuraci%C3%B3n/barrita%20vacia%2096x219.png?fileID=2800000&amp;guid=1166546a89ae8b546a73ec2dfbdc8bdb&amp;type=3#barrita vacia 96x219&quot;);"/>
             </ui:VisualElement>
-            <ui:VisualElement name="Return" style="flex-direction: row-reverse; width: 550px; height: 200px; padding-top: 70px; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+            <ui:Button text="" name="butreturn" style="flex-direction: row; background-color: rgba(255, 255, 255, 0);">
+                <ui:Button text="" name="return" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Nueva%20Partida/return%20107x86.png?fileID=2800000&amp;guid=c10138c2b6000034c929120f4c4eec8b&amp;type=3#return 107x86&quot;); background-color: rgba(149, 149, 149, 0); width: 75px; height: 90px; -unity-background-image-tint-color: rgb(0, 0, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
                 <ui:Label text="REGRESO" style="-unity-font-definition: url(&quot;project://database/Assets/tipografias_somnia/SaintCarellClean_PERSONAL_USE_ONLY.otf?fileID=12800000&amp;guid=ded706b8d6ed12a40ae819f687f5c78e&amp;type=3#SaintCarellClean_PERSONAL_USE_ONLY&quot;); font-size: 75%; padding-top: 0; margin-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; height: 100px;"/>
-                <ui:Button text="" name="butreturn" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Pantallas%20iniciales/Nueva%20Partida/return%20107x86.png?fileID=2800000&amp;guid=c10138c2b6000034c929120f4c4eec8b&amp;type=3#return 107x86&quot;); background-color: rgba(149, 149, 149, 0); width: 75px; height: 90px; -unity-background-image-tint-color: rgb(0, 0, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
-            </ui:VisualElement>
+            </ui:Button>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
