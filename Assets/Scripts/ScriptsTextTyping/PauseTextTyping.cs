@@ -63,4 +63,11 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         SceneManager.LoadScene("Configuracion");
     }
+
+    public void IrAMenu()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        SceneManager.LoadScene("Pantalla_principal");
+    }
 }
