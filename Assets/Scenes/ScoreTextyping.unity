@@ -289,12 +289,12 @@ RectTransform:
   - {fileID: 2079353221}
   - {fileID: 587979260}
   - {fileID: 449837199}
-  - {fileID: 351028094}
   - {fileID: 1131732711}
   - {fileID: 1158695326}
   - {fileID: 1043257750}
-  - {fileID: 652096064}
+  - {fileID: 351028094}
   - {fileID: 1544244533}
+  - {fileID: 652096064}
   m_Father: {fileID: 1443769939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -701,6 +701,7 @@ GameObject:
   - component: {fileID: 587979263}
   - component: {fileID: 587979262}
   - component: {fileID: 587979261}
+  - component: {fileID: 587979264}
   m_Layer: 5
   m_Name: Mapa
   m_TagString: Untagged
@@ -772,7 +773,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 587979262}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1443769940}
+        m_TargetAssemblyTypeName: ResultadoNivelUI, Assembly-CSharp
+        m_MethodName: IrAMapa
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &587979262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +824,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587979259}
   m_CullTransparentMesh: 1
+--- !u!114 &587979264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587979259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda9f52eb4716a44cbb6e85f4e95c663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverCanva
+  scaleMultiplier: 1.1
+  speed: 10
 --- !u!1 &652096063
 GameObject:
   m_ObjectHideFlags: 0
