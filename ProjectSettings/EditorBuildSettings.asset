@@ -17,6 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Configuracion.unity
     guid: 491fcab88a24d4a4ba9a489b0f546c46
+  - enabled: 1
+    path: Assets/Scenes/ScoreTextyping.unity
+    guid: 2e855ccd089fb114ea65801cc62ab594
+  - enabled: 1
+    path: Assets/Scenes/TextTyping.unity
+    guid: fa107fca652909044892f5ec6bfadf1e
+  - enabled: 1
+    path: Assets/Scenes/Tienda.unity
+    guid: a216862d4f579074db56135eee99ca11
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

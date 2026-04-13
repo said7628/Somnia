@@ -53,6 +53,6 @@ public class MenuTextTypingUI : MonoBehaviour
     public void IrAMapa()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("escribirescenapapu");
+        SceneManager.LoadScene("Mapa");
     }
 }
