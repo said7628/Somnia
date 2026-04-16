@@ -1,9 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/inventario.uss?fileID=7433441132597879392&amp;guid=27411a7e20cd9e34e8550195650b902e&amp;type=3#inventario"/>
+    <ui:Button text="Button" name="Home" class="home"/>
     <ui:VisualElement name="fondo" class="fondo" style="flex-grow: 1;">
-        <ui:Button text="Button" name="Home" class="home"/>
-        <ui:Button text="Button" name="cerrar" class="cerrar"/>
-        <ui:VisualElement name="base" class="base" style="flex-grow: 1;"/>
+        <ui:VisualElement name="base" class="base" style="flex-grow: 1;">
+            <ui:Button text="Button" name="cerrar" class="cerrar"/>
+        </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
             <ui:Button text="Button"/>
             <ui:Button text="Button"/>

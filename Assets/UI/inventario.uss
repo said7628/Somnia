@@ -22,7 +22,12 @@
 }
 
 .cerrar {
+    align-self: flex-end;
+    border-top-width: 65px;
 }
 
 .home {
+    align-self: flex-start;
+    border-left-width: 10px;
+    border-top-width: 10px;
 }
