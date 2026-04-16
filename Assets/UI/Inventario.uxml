@@ -3,14 +3,14 @@
     <ui:Button text="Button" name="Home" class="home"/>
     <ui:VisualElement name="fondo" class="fondo" style="flex-grow: 1;">
         <ui:VisualElement name="base" class="base" style="flex-grow: 1;">
-            <ui:Button text="Button" name="cerrar" class="cerrar"/>
+            <ui:Button text="Button" name="cerrar" class="cerrar" style="align-self: flex-end; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=2800000&amp;guid=8baca84e2db8fcb449b6a2491a8d0c16&amp;type=3#tache 77x77&quot;); border-top-color: rgba(255, 255, 255, 0); border-top-width: 70px; border-left-width: 15px; border-left-color: rgba(255, 255, 255, 0); background-color: rgba(188, 188, 188, 0); border-right-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0);"/>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
-            <ui:Button text="Button"/>
-            <ui:Button text="Button"/>
-            <ui:Button text="Button"/>
-            <ui:Button text="Button"/>
-            <ui:Button text="Button"/>
+            <ui:Button text="" name="botoncara" class="botonCara" style="margin-left: -11px;"/>
+            <ui:Button text="" name="botonojos" class="botonOjos" style="margin-left: -11px;"/>
+            <ui:Button text="" name="botonoutfit" class="botonOutfit" style="margin-left: -11px;"/>
+            <ui:Button text="" name="botonconf" class="botonconf" style="margin-left: -11px;"/>
+            <ui:Button text="" name="botonHome" class="botonHome" style="margin-left: -11px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
