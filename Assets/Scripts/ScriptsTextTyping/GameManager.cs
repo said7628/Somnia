@@ -10,7 +10,7 @@ public class MathGameManager : MonoBehaviour
     [SerializeField] private TMP_Text streakText;
 
     [SerializeField] private Button[] answerButtons;
-    [SerializeField] private TMP_Text[] answerTexts; // 🔥 NUEVO (mejor que GetComponentInChildren)
+    [SerializeField] private TMP_Text[] answerTexts;
 
     [Header("Managers")]
     [SerializeField] private ScoreManager scoreManager;
@@ -42,8 +42,8 @@ public class MathGameManager : MonoBehaviour
     {
         Debug.Log("=== GENERANDO NUEVA PREGUNTA ===");
 
-        int num1 = Random.Range(100, 1000);
-        int num2 = Random.Range(100, 1000);
+        int num1 = Random.Range(10, 100);
+        int num2 = Random.Range(10, 100);
 
         bool isAddition = Random.value > 0.5f;
 
@@ -75,7 +75,6 @@ public class MathGameManager : MonoBehaviour
         {
             int capturedAnswer = answers[i];
 
-            // 🔥 USAMOS ARRAY DIRECTO (más seguro)
             if (i < answerTexts.Length)
             {
                 answerTexts[i].text = capturedAnswer.ToString();
@@ -121,31 +120,20 @@ public class MathGameManager : MonoBehaviour
 
 void SelectAnswer(int selected)
 {
-    Debug.Log("CLICK DETECTADO: " + selected);
-
-    Debug.Log("scoreManager: " + scoreManager);
-    Debug.Log("streakText: " + streakText);
-    Debug.Log("timerScript: " + timerScript);
-
     if (timerScript == null || timerScriptFinished()) return;
 
-    if (selected == correctAnswer)
-    {
-        scoreManager.CorrectAnswer();
-    }
-    else
-    {
-        scoreManager.WrongAnswer();
-    }
+        if (selected == correctAnswer)
+        {
+            scoreManager.CorrectAnswer();
 
-    if (streakText != null)
-        streakText.text = "Racha: " + scoreManager.GetStreak();
-    else
-        Debug.LogError("streakText NO asignado");
-
-    GenerateQuestion();
+            GenerateQuestion();
+        }
+        else
+        {
+            scoreManager.WrongAnswer();
+        }
+    streakText.text = "Racha: " + scoreManager.GetStreak();
 }
-
     void DisableAllButtons()
     {
         Debug.Log("Desactivando botones");
