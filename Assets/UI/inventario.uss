@@ -100,3 +100,148 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
 }
+
+.personajecombs {
+}
+
+.cosmeticos {
+    align-self: auto;
+    justify-content: flex-start;
+    align-items: auto;
+    flex-direction: row;
+    flex-shrink: initial;
+    flex-grow: 0;
+    flex-basis: 0%;
+    flex-wrap: wrap;
+}
+
+.seleccioncosmetico {
+    align-self: center;
+    height: 80px;
+    flex-direction: column;
+    flex-grow: 0;
+    translate: 0 20px;
+    min-height: auto;
+}
+
+.carapredeterminado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/blanco%20163x163.png?fileID=7751551136012658776&guid=4d955961874bd944bb53da0ab6b88ffd&type=3#blanco 163x163_0");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    height: 120px;
+    width: 130px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 60px 0;
+}
+
+.cara1 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/naranja%20163x163.png?fileID=2800000&guid=d9ff9fd64ba653b4c93f91c284eb54ef&type=3#naranja 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara2 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/morado%20163x163.png?fileID=2800000&guid=a3c268c594dca7a4a9a3b92f95a29268&type=3#morado 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara3 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/amarillon%20163x163.png?fileID=2800000&guid=afeb4ca3490d4534d9aab3b23a58f0ec&type=3#amarillon 163x163");
+    height: 160px;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara4 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/rojo%20163x163.png?fileID=2800000&guid=a33dc27d246d4fd439c7ff8f35584bdf&type=3#rojo 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara5 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/turquesa%20163x163.png?fileID=2800000&guid=bf6eea15c1fc7dc41b4ce31104ac01be&type=3#turquesa 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara6 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/verde%20163x163.png?fileID=2800000&guid=b460f5ca02d084f40b6390a559741fca&type=3#verde 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara7 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/rosita%20163x163.png?fileID=2800000&guid=17db0c0f64993c341bc3093e5fbf999c&type=3#rosita 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara8 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/azul%20163x163.png?fileID=2800000&guid=024f97f8583e2024398eedd79e48bc76&type=3#azul 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+.cara9 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/negro%20163x163.png?fileID=2800000&guid=de213e597cc5dc7478409620a57739b8&type=3#negro 163x163");
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    margin-top: 20px;
+}
