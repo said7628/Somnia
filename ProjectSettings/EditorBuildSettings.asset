@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tienda.unity
     guid: a216862d4f579074db56135eee99ca11
+  - enabled: 1
+    path: Assets/Scenes/Inventario.unity
+    guid: 756d35924eca4854ea1bc5fd1ad7c1cf
+  - enabled: 1
+    path: Assets/Scenes/ScoreTextypingFallido.unity
+    guid: 79628686867f1a74fa8f25c4d3e28543
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
