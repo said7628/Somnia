@@ -18,15 +18,33 @@
         <ui:VisualElement name="cosmeticos" class="cosmeticos" style="flex-grow: 1; translate: -550px -80px; scale: 1 1; flex-direction: column; align-self: center; width: 1900px; height: 559px;">
             <ui:Button text="" name="predeterminado" class="carapredeterminado"/>
             <ui:VisualElement name="seleccioncosmetico" class="seleccioncosmetico" style="flex-grow: 3; width: 520px; flex-direction: row; flex-wrap: wrap; flex-shrink: 3; justify-content: center;">
-                <ui:Button text="" name="cosmetico1" class="cara1"/>
-                <ui:Button text="" name="cosmetico2" class="cara2"/>
-                <ui:Button text="" name="cosmetico3" class="cara3"/>
-                <ui:Button text="" name="cosmetico4" class="cara4"/>
-                <ui:Button text="" name="cosmetico5" class="cara5"/>
-                <ui:Button text="" name="cosmetico6" class="cara6"/>
-                <ui:Button text="" name="cosmetico7" class="cara7"/>
-                <ui:Button text="" name="cosmetico8" class="cara8"/>
-                <ui:Button text="" name="cosmetico9" class="cara9"/>
+                <ui:Button text="" name="cosmetico1" class="cara1">
+                    <ui:VisualElement name="bloqueado1" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico2" class="cara2">
+                    <ui:VisualElement name="bloqueado2" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico3" class="cara3">
+                    <ui:VisualElement name="bloqueado3" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico4" class="cara4">
+                    <ui:VisualElement name="bloqueado4" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico5" class="cara5">
+                    <ui:VisualElement name="bloqueado5" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico6" class="cara6">
+                    <ui:VisualElement name="bloqueado6" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico7" class="cara7">
+                    <ui:VisualElement name="bloqueado7" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico8" class="cara8">
+                    <ui:VisualElement name="bloqueado8" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="cosmetico9" class="cara9">
+                    <ui:VisualElement name="bloqueado9" class="bloqueado" style="flex-grow: 1;"/>
+                </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
