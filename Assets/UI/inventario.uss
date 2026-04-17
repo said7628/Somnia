@@ -3,7 +3,7 @@
 
 .base {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=2800000&guid=1bc29c55dcb9b0f4bab5ad300bee54dd&type=3#base grafica 1623x1071");
-    background-size: 100% 100%;
+    background-size: 100% 95%;
     height: auto;
     width: 1550px;
 }
@@ -259,7 +259,3 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/bloqueado%20163x163.png?fileID=2800000&guid=ff3fc32833a90f4499e4bac3bae26713&type=3#bloqueado 163x163");
     background-color: rgb(243, 222, 167);
 }
-
-
-
-
