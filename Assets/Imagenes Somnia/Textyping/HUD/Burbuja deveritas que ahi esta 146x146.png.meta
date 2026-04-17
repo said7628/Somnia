@@ -122,12 +122,12 @@ TextureImporter:
       name: Burbuja deveritas que ahi esta 146x146_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 45
-        width: 111
-        height: 101
+        x: 0
+        y: 0
+        width: 146
+        height: 146
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -140,55 +140,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Burbuja deveritas que ahi esta 146x146_1
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 2
-        width: 138
-        height: 119
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8e9212620ca50b940800000000000000
-      internalID: 5309843741989743080
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Burbuja deveritas que ahi esta 146x146_2
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 116
-        width: 13
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6a183fa32492569a0800000000000000
-      internalID: -6240536344218336858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1fb97565fc821714d99d09f8835ff54d
     internalID: 0
     vertices: []
     indices: 
@@ -196,11 +152,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":146.0,"y":146.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Burbuja deveritas que ahi esta 146x146_0: -923300314326574356
-      Burbuja deveritas que ahi esta 146x146_1: 5309843741989743080
-      Burbuja deveritas que ahi esta 146x146_2: -6240536344218336858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
