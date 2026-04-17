@@ -15,7 +15,7 @@ MonoBehaviour:
   nombreIsla: Isla1
   claseEstiloUSS: 
   opcionesRopa:
-  - {fileID: 4328426257919030988, guid: 0e11e47b730cd104792db7ef252bdf1f, type: 3}
+  - {fileID: 8887136391367709469, guid: 7793173358da6594c96ed25c72577ff9, type: 3}
   opcionesOjos:
   - {fileID: -6746720259170762094, guid: f929e149898cfb34a80b83ec0855c758, type: 3}
   - {fileID: 4224106898562449350, guid: 360e3f53d7f046641a8c9bd81c7e5997, type: 3}
