@@ -50,9 +50,9 @@
 }
 
 .botonOjos {
-    width: 100px;
-    height: 80px;
-    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/cara%20desactivado%20106x102.png?fileID=2800000&guid=1c93576606f5ce0479ab296103c18b25&type=3#cara desactivado 106x102");
+    width: 140px;
+    height: 90px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20activos/cara%20activado%20160x110.png?fileID=2800000&guid=1b21765367282134da3d1ea3b35aa6c9&type=3#cara activado 160x110");
     margin-bottom: 80px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
@@ -129,6 +129,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-right: 70px;
+    background-size: 100% 86%;
 }
 
 .ojos2 {
@@ -142,6 +143,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-left: 70px;
+    background-size: 89% 100%;
 }
 
 .ojos3 {
@@ -155,6 +157,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-right: 70px;
+    background-size: 100% 86%;
 }
 
 .ojos4 {
@@ -168,6 +171,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-left: 70px;
+    background-size: 87% 100%;
 }
 
 .ojos5 {
@@ -181,6 +185,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-right: 70px;
+    background-size: 100% 87%;
 }
 
 .ojos6 {
@@ -194,4 +199,12 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-bottom: 10px;
     margin-left: 70px;
+    background-size: 87% 100%;
 }
+
+.bloqueado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/bloqueado%20163x163.png?fileID=2800000&guid=bd21816eaea16004da496e7204ff7904&type=3#bloqueado 163x163");
+    background-color: rgb(243, 222, 167);
+}
+
+

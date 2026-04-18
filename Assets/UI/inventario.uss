@@ -34,9 +34,9 @@
 }
 
 .botonCara {
-    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/color%20desactivado%20106x102.png?fileID=2800000&guid=d65654479a22c6e48b41504330f06ce7&type=3#color desactivado 106x102");
-    height: 80px;
-    width: 100px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20activos/color%20activado%20160x110.png?fileID=2800000&guid=8934cfdf4c92ca14392ef3fe4bbf3483&type=3#color activado 160x110");
+    height: 90px;
+    width: 140px;
     background-color: rgba(0, 0, 0, 0);
     padding-bottom: 0;
     margin-bottom: 80px;
