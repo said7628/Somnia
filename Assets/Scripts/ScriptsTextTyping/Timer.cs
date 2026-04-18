@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
         int minutos = Mathf.FloorToInt(tiempo / 60);
         int segundos = Mathf.FloorToInt(tiempo % 60);
 
-        TimeText.text = "Time: " + minutos.ToString("00") + ":" + segundos.ToString("00");
+        TimeText.text = minutos.ToString("00") + ":" + segundos.ToString("00");
     }
 
     // ✅ MÉTODO PÚBLICO (clave para el GameManager)
