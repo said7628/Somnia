@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/OjosInvent.uss?fileID=7433441132597879392&amp;guid=ac3d25cd674cc1248afa39e4ca3600a9&amp;type=3#OjosInvent"/>
     <ui:VisualElement name="Fondo" class="fondo" style="flex-grow: 1; margin-left: 70px;">
-        <ui:VisualElement name="Base" class="Base" style="flex-grow: 1;">
+        <ui:VisualElement name="Base" class="Base" style="flex-grow: 1; margin-right: 43px;">
             <ui:Button text="" name="Cerrar" class="cerrar" style="width: 77px; height: 77px; translate: 0 -1px; background-color: rgba(0, 0, 0, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
             <ui:VisualElement name="Ojos" style="flex-grow: 1; translate: 450px 45px; align-self: center;">
                 <ui:Button text="" name="ojosPredeterminado" class="ojospred" style="height: 140px; width: 135px;"/>

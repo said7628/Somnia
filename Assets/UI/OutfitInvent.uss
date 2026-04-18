@@ -6,7 +6,7 @@
     margin-top: 60px;
     margin-bottom: 60px;
     margin-left: 60px;
-    margin-right: 220px;
+    margin-right: 178px;
 }
 
 .panel {
@@ -14,6 +14,8 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=-5111747741860189538&guid=1bc29c55dcb9b0f4bab5ad300bee54dd&type=3#base grafica 1623x1071_0");
     background-color: rgba(0, 0, 0, 0);
     height: auto;
+    margin-left: 12px;
+    margin-right: 45px;
 }
 
 .botones {
@@ -21,7 +23,7 @@
     align-self: center;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-left: -10px;
+    margin-left: -58px;
 }
 
 .botonCerrar {
@@ -124,12 +126,19 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     background-color: rgba(0, 0, 0, 0);
     margin-right: 20px;
+    background-size: 100% 95%;
 }
 
 .outfit2 {
     width: 233px;
     height: 233px;
     margin-left: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-size: 100% 95%;
 }
 
 .outfit3 {
@@ -142,4 +151,14 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-left: 120px;
+    background-size: 100% 95%;
+}
+
+.bloqueado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/bloqueado%20233x233.png?fileID=2800000&guid=a361489ea04c442429ebb5aa78fc59b0&type=3#bloqueado 233x233");
+    background-color: rgb(243, 222, 167);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }

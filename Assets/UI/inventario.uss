@@ -6,6 +6,7 @@
     background-size: 100% 95%;
     height: auto;
     width: 1520px;
+    margin-left: 15px;
 }
 
 .fondo {

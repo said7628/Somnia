@@ -4,11 +4,17 @@
         <ui:VisualElement name="panel" class="panel" style="flex-grow: 1;">
             <ui:Button text="" name="cerrar" class="botonCerrar"/>
             <ui:VisualElement name="Outfit" class="outfit" style="flex-grow: 1; align-self: center; justify-content: flex-start; align-items: center; width: 517px;">
-                <ui:Button text="Button" name="outfitPredeterminado" class="outfitPredterminado"/>
+                <ui:Button text="" name="outfitPredeterminado" class="outfitPredterminado"/>
                 <ui:VisualElement name="seleccionOutfit" style="flex-grow: 1; flex-direction: row; flex-shrink: 2; flex-wrap: wrap; align-self: center;">
-                    <ui:Button text="Button" name="outfit1" class="outfit1"/>
-                    <ui:Button text="Button" name="outfit2" class="outfit2"/>
-                    <ui:Button text="Button" name="outfit3" class="outfit3"/>
+                    <ui:Button text="" name="outfit1" class="outfit1">
+                        <ui:VisualElement name="bloqueado1" class="bloqueado" style="flex-grow: 1;"/>
+                    </ui:Button>
+                    <ui:Button text="" name="outfit2" class="outfit2">
+                        <ui:VisualElement name="bloqueado2" class="bloqueado" style="flex-grow: 1;"/>
+                    </ui:Button>
+                    <ui:Button text="" name="outfit3" class="outfit3">
+                        <ui:VisualElement name="bloqueado3" class="bloqueado" style="flex-grow: 1;"/>
+                    </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

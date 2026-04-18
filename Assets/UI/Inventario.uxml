@@ -14,7 +14,7 @@
             <ui:Button text="" name="botonconf" class="botonconf" style="margin-left: -11px;"/>
             <ui:Button text="" name="botonHome" class="botonHome" style="margin-left: -11px;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="cosmeticos" class="cosmeticos" style="flex-grow: 1; translate: -550px -80px; scale: 1 1; flex-direction: column; align-self: center; width: 1900px; height: 559px;">
+        <ui:VisualElement name="cosmeticos" class="cosmeticos" style="flex-grow: 1; translate: -590px 4px; scale: 1 1; flex-direction: column; align-self: center; width: 1900px; height: 691px;">
             <ui:Button text="" name="predeterminado" class="carapredeterminado"/>
             <ui:VisualElement name="seleccioncosmetico" class="seleccioncosmetico" style="flex-grow: 3; width: 520px; flex-direction: row; flex-wrap: wrap; flex-shrink: 3; justify-content: center;">
                 <ui:Button text="" name="cosmetico1" class="cara1">
