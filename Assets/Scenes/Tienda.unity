@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f331c0a39d606624a90c6308534b7338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorTienda
-  islaActual: {fileID: 11400000, guid: dec99be69ad602d47ba3c297d2ca3fd7, type: 2}
+  islaActual: {fileID: 11400000, guid: bdbaa82e12a1cef4fa1f2882b5146f5d, type: 2}
   plantillaItemTienda: {fileID: 9197481963319205126, guid: 712f72107adddf443b4398b7ab659d6a, type: 3}
   imgOjosNormal: {fileID: 4154433000688897841, guid: 2b4ddb2b8b13f7847957de1f586fadc2, type: 3}
   imgColorNormal: {fileID: -4974335594040434568, guid: 46af73b4029e7eb4cbe8eb4396075bee, type: 3}
@@ -487,7 +487,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3128594558637371209, guid: 9a1078608076c854c81b609d073c7be0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

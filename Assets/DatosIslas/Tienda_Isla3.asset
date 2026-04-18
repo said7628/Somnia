@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DatosTiendaIsla
   nombreIsla: 
   claseEstiloUSS: 
-  opcionesRopa: []
-  opcionesOjos: []
-  opcionesColor: []
+  opcionesRopa:
+  - {fileID: 8166348619950179222, guid: 40e2b3fd844d4954bb2d0c2a18d99301, type: 3}
+  opcionesOjos:
+  - {fileID: 6293885544738163888, guid: 49dec59ccc6b592438571a1ac008abc5, type: 3}
+  - {fileID: 3694174313855253020, guid: ccd1e58dbb823cd4b9dee96f7c21f00a, type: 3}
+  opcionesColor:
+  - {fileID: -3441245182132240607, guid: d12e74f875eebbd4f982ce82f7ece276, type: 3}
+  - {fileID: -4212577124255999245, guid: f448e8b9d4c0458498c46ab6e6270e4a, type: 3}
+  - {fileID: -275907096933420958, guid: 0507901514e36754b826be67950e11b1, type: 3}
