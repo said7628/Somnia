@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/OjosInvent.uss?fileID=7433441132597879392&amp;guid=ac3d25cd674cc1248afa39e4ca3600a9&amp;type=3#OjosInvent"/>
+    <ui:VisualElement name="Fondo" class="fondo" style="flex-grow: 1;">
+        <ui:VisualElement name="Base" class="Base" style="flex-grow: 1;">
+            <ui:Button text="Button" name="Cerrar" class="cerrar"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="botones" class="botones" style="flex-grow: 1; align-self: center; flex-direction: column; justify-content: center; align-items: flex-start; width: auto; height: 1080px; background-position-y: center; flex-wrap: nowrap; align-content: stretch;">
+            <ui:Button text="Button" name="botonCara" class="botonCara"/>
+            <ui:Button text="Button" name="botonOjos" class="botonOjos"/>
+            <ui:Button text="Button" name="botonOutfit" class="botonOutfit"/>
+            <ui:Button text="Button" name="botonConfig" class="botonConfig"/>
+            <ui:Button text="Button" name="botonHome" class="botonHome"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
