@@ -7,10 +7,10 @@ public class MathGameManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TMP_Text questionText;
-    [SerializeField] private TMP_Text streakText;
 
     [SerializeField] private Button[] answerButtons;
     [SerializeField] private TMP_Text[] answerTexts;
+    [SerializeField] private Animator[] answerAnimators; //NUEVO
 
     [Header("Managers")]
     [SerializeField] private ScoreManager scoreManager;
@@ -49,12 +49,11 @@ public class MathGameManager : MonoBehaviour
 
         if (isAddition)
         {
-        correctAnswer = num1 + num2;
-        questionText.text = num1 + " + " + num2;
+            correctAnswer = num1 + num2;
+            questionText.text = num1 + " + " + num2;
         }
         else
         {
-            // Asegurar que no haya negativos
             if (num2 > num1)
             {
                 int temp = num1;
@@ -62,9 +61,9 @@ public class MathGameManager : MonoBehaviour
                 num2 = temp;
             }
 
-    correctAnswer = num1 - num2;
-    questionText.text = num1 + " - " + num2;
-}
+            correctAnswer = num1 - num2;
+            questionText.text = num1 + " - " + num2;
+        }
 
         Debug.Log("Pregunta: " + questionText.text);
         Debug.Log("Respuesta correcta: " + correctAnswer);
@@ -74,6 +73,7 @@ public class MathGameManager : MonoBehaviour
         for (int i = 0; i < answerButtons.Length; i++)
         {
             int capturedAnswer = answers[i];
+            int index = i;
 
             if (i < answerTexts.Length)
             {
@@ -87,7 +87,7 @@ public class MathGameManager : MonoBehaviour
             Debug.Log("Botón " + i + ": " + capturedAnswer);
 
             answerButtons[i].onClick.RemoveAllListeners();
-            answerButtons[i].onClick.AddListener(() => SelectAnswer(capturedAnswer));
+            answerButtons[i].onClick.AddListener(() => SelectAnswer(capturedAnswer, index));
         }
     }
 
@@ -106,7 +106,6 @@ public class MathGameManager : MonoBehaviour
 
         List<int> list = new List<int>(answers);
 
-        // Mezclar
         for (int i = 0; i < list.Count; i++)
         {
             int randomIndex = Random.Range(i, list.Count);
@@ -118,22 +117,42 @@ public class MathGameManager : MonoBehaviour
         return list;
     }
 
-void SelectAnswer(int selected)
-{
-    if (timerScript == null || timerScriptFinished()) return;
+    void SelectAnswer(int selected, int index)
+    {
+        if (timerScript == null || timerScriptFinished()) return;
+
+        if (scoreManager == null)
+        {
+            Debug.LogError("ScoreManager NO asignado en GameManager");
+            return;
+        }
 
         if (selected == correctAnswer)
         {
             scoreManager.CorrectAnswer();
 
-            GenerateQuestion();
+            // EXPLOSIÓN SOLO EN LA CORRECTA
+            if (answerAnimators != null && index < answerAnimators.Length)
+            {
+                if (answerAnimators[index] != null)
+                {
+                    answerAnimators[index].SetTrigger("explotar");
+                }
+                else
+                {
+                    Debug.LogError("Animator NULL en índice: " + index);
+                }
+            }
+
+            //Esperar para que se vea la animación
+            Invoke(nameof(GenerateQuestion), 0.5f);
         }
         else
         {
             scoreManager.WrongAnswer();
         }
-    streakText.text = "Racha: " + scoreManager.GetStreak();
-}
+    }
+
     void DisableAllButtons()
     {
         Debug.Log("Desactivando botones");

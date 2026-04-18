@@ -3164,7 +3164,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1421126971
 Transform:
@@ -3194,7 +3194,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MathGameManager
   questionText: {fileID: 911768307}
-  streakText: {fileID: 0}
   answerButtons:
   - {fileID: 143743498}
   - {fileID: 24591723}
@@ -3213,6 +3212,15 @@ MonoBehaviour:
   - {fileID: 1659001563}
   - {fileID: 78094982}
   - {fileID: 843292142}
+  answerAnimators:
+  - {fileID: 143743501}
+  - {fileID: 24591726}
+  - {fileID: 1505312927}
+  - {fileID: 1737157549}
+  - {fileID: 2087199875}
+  - {fileID: 157045316}
+  - {fileID: 1281360457}
+  - {fileID: 991562224}
   scoreManager: {fileID: 2093043144}
   timerScript: {fileID: 612284454}
 --- !u!1 &1490357378

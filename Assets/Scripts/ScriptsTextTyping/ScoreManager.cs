@@ -12,6 +12,9 @@ public class ScoreManager : MonoBehaviour
     private int streak = 0;
     private int multiplier = 1;
 
+    private static readonly int triggerCorrecto = Animator.StringToHash("cambioMultiplicador");
+    private static readonly int triggerFallo = Animator.StringToHash("FalloMultiplicador");
+
     private const int basePoints = 50;
 
     void Start()
@@ -19,45 +22,57 @@ public class ScoreManager : MonoBehaviour
         UpdateUI();
     }
 
-public void CorrectAnswer()
+    public void CorrectAnswer()
+    {
+        streak++;
+
+        int oldMultiplier = multiplier;
+
+        UpdateMultiplier();
+
+        Debug.Log("Streak: " + streak);
+        Debug.Log("Old Mult: " + oldMultiplier);
+        Debug.Log("New Mult: " + multiplier);
+
+        int pointsEarned = basePoints * multiplier;
+        score += pointsEarned;
+
+        UpdateUI();
+
+        //SOLO si el multiplicador SUBE
+        if (multiplier > oldMultiplier)
+        {
+            Debug.Log("CAMBIO DE MULTIPLICADOR → ANIMACION");
+
+            if (multiplicadorAnimator != null)
+            {
+                multiplicadorAnimator.ResetTrigger(triggerFallo); // evita conflicto
+                multiplicadorAnimator.SetTrigger(triggerCorrecto);
+            }
+            else
+            {
+                Debug.LogError("Animator NO asignado");
+            }
+        }
+    }
+
+public void WrongAnswer()
 {
-    streak++;
-
-    int oldMultiplier = multiplier;
-
-    UpdateMultiplier();
-
-    Debug.Log("Streak: " + streak);
-    Debug.Log("Old Mult: " + oldMultiplier);
-    Debug.Log("New Mult: " + multiplier);
-
-    int pointsEarned = basePoints * multiplier;
-    score += pointsEarned;
+    streak = 0;
+    multiplier = 1;
 
     UpdateUI();
 
-    if (multiplier > oldMultiplier)
+    if (multiplicadorAnimator != null)
     {
-        Debug.Log("🔥 CAMBIO DE MULTIPLICADOR → ANIMACION");
-
-        if (multiplicadorAnimator != null)
-        {
-            multiplicadorAnimator.SetTrigger("cambioMultiplicador");
-        }
-        else
-        {
-            Debug.LogError("Animator NO asignado");
-        }
+        multiplicadorAnimator.SetTrigger("falloMultiplicador");
     }
 }
 
-    public void WrongAnswer()
-    {
-        streak = 0;
-        multiplier = 1;
-
-        UpdateUI();
-    }
+void ReactivarAnimator()
+{
+    multiplicadorAnimator.enabled = true;
+}
 
     void UpdateMultiplier()
     {
@@ -83,11 +98,17 @@ public void CorrectAnswer()
 
     void UpdateUI()
     {
-        scoreText.text = score.ToString();
-        multiplierText.text = "x" + multiplier;
+        if (scoreText != null)
+            scoreText.text = score.ToString();
+        else
+            Debug.LogError("scoreText NO asignado");
+
+        if (multiplierText != null)
+            multiplierText.text = "x" + multiplier;
+        else
+            Debug.LogError("multiplierText NO asignado");
     }
 
-    // ✅ Getter para la racha
     public int GetStreak()
     {
         return streak;
