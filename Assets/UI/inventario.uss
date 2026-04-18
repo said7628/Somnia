@@ -5,7 +5,7 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=2800000&guid=1bc29c55dcb9b0f4bab5ad300bee54dd&type=3#base grafica 1623x1071");
     background-size: 100% 95%;
     height: auto;
-    width: 1550px;
+    width: 1520px;
 }
 
 .fondo {
@@ -35,11 +35,11 @@
 
 .botonCara {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20activos/color%20activado%20160x110.png?fileID=2800000&guid=8934cfdf4c92ca14392ef3fe4bbf3483&type=3#color activado 160x110");
-    height: 90px;
-    width: 140px;
+    height: 110px;
+    width: 160px;
     background-color: rgba(0, 0, 0, 0);
     padding-bottom: 0;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     flex-shrink: 0;
     background-position-x: center;
     background-position-y: center;
@@ -54,44 +54,47 @@
 
 .botonOjos {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/cara%20desactivado%20106x102.png?fileID=5036693061990311492&guid=1c93576606f5ce0479ab296103c18b25&type=3#cara desactivado 106x102_0");
-    height: 80px;
-    width: 100px;
-    margin-bottom: 80px;
+    height: 102px;
+    width: 106px;
+    margin-bottom: 40px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 4px 0;
 }
 
 .botonOutfit {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/outfit%20desactivado%20106x102.png?fileID=2800000&guid=ed1c1e4e15db577438262779d4832aa9&type=3#outfit desactivado 106x102");
-    height: 80px;
-    width: 100px;
-    margin-bottom: 80px;
+    height: 102px;
+    width: 106px;
+    margin-bottom: 40px;
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     background-color: rgba(0, 0, 0, 0);
+    translate: 4px 0;
 }
 
 .botonconf {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/config%20desactivado%20106x102.png?fileID=2800000&guid=846e595cca64753468fca6280bc48c33&type=3#config desactivado 106x102");
-    height: 80px;
-    width: 100px;
-    margin-bottom: 80px;
+    height: 102px;
+    width: 106px;
+    margin-bottom: 40px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 4px 0;
 }
 
 .botonHome {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/menu%20desactivado%20106x102.png?fileID=2800000&guid=5c4a6ce987d6dfb449552b2afcc2537f&type=3#menu desactivado 106x102");
-    height: 80px;
-    width: 100px;
+    height: 102px;
+    width: 106px;
     -unity-background-image-tint-color: rgb(255, 255, 255);
     background-color: rgba(0, 0, 0, 0);
     margin-bottom: 60px;
@@ -99,6 +102,8 @@
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
+    margin-left: 0;
+    translate: 4px 0;
 }
 
 .personajecombs {
