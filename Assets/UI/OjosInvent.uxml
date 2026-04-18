@@ -1,15 +1,26 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/OjosInvent.uss?fileID=7433441132597879392&amp;guid=ac3d25cd674cc1248afa39e4ca3600a9&amp;type=3#OjosInvent"/>
-    <ui:VisualElement name="Fondo" class="fondo" style="flex-grow: 1;">
+    <ui:VisualElement name="Fondo" class="fondo" style="flex-grow: 1; margin-left: 70px;">
         <ui:VisualElement name="Base" class="Base" style="flex-grow: 1;">
-            <ui:Button text="Button" name="Cerrar" class="cerrar"/>
+            <ui:Button text="" name="Cerrar" class="cerrar" style="width: 80px; height: 100px; translate: 0 -1px; background-color: rgba(0, 0, 0, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
+            <ui:VisualElement name="Cosmeticos" style="flex-grow: 1; translate: 450px 45px; align-self: center;">
+                <ui:Button text="" name="ojosPredeterminado" class="ojospred"/>
+                <ui:VisualElement name="seleccionOjos" class="seleccionOjos" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; width: 476px; align-self: auto; justify-content: space-evenly;">
+                    <ui:Button text="" name="ojos1" class="ojos1"/>
+                    <ui:Button text="" name="ojos2" class="ojos2"/>
+                    <ui:Button text="" name="ojos3" class="ojos3"/>
+                    <ui:Button text="" name="ojos4" class="ojos4"/>
+                    <ui:Button text="" name="ojos5" class="ojos5"/>
+                    <ui:Button text="" name="ojos6" class="ojos6"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1; align-self: center; flex-direction: column; justify-content: center; align-items: flex-start; width: auto; height: 1080px; background-position-y: center; flex-wrap: nowrap; align-content: stretch;">
-            <ui:Button text="Button" name="botonCara" class="botonCara"/>
-            <ui:Button text="Button" name="botonOjos" class="botonOjos"/>
-            <ui:Button text="Button" name="botonOutfit" class="botonOutfit"/>
-            <ui:Button text="Button" name="botonConfig" class="botonConfig"/>
-            <ui:Button text="Button" name="botonHome" class="botonHome"/>
+            <ui:Button text="" name="botonCara" class="botonCara"/>
+            <ui:Button text="" name="botonOjos" class="botonOjos"/>
+            <ui:Button text="" name="botonOutfit" class="botonOutfit"/>
+            <ui:Button text="" name="botonConfig" class="botonConfig"/>
+            <ui:Button text="" name="botonHome" class="botonHome"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
