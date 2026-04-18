@@ -17,8 +17,8 @@
     align-content: flex-start;
     align-items: stretch;
     translate: 0 20px;
-    width: auto;
-    height: 70px;
+    width: 77px;
+    height: 77px;
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=2800000&guid=8baca84e2db8fcb449b6a2491a8d0c16&type=3#tache 77x77");
     background-color: rgba(0, 0, 0, 0);
 }
@@ -27,6 +27,7 @@
     align-self: center;
     justify-content: space-between;
     translate: -50px 0;
+    margin-left: 2px;
 }
 
 .fondo {
@@ -206,5 +207,3 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/bloqueado%20163x163.png?fileID=2800000&guid=bd21816eaea16004da496e7204ff7904&type=3#bloqueado 163x163");
     background-color: rgb(243, 222, 167);
 }
-
-

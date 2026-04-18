@@ -1,0 +1,145 @@
+:root {
+}
+
+.fondo {
+    flex-direction: row;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 60px;
+    margin-right: 220px;
+}
+
+.panel {
+    width: 1520px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=-5111747741860189538&guid=1bc29c55dcb9b0f4bab5ad300bee54dd&type=3#base grafica 1623x1071_0");
+    background-color: rgba(0, 0, 0, 0);
+    height: auto;
+}
+
+.botones {
+    width: 50px;
+    align-self: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: -10px;
+}
+
+.botonCerrar {
+    flex-direction: column;
+    align-self: flex-end;
+    justify-content: flex-start;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=7707315224208153258&guid=8baca84e2db8fcb449b6a2491a8d0c16&type=3#tache 77x77_0");
+    background-color: rgba(0, 0, 0, 0);
+    width: 77px;
+    height: 77px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.botonCara {
+    width: 106px;
+    height: 102px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/color%20desactivado%20106x102.png?fileID=2800000&guid=d65654479a22c6e48b41504330f06ce7&type=3#color desactivado 106x102");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.botonOjos {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/cara%20desactivado%20106x102.png?fileID=2800000&guid=1c93576606f5ce0479ab296103c18b25&type=3#cara desactivado 106x102");
+    width: 106px;
+    height: 102px;
+    background-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+}
+
+.botonOutfit {
+    width: 160px;
+    height: 110px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20activos/outfit%20activado%20160x110.png?fileID=2800000&guid=9c2a5aca0ec6a88488cf426b3382e7de&type=3#outfit activado 160x110");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+}
+
+.botonConf {
+    width: 106px;
+    height: 102px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/config%20desactivado%20106x102.png?fileID=2800000&guid=846e595cca64753468fca6280bc48c33&type=3#config desactivado 106x102");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+}
+
+.botonHome {
+    width: 106px;
+    height: 102px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/menu%20desactivado%20106x102.png?fileID=2800000&guid=5c4a6ce987d6dfb449552b2afcc2537f&type=3#menu desactivado 106x102");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 60px;
+}
+
+.outfit {
+    translate: 450px 50px;
+}
+
+.outfitPredterminado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/boy%20scout%20233x233.png?fileID=2800000&guid=62989f371143f1f4a801427b30a04edb&type=3#boy scout 233x233");
+    width: 233px;
+    height: 233px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.outfit1 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/rana%20233x233.png?fileID=2800000&guid=06717278279c74c4ca27051920c9b18d&type=3#rana 233x233");
+    width: 233px;
+    height: 233px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    margin-right: 20px;
+}
+
+.outfit2 {
+    width: 233px;
+    height: 233px;
+    margin-left: 20px;
+}
+
+.outfit3 {
+    width: 233px;
+    height: 233px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/engrane%20233x233.png?fileID=2800000&guid=70a633274c3c9f740901abdb334ff12f&type=3#engrane 233x233");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-left: 120px;
+}

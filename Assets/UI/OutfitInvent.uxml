@@ -1,0 +1,23 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/OutfitInvent.uss?fileID=7433441132597879392&amp;guid=fa300be856d1ad8468e87edd1a7b8aa5&amp;type=3#OutfitInvent"/>
+    <ui:VisualElement name="fondo" class="fondo" style="flex-grow: 1;">
+        <ui:VisualElement name="panel" class="panel" style="flex-grow: 1;">
+            <ui:Button text="" name="cerrar" class="botonCerrar"/>
+            <ui:VisualElement name="Outfit" class="outfit" style="flex-grow: 1; align-self: center; justify-content: flex-start; align-items: center; width: 517px;">
+                <ui:Button text="Button" name="outfitPredeterminado" class="outfitPredterminado"/>
+                <ui:VisualElement name="seleccionOutfit" style="flex-grow: 1; flex-direction: row; flex-shrink: 2; flex-wrap: wrap; align-self: center;">
+                    <ui:Button text="Button" name="outfit1" class="outfit1"/>
+                    <ui:Button text="Button" name="outfit2" class="outfit2"/>
+                    <ui:Button text="Button" name="outfit3" class="outfit3"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
+            <ui:Button text="" name="botonCara" class="botonCara"/>
+            <ui:Button text="" name="botonOjos" class="botonOjos"/>
+            <ui:Button text="" name="botonOutfit" class="botonOutfit"/>
+            <ui:Button text="" name="botonConf" class="botonConf"/>
+            <ui:Button text="" name="botonHome" class="botonHome"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
