@@ -6,6 +6,7 @@ public class ScoreManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text multiplierText;
+    [SerializeField] private Animator multiplicadorAnimator;
 
     private int score = 0;
     private int streak = 0;
@@ -18,16 +19,37 @@ public class ScoreManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void CorrectAnswer()
+public void CorrectAnswer()
+{
+    streak++;
+
+    int oldMultiplier = multiplier;
+
+    UpdateMultiplier();
+
+    Debug.Log("Streak: " + streak);
+    Debug.Log("Old Mult: " + oldMultiplier);
+    Debug.Log("New Mult: " + multiplier);
+
+    int pointsEarned = basePoints * multiplier;
+    score += pointsEarned;
+
+    UpdateUI();
+
+    if (multiplier > oldMultiplier)
     {
-        streak++;
-        UpdateMultiplier();
+        Debug.Log("🔥 CAMBIO DE MULTIPLICADOR → ANIMACION");
 
-        int pointsEarned = basePoints * multiplier;
-        score += pointsEarned;
-
-        UpdateUI();
+        if (multiplicadorAnimator != null)
+        {
+            multiplicadorAnimator.SetTrigger("cambioMultiplicador");
+        }
+        else
+        {
+            Debug.LogError("Animator NO asignado");
+        }
     }
+}
 
     public void WrongAnswer()
     {
