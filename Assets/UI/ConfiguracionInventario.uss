@@ -2,4 +2,125 @@
 }
 
 .Fondo {
+    flex-direction: row;
+}
+
+.base {
+    width: 1520px;
+    height: 1000px;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.cerrar {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=7707315224208153258&guid=8baca84e2db8fcb449b6a2491a8d0c16&type=3#tache 77x77_0");
+    align-self: flex-end;
+    justify-content: flex-start;
+    align-content: flex-start;
+    width: 77px;
+    height: 77px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.botones {
+    align-self: center;
+    align-items: flex-start;
+    align-content: center;
+    justify-content: center;
+    width: auto;
+    translate: 1px 0;
+}
+
+.botonCara {
+    width: 106px;
+    height: 102px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/color%20desactivado%20106x102.png?fileID=2800000&guid=d65654479a22c6e48b41504330f06ce7&type=3#color desactivado 106x102");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.botonOjos {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/cara%20desactivado%20106x102.png?fileID=2800000&guid=1c93576606f5ce0479ab296103c18b25&type=3#cara desactivado 106x102");
+    width: 106px;
+    height: 102px;
+    margin-bottom: 40px;
+}
+
+.botonOutfit {
+    width: 106px;
+    height: 102px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/outfit%20desactivado%20106x102.png?fileID=2800000&guid=ed1c1e4e15db577438262779d4832aa9&type=3#outfit desactivado 106x102");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+}
+
+.botonConfig {
+    width: 160px;
+    height: 110px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20activos/config%20activado%20160x110.png?fileID=2800000&guid=cd03cb4ec01d48540a3bb57d6177ad5a&type=3#config activado 160x110");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+}
+
+.botonHome {
+    width: 106px;
+    height: 102px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Botones/Botones%20desactivados/config%20desactivado%20106x102.png?fileID=2800000&guid=846e595cca64753468fca6280bc48c33&type=3#config desactivado 106x102");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 60px;
+}
+
+.configuracion {
+    width: 550px;
+    height: 350px;
+    align-self: stretch;
+    justify-content: flex-start;
+    align-items: flex-start;
+    translate: 950px 200px;
+}
+
+.musica {
+    flex-direction: row;
+}
+
+.voz {
+    flex-direction: row;
+}
+
+.iconoMusica {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/icono%20musica%20170x165.png?fileID=2800000&guid=5f5cc7fe62dc1304ebd6d73173e9e15d&type=3#icono musica 170x165");
+    width: 170px;
+    height: 165px;
+}
+
+.iconoVoz {
+    width: 170px;
+    height: 165px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/icono%20voz%20170x165.png?fileID=2800000&guid=7187e25e8a09cb64bb3036ae18fc1d05&type=3#icono voz 170x165");
 }

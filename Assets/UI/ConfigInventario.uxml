@@ -1,6 +1,26 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/ConfiguracionInventario.uss?fileID=7433441132597879392&amp;guid=242ea5e08972ade4e95160cdea3732a0&amp;type=3#ConfiguracionInventario"/>
-    <ui:VisualElement name="Fondo" style="flex-grow: 1;">
-        <ui:VisualElement name="Base" style="flex-grow: 1;"/>
+    <ui:VisualElement name="Fondo" class="Fondo" style="flex-grow: 1;">
+        <ui:VisualElement name="Base" class="base" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=-5111747741860189538&amp;guid=1bc29c55dcb9b0f4bab5ad300bee54dd&amp;type=3#base grafica 1623x1071_0&quot;); translate: 20px 0; margin-left: 55px; margin-right: 25px; height: 960px; width: 1475px;">
+            <ui:Button text="" name="Cerrar" class="cerrar"/>
+            <ui:VisualElement name="Configuracion" class="configuracion">
+                <ui:VisualElement name="Voz" class="voz" style="flex-grow: 1;">
+                    <ui:Image name="iconoVoz" class="iconoVoz"/>
+                    <ui:Button text="Button"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="musica" class="musica" style="flex-grow: 1;">
+                    <ui:Image name="iconoMusica" class="iconoMusica"/>
+                    <ui:Button text="Button"/>
+                    <ui:Button text="Button"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="botones" class="botones" style="flex-grow: 1; translate: -18px 0;">
+            <ui:Button text="" name="botonCara" class="botonCara"/>
+            <ui:Button text="" name="botonOjos" class="botonOjos"/>
+            <ui:Button text="" name="botonOutfit" class="botonOutfit"/>
+            <ui:Button text="" name="botonConfig" class="botonConfig"/>
+            <ui:Button text="" name="botonHome" class="botonHome"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
