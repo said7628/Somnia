@@ -6,11 +6,20 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
 
+
+    [SerializeField] private GameObject configuracionPausa;
+
     private bool isPaused;
 
     private void Start()
     {
         pausePanel.SetActive(false);
+
+        if (configuracionPausa
+ != null)
+            configuracionPausa
+    .SetActive(false);
+
         isPaused = false;
         Time.timeScale = 1f;
     }
@@ -29,6 +38,12 @@ public class PauseMenu : MonoBehaviour
     public void AbrirPausa()
     {
         pausePanel.SetActive(true);
+
+        if (configuracionPausa
+ != null)
+            configuracionPausa
+    .SetActive(false);
+
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -36,14 +51,21 @@ public class PauseMenu : MonoBehaviour
     public void Continuar()
     {
         pausePanel.SetActive(false);
+
+
+        if (configuracionPausa
+ != null)
+            configuracionPausa
+    .SetActive(false);
+
         Time.timeScale = 1f;
         isPaused = false;
     }
 
     public void PruebaBoton()
-{
-    Debug.Log("si dio click");
-}
+    {
+        Debug.Log("si dio click");
+    }
 
     public void Reintentar()
     {
@@ -57,11 +79,29 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("Mapa");
     }
 
+    
     public void IrAConfiguracion()
     {
-        Time.timeScale = 1f;
-        isPaused = false;
-        SceneManager.LoadScene("Configuracion");
+        // en vez de cambiar de escena, abrimos el panel
+        if (configuracionPausa
+ != null)
+        {
+            pausePanel.SetActive(false);
+            configuracionPausa
+    .SetActive(true);
+        }
+    }
+
+    //botón para regresar
+    public void VolverDesdeConfiguracion()
+    {
+        if (configuracionPausa
+ != null)
+        {
+            configuracionPausa
+    .SetActive(false);
+            pausePanel.SetActive(true);
+        }
     }
 
     public void IrAMenu()
