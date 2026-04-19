@@ -16,12 +16,12 @@ public class ConfiguracionManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontró el botón 'butreturn'");
+            Debug.LogError("No se encontro el boton");
         }
     }
 
     void VolverAlMenu()
     {
-        SceneManager.LoadScene("Pantalla principal");
+        SceneManager.LoadScene("Pantalla_principal");
     }
 }

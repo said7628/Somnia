@@ -17,6 +17,7 @@ public class MathGameManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private Timer timerScript;
+    [SerializeField] private AudioSource[] answerAudioSources;
 
     private int correctAnswer;
 
@@ -155,15 +156,60 @@ void GeneratePatrones()
 
 void GenerateSucesiones()
 {
-    int a = Random.Range(1, 10);
-    int b = Random.Range(1, 10);
+    int tipo = Random.Range(0, 3); // 3 tipos
 
-    int c = a + b;
-    int d = b + c;
+    switch (tipo)
+    {
+        // 🔹 1. Fibonacci (suma de anteriores)
+        case 0:
+        {
+            int a = Random.Range(1, 10);
+            int b = Random.Range(1, 10);
 
-    correctAnswer = c + d;
+            int c = a + b;
+            int d = b + c;
 
-    questionText.text = a + ", " + b + ", " + c + ", " + d + ", ?";
+            correctAnswer = c + d;
+
+            questionText.text = a + ", " + b + ", " + c + ", " + d + ", ?";
+            break;
+        }
+
+        // 🔹 2. Multiplicativa (x2, x3, etc)
+        case 1:
+        {
+            int start = Random.Range(1, 5);
+            int factor = Random.Range(2, 4);
+
+            int a = start;
+            int b = a * factor;
+            int c = b * factor;
+            int d = c * factor;
+
+            correctAnswer = d * factor;
+
+            questionText.text = a + ", " + b + ", " + c + ", " + d + ", ?";
+            break;
+        }
+
+        // 🔹 3. Alternante (+a, -b, +a, -b)
+        case 2:
+        {
+            int start = Random.Range(20, 50);
+            int plus = Random.Range(5, 15);
+            int minus = Random.Range(3, 10);
+
+            int a = start;
+            int b = a + plus;
+            int c = b - minus;
+            int d = c + plus;
+
+            correctAnswer = d - minus;
+
+            questionText.text = a + ", " + b + ", " + c + ", " + d + ", ?";
+            break;
+        }
+    }
 
     SetupAnswers(correctAnswer);
 }
@@ -294,6 +340,15 @@ void ShuffleAndAssign(List<int> answers)
                 {
                     Debug.Log("💥 Activando animación en botón: " + index);
                     answerAnimators[index].Play("Explode", 0, 0f);
+
+// 🔊 SONIDO
+                    if (answerAudioSources != null && index < answerAudioSources.Length)
+                    {
+                        if (answerAudioSources[index] != null)
+                        {
+                            answerAudioSources[index].Play();
+                        }
+                    }
                 }
                 else
                 {

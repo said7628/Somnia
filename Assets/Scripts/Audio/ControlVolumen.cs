@@ -20,6 +20,12 @@ public class ControlVolumen : MonoBehaviour
 
         var root = uiDocument.rootVisualElement;
 
+        if (AudioManager.Instancia != null)
+        {
+            nivelAudioGeneral = AudioManager.Instancia.GetMasterLevel();
+            nivelMusica = AudioManager.Instancia.GetMusicLevel();
+        }
+
         for (int i = 0; i < 5; i++)
         {
             barrasAudio[i] = root.Q<VisualElement>("ALleno" + (i + 1));
@@ -45,12 +51,18 @@ public class ControlVolumen : MonoBehaviour
     {
         nivelAudioGeneral = Mathf.Clamp(nuevoNivel, 0, 5);
         ActualizarVisualAudio();
+
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMasterLevel(nivelAudioGeneral);
     }
 
     public void SeleccionarNivelMusica(int nuevoNivel)
     {
         nivelMusica = Mathf.Clamp(nuevoNivel, 0, 5);
         ActualizarVisualMusica();
+
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMusicLevel(nivelMusica);
     }
 
     private void ActualizarVisualAudio()
