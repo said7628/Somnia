@@ -10,7 +10,7 @@ public class MathGameManager : MonoBehaviour
 
     [SerializeField] private Button[] answerButtons;
     [SerializeField] private TMP_Text[] answerTexts;
-    [SerializeField] private Animator[] answerAnimators; //NUEVO
+    [SerializeField] private Animator[] answerAnimators; 
 
     [Header("Managers")]
     [SerializeField] private ScoreManager scoreManager;
@@ -73,7 +73,7 @@ public class MathGameManager : MonoBehaviour
         for (int i = 0; i < answerButtons.Length; i++)
         {
             int capturedAnswer = answers[i];
-            int index = i;
+            int index = i; 
 
             if (i < answerTexts.Length)
             {
@@ -117,6 +117,7 @@ public class MathGameManager : MonoBehaviour
         return list;
     }
 
+  
     void SelectAnswer(int selected, int index)
     {
         if (timerScript == null || timerScriptFinished()) return;
@@ -136,7 +137,8 @@ public class MathGameManager : MonoBehaviour
             {
                 if (answerAnimators[index] != null)
                 {
-                    answerAnimators[index].SetTrigger("explotar");
+                    Debug.Log("💥 Activando animación en botón: " + index);
+                    answerAnimators[index].Play("Explode", 0, 0f);
                 }
                 else
                 {
@@ -145,7 +147,7 @@ public class MathGameManager : MonoBehaviour
             }
 
             //Esperar para que se vea la animación
-            Invoke(nameof(GenerateQuestion), 0.5f);
+            Invoke(nameof(GenerateQuestion), 1f);
         }
         else
         {
