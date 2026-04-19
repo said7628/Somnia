@@ -138,7 +138,8 @@
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
-    background-size: 100% 95%;
+    background-size: 100% 92%;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/diablo%20233x233.png?fileID=2800000&guid=9de713ac143cfa9449ab78be5476a618&type=3#diablo 233x233");
 }
 
 .outfit3 {
