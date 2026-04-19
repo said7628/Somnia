@@ -7,21 +7,30 @@
                 <ui:Button text="" name="outfitPredeterminado" class="outfitPredterminado"/>
                 <ui:VisualElement name="seleccionOutfit" style="flex-grow: 1; flex-direction: row; flex-shrink: 2; flex-wrap: wrap; align-self: center;">
                     <ui:Button text="" name="outfit1" class="outfit1">
+                        <ui:VisualElement name="Outfitnuevo1" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueado1" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
                     <ui:Button text="" name="outfit2" class="outfit2">
+                        <ui:VisualElement name="Outfitnuevo2" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueado2" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
                     <ui:Button text="" name="outfit3" class="outfit3">
+                        <ui:VisualElement name="Outfitnuevo3" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueado3" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
-            <ui:Button text="" name="botonCara" class="botonCara"/>
-            <ui:Button text="" name="botonOjos" class="botonOjos"/>
-            <ui:Button text="" name="botonOutfit" class="botonOutfit"/>
+            <ui:Button text="" name="botonCara" class="botonCara">
+                <ui:VisualElement name="nuevoCara" class="nuevoAlert" style="flex-grow: 1;"/>
+            </ui:Button>
+            <ui:Button text="" name="botonOjos" class="botonOjos">
+                <ui:VisualElement name="nuevoOjos" class="nuevoAlert" style="flex-grow: 1;"/>
+            </ui:Button>
+            <ui:Button text="" name="botonOutfit" class="botonOutfit">
+                <ui:VisualElement name="nuevoOutfit" class="nuevoAlert" style="flex-grow: 1;"/>
+            </ui:Button>
             <ui:Button text="" name="botonConf" class="botonConf"/>
             <ui:Button text="" name="botonHome" class="botonHome"/>
         </ui:VisualElement>
