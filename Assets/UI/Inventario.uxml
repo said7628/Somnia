@@ -8,9 +8,15 @@
             <ui:Button text="" name="cerrar" class="cerrar" style="align-self: flex-end; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=2800000&amp;guid=8baca84e2db8fcb449b6a2491a8d0c16&amp;type=3#tache 77x77&quot;); border-top-color: rgba(255, 255, 255, 0); border-top-width: 10px; border-left-width: 8px; border-left-color: rgba(255, 255, 255, 0); background-color: rgba(188, 188, 188, 0); border-right-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); width: 77px; align-items: center; justify-content: flex-start; height: 77px; margin-top: 10px; translate: 0 15px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
-            <ui:Button text="" name="botoncara" class="botonCara" style="margin-left: -11px;"/>
-            <ui:Button text="" name="botonojos" class="botonOjos" style="margin-left: -11px;"/>
-            <ui:Button text="" name="botonoutfit" class="botonOutfit" style="margin-left: -11px;"/>
+            <ui:Button text="" name="botoncara" class="botonCara" style="margin-left: -11px;">
+                <ui:VisualElement name="nuevoCara" class="nuevaCompra" style="flex-grow: 1; translate: 50px -70px;"/>
+            </ui:Button>
+            <ui:Button text="" name="botonojos" class="botonOjos" style="margin-left: -11px;">
+                <ui:VisualElement name="nuevoOjos" class="nuevaCompra" style="flex-grow: 1;"/>
+            </ui:Button>
+            <ui:Button text="" name="botonoutfit" class="botonOutfit" style="margin-left: -11px;">
+                <ui:VisualElement name="nuevoOutfit" class="nuevaCompra" style="flex-grow: 1;"/>
+            </ui:Button>
             <ui:Button text="" name="botonconf" class="botonconf" style="margin-left: -11px;"/>
             <ui:Button text="" name="botonHome" class="botonHome" style="margin-left: -11px;"/>
         </ui:VisualElement>
@@ -18,30 +24,39 @@
             <ui:Button text="" name="predeterminado" class="carapredeterminado"/>
             <ui:VisualElement name="seleccioncosmetico" class="seleccioncosmetico" style="flex-grow: 3; width: 520px; flex-direction: row; flex-wrap: wrap; flex-shrink: 3; justify-content: center;">
                 <ui:Button text="" name="cosmetico1" class="cara1">
+                    <ui:VisualElement name="Cosmeticonuevo1" class="nuevodInventario"/>
                     <ui:VisualElement name="bloqueado1" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico2" class="cara2">
+                    <ui:VisualElement name="Cosmeticonuevo2" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado2" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico3" class="cara3">
+                    <ui:VisualElement name="Cosmeticonuevo3" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado3" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico4" class="cara4">
+                    <ui:VisualElement name="Cosmeticonuevo4" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado4" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico5" class="cara5">
+                    <ui:VisualElement name="Cosmeticonuevo5" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado5" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico6" class="cara6">
+                    <ui:VisualElement name="Cosmeticonuevo6" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado6" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico7" class="cara7">
+                    <ui:VisualElement name="Cosmeticonuevo7" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado7" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico8" class="cara8">
+                    <ui:VisualElement name="Cosmeticonuevo8" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado8" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
                 <ui:Button text="" name="cosmetico9" class="cara9">
+                    <ui:VisualElement name="Cosmeticonuevo9" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado9" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
             </ui:VisualElement>

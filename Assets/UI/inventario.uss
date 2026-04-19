@@ -265,3 +265,30 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/bloqueado%20163x163.png?fileID=2800000&guid=ff3fc32833a90f4499e4bac3bae26713&type=3#bloqueado 163x163");
     background-color: rgb(243, 222, 167);
 }
+
+.nuevodInventario {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Notificaciones/noti%2055x55.png?fileID=2800000&guid=9fb29212a1338904689bee3393b734ee&type=3#noti 55x55");
+    width: 55px;
+    height: 55px;
+    align-items: flex-end;
+    align-self: flex-end;
+    background-position-y: center;
+    -unity-background-scale-mode: scale-to-fit;
+    position: absolute;
+    translate: -10px 0;
+}
+
+.nuevaCompra {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Notificaciones/noti%2073x73.png?fileID=2800000&guid=bd0112f0b971beb47861d5bd2682b0b5&type=3#noti 73x73");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    width: 73px;
+    height: 73px;
+    align-self: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
+    translate: 50px -50px;
+}
