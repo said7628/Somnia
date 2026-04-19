@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        // BOTÓN NUEVO JUEGO
+        // BOToN NUEVO JUEGO
         Button botonNuevoJuego = root.Q<Button>("nuevo-juego");
         if (botonNuevoJuego != null)
         {
@@ -16,10 +16,10 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontró el botón 'nuevo-juego'");
+            Debug.LogError("No se encontrï¿½ el botï¿½n 'nuevo-juego'");
         }
 
-        // BOTÓN CONFIGURACIÓN
+        // BOTï¿½N CONFIGURACIï¿½N
         Button botonConfig = root.Q<Button>("configuracion");
         if (botonConfig != null)
         {
@@ -27,10 +27,10 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontró el botón 'configuracion'");
+            Debug.LogError("No se encontrï¿½ el botï¿½n 'configuracion'");
         }
 
-        // BOTÓN SALIR
+        // BOTï¿½N SALIR
         Button botonSalir = root.Q<Button>("salir");
         if (botonSalir != null)
         {
@@ -38,7 +38,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontró el botón 'salir'");
+            Debug.LogError("No se encontrï¿½ el botï¿½n 'salir'");
         }
     }
 

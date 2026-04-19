@@ -26,6 +26,13 @@ public class PantallaVolumenCanvas : MonoBehaviour
 
     private void Start()
     {
+        // Cargar niveles desde AudioManager
+        if (AudioManager.Instancia != null)
+        {
+            nivelAudioGeneral = AudioManager.Instancia.GetMasterLevel();
+            nivelMusica = AudioManager.Instancia.GetMusicLevel();
+        }
+
         for (int i = 0; i < 6; i++)
         {
             int nivelA = i;
@@ -37,21 +44,26 @@ public class PantallaVolumenCanvas : MonoBehaviour
 
         ActualizarVisualAudio();
         ActualizarVisualMusica();
-        AplicarVolumenes();
     }
 
     public void SeleccionarNivelAudio(int nuevoNivel)
     {
         nivelAudioGeneral = Mathf.Clamp(nuevoNivel, 0, 5);
         ActualizarVisualAudio();
-        AplicarVolumenes();
+
+        // Mandar al AudioManager
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMasterLevel(nivelAudioGeneral);
     }
 
     public void SeleccionarNivelMusica(int nuevoNivel)
     {
         nivelMusica = Mathf.Clamp(nuevoNivel, 0, 5);
         ActualizarVisualMusica();
-        AplicarVolumenes();
+
+        // Mandar al AudioManager
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMusicLevel(nivelMusica);
     }
 
     private void ActualizarVisualAudio()
@@ -72,16 +84,5 @@ public class PantallaVolumenCanvas : MonoBehaviour
                 ? barraLlenaMusica
                 : barraVacia;
         }
-    }
-
-    private void AplicarVolumenes()
-    {
-        float volumenGeneralNormalizado = nivelAudioGeneral / 5f;
-        float volumenMusicaNormalizado = nivelMusica / 5f;
-
-        AudioListener.volume = Mathf.Max(volumenGeneralNormalizado, volumenMusicaNormalizado);
-
-        Debug.Log("Audio general: " + volumenGeneralNormalizado);
-        Debug.Log("Música: " + volumenMusicaNormalizado);
     }
 }
