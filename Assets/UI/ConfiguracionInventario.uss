@@ -124,3 +124,53 @@
     height: 165px;
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/icono%20voz%20170x165.png?fileID=2800000&guid=7187e25e8a09cb64bb3036ae18fc1d05&type=3#icono voz 170x165");
 }
+
+
+
+.seleccionVoz {
+    flex-direction: row;
+}
+
+.MedVoz {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/barrita%20vacia%2076x172.png?fileID=-214360365180322643&guid=d68d4004ca6cc2c4da7fa12085346b83&type=3#barrita vacia 76x172_0");
+    width: 76px;
+    height: 172px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.MedMusica {
+    flex-direction: row;
+}
+
+.seleccionMusica {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/barrita%20vacia%2076x172.png?fileID=-214360365180322643&guid=d68d4004ca6cc2c4da7fa12085346b83&type=3#barrita vacia 76x172_0");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    width: 76px;
+    height: 172px;
+}
+
+.activaMusica {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/barrita%20musica%2076x172.png?fileID=2800000&guid=727b7b0be93e08f43810f8d0b237077b&type=3#barrita musica 76x172");
+    background-color: rgba(0, 0, 0, 0);
+    width: 76px;
+    height: 172px;
+}
+
+.activaVoz {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/config/barrita%20voz%2076x172.png?fileID=-5057966394695921799&guid=c4a652823cc36fd47bb5d72a845f2784&type=3#barrita voz 76x172_0");
+    width: 76px;
+    height: 172px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
