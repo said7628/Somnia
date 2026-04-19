@@ -47,7 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
   audioSource: {fileID: 8235318211845937022}
   musicaMenu: {fileID: 8300000, guid: b5f859440ed7d9a41b23788b4432195c, type: 3}
-  musicaGameplay: {fileID: 0}
+  musicaTextyping: {fileID: 8300000, guid: cedf2aacf8de57a4eb647781836458ca, type: 3}
+  musicaMapa1: {fileID: 8300000, guid: 64218d2a873fcf24cae190219690d9d6, type: 3}
+  musicaMapa2: {fileID: 8300000, guid: b6168060634577345b294c9f1726c8a2, type: 3}
+  musicaMapa3: {fileID: 8300000, guid: 8b39a82daaa78464cab44c9ab33c981e, type: 3}
 --- !u!1 &7457787064513084460
 GameObject:
   m_ObjectHideFlags: 0
