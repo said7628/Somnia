@@ -10,7 +10,10 @@ public class MusicManager : MonoBehaviour
 
     [Header("Música")]
     [SerializeField] private AudioClip musicaMenu;
-    [SerializeField] private AudioClip musicaGameplay;
+    [SerializeField] private AudioClip musicaTextyping;
+    [SerializeField] private AudioClip musicaMapa1;
+    [SerializeField] private AudioClip musicaMapa2;
+    [SerializeField] private AudioClip musicaMapa3;
 
     private AudioClip musicaActual;
 
@@ -70,13 +73,26 @@ public class MusicManager : MonoBehaviour
             case "Pantalla_principal":
             case "Nuevo juego":
             case "Configuracion":
-            case "Mapa":
                 return musicaMenu;
 
-            case "Nivel1":
-            case "Nivel2":
-            case "Nivel3":
-                return musicaGameplay;
+            case "TextTyping":
+            case "TextTyping2":
+            case "TextTyping3":
+            case "TextTyping4":
+            case "TextTyping5":
+            case "TextTyping6":
+            case "ScoreTextyping":
+            case "ScoreTextypingFallido":
+                return musicaTextyping;
+
+            case "Mapa":
+                return musicaMapa1;
+
+            case "Mapa2":
+                return musicaMapa2;
+
+            case "Mapa3":
+                return musicaMapa3;
 
             default:
                 return musicaMenu;
