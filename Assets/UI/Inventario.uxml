@@ -9,7 +9,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
             <ui:Button text="" name="botoncara" class="botonCara" style="margin-left: -11px;">
-                <ui:VisualElement name="nuevoCara" class="nuevaCompra" style="flex-grow: 1; translate: 50px -70px;"/>
+                <ui:VisualElement name="nuevoCara" class="nuevaCompra" style="flex-grow: 1;"/>
             </ui:Button>
             <ui:Button text="" name="botonojos" class="botonOjos" style="margin-left: -11px;">
                 <ui:VisualElement name="nuevoOjos" class="nuevaCompra" style="flex-grow: 1;"/>

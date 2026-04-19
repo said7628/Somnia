@@ -27,10 +27,10 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1; translate: -18px 0;">
-            <ui:Button text="" name="botonCara" class="botonCara"/>
-            <ui:Button text="" name="botonOjos" class="botonOjos"/>
-            <ui:Button text="" name="botonOutfit" class="botonOutfit"/>
-            <ui:Button text="" name="botonConfig" class="botonConfig"/>
+            <ui:Button text="" name="botoncara" class="botonCara"/>
+            <ui:Button text="" name="botonojos" class="botonOjos"/>
+            <ui:Button text="" name="botonoutfit" class="botonOutfit"/>
+            <ui:Button text="" name="botonconf" class="botonConfig"/>
             <ui:Button text="" name="botonHome" class="botonHome"/>
         </ui:VisualElement>
     </ui:VisualElement>

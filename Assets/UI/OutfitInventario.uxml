@@ -22,16 +22,16 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
-            <ui:Button text="" name="botonCara" class="botonCara">
+            <ui:Button text="" name="botoncara" class="botonCara">
                 <ui:VisualElement name="nuevoCara" class="nuevoAlert" style="flex-grow: 1;"/>
             </ui:Button>
-            <ui:Button text="" name="botonOjos" class="botonOjos">
+            <ui:Button text="" name="botonojos" class="botonOjos">
                 <ui:VisualElement name="nuevoOjos" class="nuevoAlert" style="flex-grow: 1;"/>
             </ui:Button>
-            <ui:Button text="" name="botonOutfit" class="botonOutfit">
+            <ui:Button text="" name="botonoutfit" class="botonOutfit">
                 <ui:VisualElement name="nuevoOutfit" class="nuevoAlert" style="flex-grow: 1;"/>
             </ui:Button>
-            <ui:Button text="" name="botonConf" class="botonConf"/>
+            <ui:Button text="" name="botonconf" class="botonConf"/>
             <ui:Button text="" name="botonHome" class="botonHome"/>
         </ui:VisualElement>
     </ui:VisualElement>
