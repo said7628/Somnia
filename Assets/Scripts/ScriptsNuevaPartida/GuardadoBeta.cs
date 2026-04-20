@@ -3,6 +3,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 using Somnia.Economy.Core;
 using Somnia.Economy.Services;
 using Somnia.UnityClient;
@@ -26,6 +28,8 @@ public class GuardadoBeta : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool verboseLogs;
+    [Header("Loading modal runtime")]
+    [SerializeField] private string loadingMessage = "Cargando...";
 
     private GameDataService gameDataService;
 
@@ -34,9 +38,14 @@ public class GuardadoBeta : MonoBehaviour
     private bool isBusy;
     private bool slotsLoaded;
 
+    private GameObject loadingBlocker;
+    private CanvasGroup loadingCanvasGroup;
+    private TextMeshProUGUI loadingText;
+
     private void Start()
     {
         Debug.Log("GuardadoBeta: Start()");
+        TryResolveToastMessage();
         InicializarRanurasVisuales();
         StartCoroutine(BootstrapAndLoadSlots());
     }
@@ -62,10 +71,8 @@ public class GuardadoBeta : MonoBehaviour
             yield break;
         }
 
-        // 1) Flujo oficial: EconomyModule ya presente en escena.
         var module = FindFirstObjectByType<EconomyModule>();
 
-        // 2) Si no existe, lo creamos para no depender de referencias manuales rotas en el inspector.
         if (module == null)
         {
             var moduleGo = new GameObject("[EconomyModule]");
@@ -76,7 +83,6 @@ public class GuardadoBeta : MonoBehaviour
             }
         }
 
-        // 3) Esperamos un poco a que Awake() inicialice GameDataService.
         const float timeoutSeconds = 5f;
         float elapsed = 0f;
 
@@ -123,18 +129,17 @@ public class GuardadoBeta : MonoBehaviour
     private IEnumerator CargarSlotsDesdeBackend()
     {
         Debug.Log($"GuardadoBeta: CargarSlotsDesdeBackend() BEFORE reset occupied=[{FormatOccupiedSlots()}]");
-        isBusy = true;
+        SetBusyState(true, "Cargando slots");
         slotsLoaded = false;
 
         var task = gameDataService.GetSlotsAsync();
         yield return new WaitUntil(() => task.IsCompleted);
 
-        isBusy = false;
-
         if (task.IsFaulted || task.Result == null)
         {
             MostrarToast("No se pudieron cargar los slots.");
             Debug.LogWarning($"GuardadoBeta: error cargando slots: {task.Exception}");
+            SetBusyState(false, "Error cargando slots");
             yield break;
         }
 
@@ -146,6 +151,7 @@ public class GuardadoBeta : MonoBehaviour
             MostrarToast(string.IsNullOrWhiteSpace(response.message)
                 ? "No se pudieron cargar los slots."
                 : response.message);
+            SetBusyState(false, "Respuesta backend fallida al cargar slots");
             yield break;
         }
 
@@ -174,6 +180,7 @@ public class GuardadoBeta : MonoBehaviour
         slotsLoaded = true;
         Debug.Log($"GuardadoBeta: CargarSlotsDesdeBackend() AFTER load occupied=[{FormatOccupiedSlots()}]");
         RefreshSlots();
+        SetBusyState(false, "Slots cargados");
     }
 
     private IEnumerator LoadSlotVisualData(int slotNumber)
@@ -195,6 +202,7 @@ public class GuardadoBeta : MonoBehaviour
         Debug.Log($"GuardadoBeta: click recibido slot={slotNumber} isBusy={isBusy} slotsLoaded={slotsLoaded} occupied=[{FormatOccupiedSlots()}]");
         if (isBusy)
         {
+            Debug.Log("GuardadoBeta: click ignorado porque UI esta ocupada.");
             return;
         }
 
@@ -217,24 +225,24 @@ public class GuardadoBeta : MonoBehaviour
         }
 
         MostrarToast("Ese slot ya esta ocupado.");
+        Debug.LogWarning($"GuardadoBeta: slot {slotNumber} ocupado. Se mostro toast visual.");
     }
 
     private IEnumerator CrearNuevaPartidaBackend(int slotNumber)
     {
         Debug.Log($"GuardadoBeta: CrearNuevaPartidaBackend slot={slotNumber} BEFORE create occupied=[{FormatOccupiedSlots()}]");
-        isBusy = true;
+        SetBusyState(true, $"Creando slot {slotNumber}");
 
         string slotName = GetDefaultSlotName(slotNumber);
 
         var task = gameDataService.InitializeNewGameAsync(slotNumber, slotName);
         yield return new WaitUntil(() => task.IsCompleted);
 
-        isBusy = false;
-
         if (task.IsFaulted || task.Result == null)
         {
             MostrarToast("No se pudo crear la partida.");
             Debug.LogWarning($"GuardadoBeta: error creando partida slot {slotNumber}: {task.Exception}");
+            SetBusyState(false, $"Error creando slot {slotNumber}");
             yield break;
         }
 
@@ -251,7 +259,7 @@ public class GuardadoBeta : MonoBehaviour
             Debug.LogWarning($"GuardadoBeta: create failed slot={slotNumber}, forcing authoritative reload from backend. occupied BEFORE reload=[{FormatOccupiedSlots()}]");
             yield return CargarSlotsDesdeBackend();
             Debug.LogWarning($"GuardadoBeta: create failed slot={slotNumber}, occupied AFTER reload=[{FormatOccupiedSlots()}]");
-
+            SetBusyState(false, $"Create fallida slot {slotNumber}");
             yield break;
         }
 
@@ -261,6 +269,7 @@ public class GuardadoBeta : MonoBehaviour
         RefreshSlots();
 
         GameSessionManager.Instance?.SetCurrentSlot(slotNumber);
+        SetBusyState(false, $"Create exitosa slot {slotNumber}");
         SceneManager.LoadScene(escenaMapa);
     }
 
@@ -280,7 +289,7 @@ public class GuardadoBeta : MonoBehaviour
 
             int slotNumber = i + 1;
             ranuras[i].SetSlotNumber(slotNumber);
-            ranuras[i].SetInteractable(true);
+            ranuras[i].SetInteractable(!isBusy);
 
             if (occupiedSlots[slotNumber - 1])
             {
@@ -297,6 +306,117 @@ public class GuardadoBeta : MonoBehaviour
         }
     }
 
+    private void SetSlotsInteractable(bool interactable)
+    {
+        if (ranuras == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < ranuras.Length; i++)
+        {
+            if (ranuras[i] != null)
+            {
+                ranuras[i].SetInteractable(interactable);
+            }
+        }
+    }
+
+    private void SetBusyState(bool busy, string reason)
+    {
+        isBusy = busy;
+        SetSlotsInteractable(!busy);
+        SetLoadingModalVisible(busy);
+        Debug.Log($"GuardadoBeta: SetBusyState={busy}. reason={reason}");
+    }
+
+    private void SetLoadingModalVisible(bool visible)
+    {
+        EnsureLoadingModal();
+        if (loadingBlocker == null)
+        {
+            return;
+        }
+
+        if (loadingText != null)
+        {
+            loadingText.text = loadingMessage;
+        }
+
+        loadingBlocker.SetActive(visible);
+        if (loadingCanvasGroup != null)
+        {
+            loadingCanvasGroup.alpha = visible ? 1f : 0f;
+            loadingCanvasGroup.blocksRaycasts = visible;
+            loadingCanvasGroup.interactable = visible;
+        }
+    }
+
+    private void EnsureLoadingModal()
+    {
+        if (loadingBlocker != null)
+        {
+            return;
+        }
+
+        Canvas parentCanvas = GetComponentInParent<Canvas>();
+        if (parentCanvas == null)
+        {
+            parentCanvas = FindFirstObjectByType<Canvas>(FindObjectsInactive.Include);
+        }
+
+        if (parentCanvas == null)
+        {
+            Debug.LogWarning("GuardadoBeta: no se encontro Canvas para crear modal de carga.");
+            return;
+        }
+
+        loadingBlocker = new GameObject("RuntimeLoadingBlocker", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
+        loadingBlocker.transform.SetParent(parentCanvas.transform, false);
+
+        RectTransform blockerRect = loadingBlocker.GetComponent<RectTransform>();
+        blockerRect.anchorMin = Vector2.zero;
+        blockerRect.anchorMax = Vector2.one;
+        blockerRect.offsetMin = Vector2.zero;
+        blockerRect.offsetMax = Vector2.zero;
+
+        Image blockerImage = loadingBlocker.GetComponent<Image>();
+        blockerImage.color = new Color(0f, 0f, 0f, 0.45f);
+
+        loadingCanvasGroup = loadingBlocker.GetComponent<CanvasGroup>();
+        loadingCanvasGroup.alpha = 0f;
+        loadingCanvasGroup.blocksRaycasts = true;
+        loadingCanvasGroup.interactable = true;
+
+        GameObject panel = new GameObject("RuntimeLoadingPanel", typeof(RectTransform), typeof(Image));
+        panel.transform.SetParent(loadingBlocker.transform, false);
+        RectTransform panelRect = panel.GetComponent<RectTransform>();
+        panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
+        panelRect.sizeDelta = new Vector2(420f, 140f);
+
+        Image panelImage = panel.GetComponent<Image>();
+        panelImage.color = new Color(0.08f, 0.1f, 0.17f, 0.95f);
+
+        GameObject labelGo = new GameObject("RuntimeLoadingLabel", typeof(RectTransform), typeof(TextMeshProUGUI));
+        labelGo.transform.SetParent(panel.transform, false);
+        RectTransform labelRect = labelGo.GetComponent<RectTransform>();
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = new Vector2(20f, 20f);
+        labelRect.offsetMax = new Vector2(-20f, -20f);
+
+        loadingText = labelGo.GetComponent<TextMeshProUGUI>();
+        loadingText.alignment = TextAlignmentOptions.Center;
+        loadingText.fontSize = 44f;
+        loadingText.fontStyle = FontStyles.Bold;
+        loadingText.color = Color.white;
+        loadingText.text = loadingMessage;
+
+        loadingBlocker.transform.SetAsLastSibling();
+        loadingBlocker.SetActive(false);
+        Debug.Log("GuardadoBeta: modal runtime 'Cargando...' creado por codigo.");
+    }
+
     public void IrMenuPrincipal()
     {
         Time.timeScale = 1f;
@@ -305,6 +425,9 @@ public class GuardadoBeta : MonoBehaviour
 
     private void MostrarToast(string mensaje)
     {
+        TryResolveToastMessage();
+
+        Debug.Log($"GuardadoBeta.Toast => {mensaje}");
         if (toastMessage != null)
         {
             toastMessage.Show(mensaje);
@@ -312,6 +435,20 @@ public class GuardadoBeta : MonoBehaviour
         else
         {
             Debug.LogWarning(mensaje);
+        }
+    }
+
+    private void TryResolveToastMessage()
+    {
+        if (toastMessage != null)
+        {
+            return;
+        }
+
+        toastMessage = FindFirstObjectByType<ToastMessage>(FindObjectsInactive.Include);
+        if (toastMessage != null)
+        {
+            Debug.Log("GuardadoBeta: ToastMessage encontrado automaticamente en escena.");
         }
     }
 
@@ -343,7 +480,6 @@ public class GuardadoBeta : MonoBehaviour
                 continue;
             }
 
-            // Si no viene id_isla, mantenemos convención visual mínima en isla 1.
             if (p.id_isla > best)
             {
                 best = p.id_isla;

@@ -9,14 +9,28 @@ public class MapaBotonesBinder : MonoBehaviour
 
     [Header("Nombres exactos de los botones en UXML")]
     [SerializeField] private string botonIsla1 = "bosque";
-    [SerializeField] private string botonIsla2 = "montana";
+    [SerializeField] private string botonIsla2 = "nieve";
     [SerializeField] private string botonIsla3 = "ciudad";
+
+    private Button bosqueButton;
+    private Button nieveButton;
+    private Button ciudadButton;
 
     private void Awake()
     {
         if (uiDocument == null)
         {
+            uiDocument = GetComponent<UIDocument>();
+        }
+
+        if (uiDocument == null)
+        {
             uiDocument = FindFirstObjectByType<UIDocument>();
+        }
+
+        if (mapaIslasUI == null)
+        {
+            mapaIslasUI = GetComponent<MapaIslasUI>();
         }
 
         if (mapaIslasUI == null)
@@ -25,46 +39,57 @@ public class MapaBotonesBinder : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         Vincular();
+    }
+
+    private void OnDisable()
+    {
+        Desvincular();
     }
 
     private void Vincular()
     {
         if (uiDocument == null)
         {
-            Debug.LogError("MapaBotonesBinder: no hay UIDocument");
+            Debug.LogError("[MapaBotonesBinder] No hay UIDocument.");
             return;
         }
 
         if (mapaIslasUI == null)
         {
-            Debug.LogError("MapaBotonesBinder: no hay referencia a MapaIslasUI");
+            Debug.LogError("[MapaBotonesBinder] No hay referencia a MapaIslasUI.");
             return;
         }
 
         VisualElement root = uiDocument.rootVisualElement;
 
-        Button bosque = root.Q<Button>(botonIsla1);
-        Button montana = root.Q<Button>(botonIsla2);
-        Button ciudad = root.Q<Button>(botonIsla3);
+        bosqueButton = root.Q<Button>(botonIsla1);
+        nieveButton = root.Q<Button>(botonIsla2);
+        ciudadButton = root.Q<Button>(botonIsla3);
 
-        ConfigurarBoton(bosque, mapaIslasUI.AbrirIsla1, botonIsla1);
-        ConfigurarBoton(montana, mapaIslasUI.MostrarIslaBloqueada, botonIsla2);
-        ConfigurarBoton(ciudad, mapaIslasUI.MostrarIslaBloqueada, botonIsla3);
+        ConfigurarBoton(bosqueButton, mapaIslasUI.OnBosqueClick, botonIsla1);
+        ConfigurarBoton(nieveButton, mapaIslasUI.OnNieveClick, botonIsla2);
+        ConfigurarBoton(ciudadButton, mapaIslasUI.OnCiudadClick, botonIsla3);
+    }
+
+    private void Desvincular()
+    {
+        QuitarBoton(bosqueButton, mapaIslasUI != null ? mapaIslasUI.OnBosqueClick : null);
+        QuitarBoton(nieveButton, mapaIslasUI != null ? mapaIslasUI.OnNieveClick : null);
+        QuitarBoton(ciudadButton, mapaIslasUI != null ? mapaIslasUI.OnCiudadClick : null);
     }
 
     private void ConfigurarBoton(Button boton, Action accion, string nombre)
     {
         if (boton == null)
         {
-            Debug.LogWarning("No se encontro el boton: " + nombre);
+            Debug.LogWarning("[MapaBotonesBinder] No se encontro el boton: " + nombre);
             return;
         }
 
         boton.pickingMode = PickingMode.Position;
-
         boton.style.backgroundColor = new StyleColor(Color.clear);
         boton.style.borderTopWidth = 0;
         boton.style.borderBottomWidth = 0;
@@ -74,13 +99,24 @@ public class MapaBotonesBinder : MonoBehaviour
         boton.style.paddingRight = 0;
         boton.style.paddingTop = 0;
         boton.style.paddingBottom = 0;
+        boton.BringToFront();
 
         HacerHijosNoInterceptables(boton);
 
         boton.clicked -= accion;
         boton.clicked += accion;
 
-        Debug.Log("Boton configurado: " + nombre);
+        Debug.Log("[MapaBotonesBinder] Boton configurado: " + nombre);
+    }
+
+    private void QuitarBoton(Button boton, Action accion)
+    {
+        if (boton == null || accion == null)
+        {
+            return;
+        }
+
+        boton.clicked -= accion;
     }
 
     private void HacerHijosNoInterceptables(VisualElement padre)

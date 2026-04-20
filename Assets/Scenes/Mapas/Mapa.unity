@@ -263,8 +263,8 @@ GameObject:
   m_Component:
   - component: {fileID: 962507291}
   - component: {fileID: 962507290}
-  - component: {fileID: 962507289}
   - component: {fileID: 962507288}
+  - component: {fileID: 962507292}
   m_Layer: 0
   m_Name: MapaUIManager
   m_TagString: Untagged
@@ -286,20 +286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToastUI
   uiDocument: {fileID: 4986236}
   duracion: 2
---- !u!114 &962507289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962507287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57ccdec4d6ded3b4fa2e84e7fe488fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapaIslasUI
-  toastUI: {fileID: 962507288}
-  escenaIsla1: Isla1
 --- !u!114 &962507290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,9 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapaBotonesBinder
   uiDocument: {fileID: 4986236}
-  mapaIslasUI: {fileID: 962507289}
+  mapaIslasUI: {fileID: 962507292}
   botonIsla1: bosque
-  botonIsla2: montana
+  botonIsla2: nieve
   botonIsla3: ciudad
 --- !u!4 &962507291
 Transform:
@@ -332,6 +318,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &962507292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962507287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ddabccc69165f34c81358684a2d3479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapaIslasUI
+  uiDocument: {fileID: 4986236}
+  toastUI: {fileID: 0}
+  sceneBosque: Isla1
+  sceneNieve: Mapa2
+  sceneCiudad: Mapa3
+  verboseLogs: 1
 --- !u!1 &1021528350
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,11 @@ public class ToastUI : MonoBehaviour
     {
         if (uiDocument == null)
         {
+            uiDocument = GetComponent<UIDocument>();
+        }
+
+        if (uiDocument == null)
+        {
             uiDocument = FindFirstObjectByType<UIDocument>();
         }
     }
@@ -39,7 +44,9 @@ public class ToastUI : MonoBehaviour
         }
 
         if (toastLabel != null)
+        {
             return;
+        }
 
         toastLabel = new Label();
         toastLabel.name = "toast-dinamico";

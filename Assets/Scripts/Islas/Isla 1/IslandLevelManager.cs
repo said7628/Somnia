@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Somnia.Economy.Core;
 using Somnia.Economy.DTOs;
 using Somnia.Economy.Services;
 using Somnia.UnityClient;
@@ -47,6 +48,7 @@ public class IslandLevelManager : MonoBehaviour
     [Header("Config")]
     [SerializeField] private bool lockLevelsWithoutScene = true;
     [SerializeField] private bool verboseLogs = true;
+    [SerializeField] private ToastMessage toastMessage;
 
     private GameDataService gameDataService;
     private int currentSlot = 1;
@@ -56,15 +58,8 @@ public class IslandLevelManager : MonoBehaviour
     private readonly HashSet<int> playedLevels = new HashSet<int>();
     private readonly HashSet<int> completedLevels = new HashSet<int>();
 
-    public bool IsInitialized
-    {
-        get { return isInitialized; }
-    }
-
-    public bool IsBusy
-    {
-        get { return isLoading; }
-    }
+    public bool IsInitialized => isInitialized;
+    public bool IsBusy => isLoading;
 
     private void Awake()
     {
@@ -80,10 +75,13 @@ public class IslandLevelManager : MonoBehaviour
     private async void Start()
     {
         currentSlot = ResolveCurrentSlot();
+        TryResolveToast();
 
-        if (!TryResolveGameDataService())
+        bool resolved = await ResolveGameDataServiceWithRecoveryAsync();
+        if (!resolved)
         {
-            Debug.LogError("IslandLevelManager: no se pudo resolver GameDataService desde el objeto asignado.");
+            Debug.LogError("IslandLevelManager: no se pudo resolver GameDataService. Se aplican reglas fallback.");
+            ShowToast("No se pudo cargar progreso. Modo local.");
             ApplyFallbackRules();
             return;
         }
@@ -95,53 +93,66 @@ public class IslandLevelManager : MonoBehaviour
     {
         if (GameSessionManager.Instance != null)
         {
-            return GameSessionManager.Instance.CurrentSlotNumber;
+            return Mathf.Max(1, GameSessionManager.Instance.CurrentSlotNumber);
         }
 
         return 1;
     }
 
-    private bool TryResolveGameDataService()
+    private async Task<bool> ResolveGameDataServiceWithRecoveryAsync()
     {
         if (gameDataService != null)
         {
             return true;
         }
 
+        if (TryResolveFromBehaviour(economyModuleBehaviour))
+        {
+            Log("GameDataService resuelto desde economyModuleBehaviour asignado.");
+            return true;
+        }
+
         if (economyModuleBehaviour == null)
         {
-            Debug.LogError("IslandLevelManager: economyModuleBehaviour no esta asignado.");
-            return false;
+            economyModuleBehaviour = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
+            if (economyModuleBehaviour != null)
+            {
+                Log("economyModuleBehaviour autodescubierto en escena.");
+            }
         }
 
-        Type moduleType = economyModuleBehaviour.GetType();
-
-        PropertyInfo property = moduleType.GetProperty(
-            "GameDataService",
-            BindingFlags.Public | BindingFlags.Instance
-        );
-
-        if (property == null)
+        if (TryResolveFromBehaviour(economyModuleBehaviour))
         {
-            Debug.LogError(
-                "IslandLevelManager: el objeto asignado no tiene una propiedad publica llamada GameDataService."
-            );
-            return false;
+            Log("GameDataService resuelto por autodescubrimiento.");
+            return true;
         }
 
-        object value = property.GetValue(economyModuleBehaviour);
-
-        gameDataService = value as GameDataService;
-
-        if (gameDataService == null)
+        EconomyModule runtimeModule = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
+        if (runtimeModule == null)
         {
-            Debug.LogError(
-                "IslandLevelManager: la propiedad GameDataService existe, pero no se pudo castear a Somnia.Economy.Services.GameDataService."
-            );
-            return false;
+            runtimeModule = new GameObject("[EconomyModule]").AddComponent<EconomyModule>();
+            Log("Se creo EconomyModule runtime para recuperar GameDataService.");
         }
 
-        return true;
+        const float timeoutSeconds = 6f;
+        float elapsed = 0f;
+
+        while (runtimeModule != null && runtimeModule.GameDataService == null && elapsed < timeoutSeconds)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            await Task.Yield();
+        }
+
+        economyModuleBehaviour = runtimeModule;
+
+        if (TryResolveFromBehaviour(economyModuleBehaviour))
+        {
+            Log("GameDataService resuelto desde EconomyModule runtime.");
+            return true;
+        }
+
+        Debug.LogError("IslandLevelManager: no se pudo resolver GameDataService desde ninguna fuente.");
+        return false;
     }
 
     public async Task LoadStateAsync()
@@ -159,6 +170,13 @@ public class IslandLevelManager : MonoBehaviour
             playedLevels.Clear();
             completedLevels.Clear();
 
+            if (gameDataService == null)
+            {
+                Debug.LogWarning("IslandLevelManager: GameDataService es null. Se aplican reglas fallback.");
+                ApplyFallbackRules();
+                return;
+            }
+
             var response = await gameDataService.GetSlotDetailAsync(currentSlot);
 
             if (response == null)
@@ -170,10 +188,7 @@ public class IslandLevelManager : MonoBehaviour
 
             if (!response.success || response.data == null)
             {
-                Debug.LogWarning(
-                    "IslandLevelManager: no se pudo cargar detalle del slot. " +
-                    (response != null ? response.message : "respuesta nula")
-                );
+                Debug.LogWarning("IslandLevelManager: no se pudo cargar detalle del slot. " + response.message);
                 ApplyFallbackRules();
                 return;
             }
@@ -234,12 +249,14 @@ public class IslandLevelManager : MonoBehaviour
         if (!isInitialized)
         {
             Log("Todavia no termina de inicializar.");
+            ShowToast("Cargando progreso de isla...");
             return;
         }
 
         if (isLoading)
         {
             Log("Manager ocupado.");
+            ShowToast("Espera un momento...");
             return;
         }
 
@@ -254,25 +271,37 @@ public class IslandLevelManager : MonoBehaviour
         if (!level.isUnlocked)
         {
             Log("Nivel bloqueado: " + dbLevelId);
+            ShowToast("Nivel bloqueado por progreso.");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(level.sceneName))
         {
             Log("Nivel " + dbLevelId + " sin escena asignada. Se queda bloqueado.");
+            ShowToast("Este nivel aun no esta disponible.");
             return;
         }
 
         await MarkLevelAsPlayedAsync(dbLevelId);
 
-        Log("Cargando escena: " + level.sceneName);
-        SceneManager.LoadScene(level.sceneName);
+        string normalizedScene = NormalizeSceneName(level.sceneName);
+        Log("Cargando escena: " + normalizedScene);
+        SceneManager.LoadScene(normalizedScene);
     }
 
     private async Task MarkLevelAsPlayedAsync(int dbLevelId)
     {
         if (playedLevels.Contains(dbLevelId))
         {
+            return;
+        }
+
+        if (gameDataService == null)
+        {
+            Debug.LogWarning("IslandLevelManager: GameDataService null al marcar nivel jugado. Se aplica fallback local.");
+            playedLevels.Add(dbLevelId);
+            ApplyUnlockRules();
+            RefreshVisuals();
             return;
         }
 
@@ -339,7 +368,6 @@ public class IslandLevelManager : MonoBehaviour
         {
             Debug.LogError("IslandLevelManager: error guardando progreso: " + ex.Message);
 
-            // Para no frenar el flujo, lo marcamos localmente
             playedLevels.Add(dbLevelId);
             ApplyUnlockRules();
             RefreshVisuals();
@@ -359,6 +387,7 @@ public class IslandLevelManager : MonoBehaviour
         RefreshVisuals();
 
         isInitialized = true;
+        isLoading = false;
     }
 
     private void ApplyUnlockRules()
@@ -378,14 +407,11 @@ public class IslandLevelManager : MonoBehaviour
             level.isUnlocked = false;
         }
 
-        // Logica especifica que me pediste:
-        // Nivel 1 siempre desbloqueado
         if (levels.Length > 0 && levels[0] != null)
         {
             levels[0].isUnlocked = true;
         }
 
-        // Nivel 2 solo si ya jugo el 1
         if (levels.Length > 1 && levels[1] != null && levels[0] != null)
         {
             levels[1].isUnlocked =
@@ -393,7 +419,6 @@ public class IslandLevelManager : MonoBehaviour
                 completedLevels.Contains(levels[0].dbLevelId);
         }
 
-        // Nivel 3 bloqueado por ahora
         if (levels.Length > 2 && levels[2] != null)
         {
             levels[2].isUnlocked = false;
@@ -468,5 +493,57 @@ public class IslandLevelManager : MonoBehaviour
         {
             Debug.Log("[IslandLevelManager] " + msg);
         }
+    }
+
+    private void ShowToast(string message)
+    {
+        TryResolveToast();
+        Debug.Log("[IslandLevelManager.Toast] " + message);
+
+        if (toastMessage != null)
+        {
+            toastMessage.Show(message);
+        }
+    }
+
+    private void TryResolveToast()
+    {
+        if (toastMessage == null)
+        {
+            toastMessage = FindFirstObjectByType<ToastMessage>(FindObjectsInactive.Include);
+            if (toastMessage != null)
+            {
+                Log("ToastMessage encontrado automaticamente.");
+            }
+        }
+    }
+
+    private bool TryResolveFromBehaviour(MonoBehaviour behaviour)
+    {
+        if (behaviour == null)
+        {
+            return false;
+        }
+
+        Type moduleType = behaviour.GetType();
+        PropertyInfo property = moduleType.GetProperty("GameDataService", BindingFlags.Public | BindingFlags.Instance);
+
+        if (property == null)
+        {
+            return false;
+        }
+
+        gameDataService = property.GetValue(behaviour) as GameDataService;
+        return gameDataService != null;
+    }
+
+    private static string NormalizeSceneName(string rawSceneName)
+    {
+        if (string.IsNullOrWhiteSpace(rawSceneName))
+        {
+            return rawSceneName;
+        }
+
+        return rawSceneName.Trim().Trim('"');
     }
 }
