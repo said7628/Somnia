@@ -7,8 +7,15 @@
 .inventario {
     align-items: flex-end;
     align-self: flex-end;
-    width: 300px;
-    height: 200px;
+    width: 365px;
+    height: 185px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Mapas/Iconos/HUD/Inventario.png?fileID=6996492222815415416&guid=efa7e82b7ada165428873fba6083e58e&type=3#Inventario_0");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 0 -40px;
 }
 
 .Home {
