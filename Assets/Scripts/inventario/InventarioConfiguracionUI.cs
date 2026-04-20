@@ -6,31 +6,39 @@ public class InventarioConfiguracionUI : MonoBehaviour
 {
     private VisualElement root;
 
+    private VisualElement voz0;
+    private VisualElement musica0;
+
     private List<VisualElement> barrasVoz = new List<VisualElement>();
     private List<VisualElement> barrasMusica = new List<VisualElement>();
 
-    void OnEnable()
+    private void OnEnable()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
         ObtenerReferencias();
         RegistrarEventos();
 
-        LimpiarVoz();
-        LimpiarMusica();
+        int nivelVoz = 5;
+        int nivelMusica = 5;
 
-        
-        int nivelVoz = PlayerPrefs.GetInt("VolumenVoz", 5);
-        int nivelMusica = PlayerPrefs.GetInt("VolumenMusica", 5);
+        if (AudioManager.Instancia != null)
+        {
+            nivelVoz = AudioManager.Instancia.GetMasterLevel();
+            nivelMusica = AudioManager.Instancia.GetMusicLevel();
+        }
 
         ActualizarVoz(nivelVoz);
         ActualizarMusica(nivelMusica);
     }
 
-    void ObtenerReferencias()
+    private void ObtenerReferencias()
     {
         barrasVoz.Clear();
         barrasMusica.Clear();
+
+        voz0 = root.Q<VisualElement>("Voz0");
+        musica0 = root.Q<VisualElement>("Musica0");
 
         barrasVoz.Add(root.Q<VisualElement>("Voz20"));
         barrasVoz.Add(root.Q<VisualElement>("Voz40"));
@@ -45,8 +53,18 @@ public class InventarioConfiguracionUI : MonoBehaviour
         barrasMusica.Add(root.Q<VisualElement>("Musica100"));
     }
 
-    void RegistrarEventos()
+    private void RegistrarEventos()
     {
+        if (voz0 != null)
+        {
+            voz0.RegisterCallback<ClickEvent>(evt => ActualizarVoz(0));
+        }
+
+        if (musica0 != null)
+        {
+            musica0.RegisterCallback<ClickEvent>(evt => ActualizarMusica(0));
+        }
+
         for (int i = 0; i < barrasVoz.Count; i++)
         {
             int nivel = i + 1;
@@ -68,7 +86,7 @@ public class InventarioConfiguracionUI : MonoBehaviour
         }
     }
 
-    void LimpiarVoz()
+    private void LimpiarVoz()
     {
         foreach (VisualElement barra in barrasVoz)
         {
@@ -79,7 +97,7 @@ public class InventarioConfiguracionUI : MonoBehaviour
         }
     }
 
-    void LimpiarMusica()
+    private void LimpiarMusica()
     {
         foreach (VisualElement barra in barrasMusica)
         {
@@ -90,8 +108,10 @@ public class InventarioConfiguracionUI : MonoBehaviour
         }
     }
 
-    void ActualizarVoz(int nivel)
+    private void ActualizarVoz(int nivel)
     {
+        nivel = Mathf.Clamp(nivel, 0, 5);
+
         LimpiarVoz();
 
         for (int i = 0; i < barrasVoz.Count; i++)
@@ -104,14 +124,16 @@ public class InventarioConfiguracionUI : MonoBehaviour
             }
         }
 
-        PlayerPrefs.SetInt("VolumenVoz", nivel);
-        PlayerPrefs.Save();
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMasterLevel(nivel);
 
-        Debug.Log("Voz: " + (nivel * 20));
+        Debug.Log("Voz: " + nivel);
     }
 
-    void ActualizarMusica(int nivel)
+    private void ActualizarMusica(int nivel)
     {
+        nivel = Mathf.Clamp(nivel, 0, 5);
+
         LimpiarMusica();
 
         for (int i = 0; i < barrasMusica.Count; i++)
@@ -124,9 +146,9 @@ public class InventarioConfiguracionUI : MonoBehaviour
             }
         }
 
-        PlayerPrefs.SetInt("VolumenMusica", nivel);
-        PlayerPrefs.Save();
+        if (AudioManager.Instancia != null)
+            AudioManager.Instancia.SetMusicLevel(nivel);
 
-        Debug.Log("Música: " + (nivel * 20));
+        Debug.Log("Música: " + nivel);
     }
 }

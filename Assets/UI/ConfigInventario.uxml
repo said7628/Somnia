@@ -4,8 +4,8 @@
         <ui:VisualElement name="Base" class="base" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/HUD/Inventario/base%20grafica%201623x1071.png?fileID=-5111747741860189538&amp;guid=1bc29c55dcb9b0f4bab5ad300bee54dd&amp;type=3#base grafica 1623x1071_0&quot;); translate: 20px 0; margin-left: 55px; margin-right: 25px; height: 960px; width: 1475px;">
             <ui:Button text="" name="Cerrar" class="cerrar"/>
             <ui:VisualElement name="Configuracion" class="configuracion">
-                <ui:VisualElement name="Voz" class="voz" style="flex-grow: 1; margin-bottom: 30px;">
-                    <ui:Image name="iconoVoz" class="iconoVoz"/>
+                <ui:VisualElement name="Voz" class="voz" style="flex-grow: 1; margin-bottom: 30px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);">
+                    <ui:Button text="" name="Voz0" class="iconoVoz" style="background-color: rgba(188, 188, 188, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
                     <ui:VisualElement name="MedVoz" class="seleccionVoz" style="flex-grow: 1;">
                         <ui:Button text="" name="Voz20" class="MedVoz activaVoz"/>
                         <ui:Button text="" name="Voz40" class="MedVoz activaVoz"/>
@@ -15,7 +15,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="musica" class="musica" style="flex-grow: 1; margin-top: 30px;">
-                    <ui:Image name="iconoMusica" class="iconoMusica"/>
+                    <ui:Button text="" name="Musica0" class="iconoMusica" style="background-color: rgba(188, 188, 188, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);"/>
                     <ui:VisualElement name="MedMusica" class="MedMusica" style="flex-grow: 1;">
                         <ui:Button text="" name="Musica20" class="seleccionMusica activaMusica"/>
                         <ui:Button text="" name="Musica40" class="seleccionMusica activaMusica"/>
