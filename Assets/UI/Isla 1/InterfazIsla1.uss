@@ -38,4 +38,5 @@
     align-self: stretch;
     align-items: center;
     translate: 0 560px;
+    width: 200px;
 }
