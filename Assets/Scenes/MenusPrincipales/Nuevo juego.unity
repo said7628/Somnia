@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 725290901}
   - component: {fileID: 725290900}
   - component: {fileID: 725290899}
+  - component: {fileID: 725290903}
   m_Layer: 5
   m_Name: Ranura2
   m_TagString: Untagged
@@ -809,6 +810,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725290897}
   m_CullTransparentMesh: 1
+--- !u!114 &725290903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725290897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5c0ecd38075a646ab0acd78f15d49c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
+  menuController: {fileID: 0}
+  button: {fileID: 725290900}
+  slotNumber: 2
 --- !u!1 &820786115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1619,7 @@ GameObject:
   - component: {fileID: 1285158340}
   - component: {fileID: 1285158339}
   - component: {fileID: 1285158342}
+  - component: {fileID: 1285158343}
   m_Layer: 5
   m_Name: Ranura1
   m_TagString: Untagged
@@ -1749,6 +1766,21 @@ MonoBehaviour:
   isla1Sprite: {fileID: 465816692598377798, guid: 5b61e3c7409526d4db17f29dbae1609f, type: 3}
   isla2Sprite: {fileID: -203911375062089560, guid: 07c5ce2e0e4ba684f8e2462f6895ca7a, type: 3}
   isla3Sprite: {fileID: -3601958704154933141, guid: 28c11b846e680c748a11d09ae359ca6d, type: 3}
+--- !u!114 &1285158343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285158337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5c0ecd38075a646ab0acd78f15d49c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
+  menuController: {fileID: 0}
+  button: {fileID: 1285158339}
+  slotNumber: 1
 --- !u!1 &1296319298
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2326,7 @@ GameObject:
   - component: {fileID: 1476331367}
   - component: {fileID: 1476331366}
   - component: {fileID: 1476331365}
+  - component: {fileID: 1476331369}
   m_Layer: 5
   m_Name: Ranura3
   m_TagString: Untagged
@@ -2440,6 +2473,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476331363}
   m_CullTransparentMesh: 1
+--- !u!114 &1476331369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476331363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5c0ecd38075a646ab0acd78f15d49c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
+  menuController: {fileID: 0}
+  button: {fileID: 1476331366}
+  slotNumber: 3
 --- !u!1 &1553717854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,6 +2987,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727118657}
   m_CullTransparentMesh: 1
+--- !u!1 &1781948959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781948960}
+  - component: {fileID: 1781948961}
+  m_Layer: 0
+  m_Name: CreateGameMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1781948960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781948959}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1497.3943, y: 736.83844, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1781948961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781948959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fb859e8b4ddc345a6305b779b1fc71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameMenuController
+  nextSceneName: Mapa
+  toastMessage: {fileID: 0}
+  slot1DefaultName: Partida 1
+  slot2DefaultName: Partida 2
+  slot3DefaultName: Partida 3
 --- !u!1 &1828300501
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,3 +3471,4 @@ SceneRoots:
   - {fileID: 650581965}
   - {fileID: 1472549539}
   - {fileID: 1956151514}
+  - {fileID: 1781948960}
