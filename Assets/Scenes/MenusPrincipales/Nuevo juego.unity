@@ -2312,7 +2312,10 @@ MonoBehaviour:
   - {fileID: 1285158342}
   - {fileID: 725290899}
   - {fileID: 1476331365}
+  toastMessage: {fileID: 0}
   escenaMapa: Mapa
+  escenaMenuPrincipal: Pantalla_principal
+  permitirEntrarASlotOcupado: 0
 --- !u!1 &1476331363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,55 +2990,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727118657}
   m_CullTransparentMesh: 1
---- !u!1 &1781948959
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1781948960}
-  - component: {fileID: 1781948961}
-  m_Layer: 0
-  m_Name: CreateGameMenuController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1781948960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781948959}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1497.3943, y: 736.83844, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1781948961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781948959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67fb859e8b4ddc345a6305b779b1fc71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameMenuController
-  nextSceneName: Mapa
-  toastMessage: {fileID: 0}
-  slot1DefaultName: Partida 1
-  slot2DefaultName: Partida 2
-  slot3DefaultName: Partida 3
 --- !u!1 &1828300501
 GameObject:
   m_ObjectHideFlags: 0
@@ -3471,4 +3425,3 @@ SceneRoots:
   - {fileID: 650581965}
   - {fileID: 1472549539}
   - {fileID: 1956151514}
-  - {fileID: 1781948960}
