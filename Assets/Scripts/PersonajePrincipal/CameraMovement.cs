@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform target; // el jugador
+    [SerializeField] private Transform target;
     [SerializeField] private float smoothSpeed = 5f;
     [SerializeField] private Vector3 offset;
 
@@ -12,7 +12,10 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 desiredPosition = target.position + offset;
 
-        // Suavizado
+        Debug.Log("Target pos: " + target.position);
+        Debug.Log("Offset: " + offset);
+        Debug.Log("Desired pos: " + desiredPosition);
+
         Vector3 smoothedPosition = Vector3.Lerp(
             transform.position,
             desiredPosition,
