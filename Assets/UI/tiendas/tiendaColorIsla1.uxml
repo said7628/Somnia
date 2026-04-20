@@ -9,12 +9,18 @@
         <ui:VisualElement name="puesto" class="puesto">
             <ui:VisualElement name="vendedorAleatorio" style="flex-grow: 1;"/>
             <ui:VisualElement name="ColorIsla1" class="colorisla1" style="flex-grow: 1;">
-                <ui:Button text="" name="colorAmarillon" class="colorAmarillon"/>
-                <ui:Button text="" name="colorMorado" class="colorMorado"/>
-                <ui:Button text="" name="colorNaranja" class="colorNaranja"/>
+                <ui:Button text="" name="colorAmarillon" class="colorAmarillon">
+                    <ui:VisualElement name="soldOutAmarillon" class="soldOut" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="colorMorado" class="colorMorado">
+                    <ui:VisualElement name="soldOutMorado" class="soldOut" style="flex-grow: 1;"/>
+                </ui:Button>
+                <ui:Button text="" name="colorNaranja" class="colorNaranja">
+                    <ui:VisualElement name="soldOutNaranja" class="soldOut" style="flex-grow: 1;"/>
+                </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="yatzis" style="flex-grow: 1;"/>
-        <ui:Button text="Button" name="Cerrar"/>
+        <ui:VisualElement name="yatzis" style="flex-grow: 1; width: 900px;"/>
+        <ui:Button text="" name="Cerrar" class="cerrar"/>
     </ui:VisualElement>
 </ui:UXML>
