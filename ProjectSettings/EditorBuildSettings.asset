@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Textyping/TextTyping.unity
     guid: fa107fca652909044892f5ec6bfadf1e
   - enabled: 1
-    path: Assets/Scenes/Tienda.unity
+    path: Assets/Scenes/Tienda/Tienda.unity
     guid: a216862d4f579074db56135eee99ca11
   - enabled: 1
     path: Assets/Scenes/Inventario/Inventario.unity
