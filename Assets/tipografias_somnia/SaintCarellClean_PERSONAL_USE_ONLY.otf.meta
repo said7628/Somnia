@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1c82cc1514ac287448cae0e9782ea003
+guid: ded706b8d6ed12a40ae819f687f5c78e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Funky Bird PERSONAL USE
+  - Saint Carell Clean PERSONAL
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
