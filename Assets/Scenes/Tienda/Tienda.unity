@@ -321,17 +321,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1567299531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f331c0a39d606624a90c6308534b7338, type: 3}
+  m_Script: {fileID: 11500000, guid: 24ba3c7825506a2479e65f27426f1475, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ControladorTienda
-  islaActual: {fileID: 11400000, guid: dec99be69ad602d47ba3c297d2ca3fd7, type: 2}
-  plantillaItemTienda: {fileID: 9197481963319205126, guid: 712f72107adddf443b4398b7ab659d6a, type: 3}
-  imgOjosNormal: {fileID: 4154433000688897841, guid: 2b4ddb2b8b13f7847957de1f586fadc2, type: 3}
-  imgColorNormal: {fileID: -4974335594040434568, guid: 46af73b4029e7eb4cbe8eb4396075bee, type: 3}
-  imgRopaNormal: {fileID: -6704923256494017336, guid: 7e20aeb0aa3bae34f8644501024f5c62, type: 3}
-  imgOjosActivo: {fileID: 2834352651998629639, guid: 0eb5bfe79c8d3914ba0e6dc165cb61a2, type: 3}
-  imgColorActivo: {fileID: 1770499137549744020, guid: e18d5daa1412c5c4ca5da31e42b235fc, type: 3}
-  imgRopaActivo: {fileID: 6939055083934534698, guid: 65952156c44bd354e8682e34431ee446, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::NavegacionTienda
 --- !u!1 &1785088075
 GameObject:
   m_ObjectHideFlags: 0
