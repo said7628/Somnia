@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace Somnia.UnityClient
 {
@@ -15,6 +16,9 @@ namespace Somnia.UnityClient
         public string LastError { get; private set; }
 
         [SerializeField] private bool autoStart = true;
+        [SerializeField] private bool loadFailSceneOnError = true;
+        [SerializeField] private string failSceneName = "Fail";
+        private bool failSceneTriggered;
 
         private void Start()
         {
@@ -26,10 +30,20 @@ namespace Somnia.UnityClient
 
         public IEnumerator Bootstrap()
         {
+            IsReady = false;
+            LastError = null;
+            failSceneTriggered = false;
+
+            if (apiClient == null)
+            {
+                Fail("No hay GameApiClient configurado");
+                yield break;
+            }
+
             var resolvedTicket = ResolveTicket();
             if (string.IsNullOrWhiteSpace(resolvedTicket))
             {
-                LastError = "No se recibió game ticket";
+                Fail("No se recibió game ticket");
                 yield break;
             }
 
@@ -42,18 +56,56 @@ namespace Somnia.UnityClient
                 onSuccess: (raw) =>
                 {
                     var auth = JsonUtility.FromJson<GameAuthResponse>(raw);
-                    if (auth == null || !auth.success || auth.tokens == null)
+                    if (auth == null)
                     {
-                        LastError = "Respuesta inválida en intercambio de ticket";
+                        Fail("Respuesta inválida en intercambio de ticket");
+                        return;
+                    }
+
+                    if (!auth.success)
+                    {
+                        Fail(string.IsNullOrWhiteSpace(auth.message)
+                            ? "Intercambio de ticket rechazado"
+                            : auth.message);
+                        return;
+                    }
+
+                    if (auth.user == null || auth.tokens == null)
+                    {
+                        Fail("Respuesta inválida en intercambio de ticket");
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(auth.tokens.accessToken) || string.IsNullOrWhiteSpace(auth.tokens.refreshToken))
+                    {
+                       
+                        Fail("Tokens inválidos en respuesta de autenticación");
                         return;
                     }
 
                     GameSessionManager.Instance.SetSession(auth.user, auth.tokens);
                     IsReady = true;
                 },
-                onError: (err) => LastError = err,
+                onError: (err) => Fail(string.IsNullOrWhiteSpace(err) ? "Falló la llamada de intercambio de ticket" : err),
                 withAuth: false
             );
+        }
+
+        private void Fail(string error)
+        {
+            LastError = error;
+            IsReady = false;
+
+            if (!loadFailSceneOnError || failSceneTriggered) return;
+
+            failSceneTriggered = true;
+            if (Application.CanStreamedLevelBeLoaded(failSceneName))
+            {
+                SceneManager.LoadScene(failSceneName);
+                return;
+            }
+
+            Debug.LogError($"GameBootstrapAuth: no se puede cargar la escena '{failSceneName}' porque no está en Build Settings.");
         }
 
         private string ResolveTicket()
@@ -83,6 +135,11 @@ namespace Somnia.UnityClient
         public void SetAutoStart(bool enabled)
         {
             autoStart = enabled;
+        }
+
+        public void SetFailScene(string sceneName)
+        {
+            failSceneName = sceneName;
         }
     }
 }

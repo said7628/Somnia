@@ -7,7 +7,7 @@ namespace Somnia.UnityClient
     public class LoadingSceneController : MonoBehaviour
     {
         [Header("Escenas")]
-        [SerializeField] private string successSceneName = "Menu";
+        [SerializeField] private string successSceneName = "Pantalla_principal";
         [SerializeField] private string failSceneName = "Fail";
 
         [Header("Ticket manual para pruebas locales (opcional)")]
