@@ -6,12 +6,17 @@ namespace Somnia.UnityClient
     public class CreateGameSlotButton : MonoBehaviour
     {
         [SerializeField] private CreateGameMenuController menuController;
+        [SerializeField] private GuardadoBeta guardadoController;
         [SerializeField] private Button button;
         [SerializeField] private int slotNumber = 1;
 
         private void Reset()
         {
             button = GetComponent<Button>();
+            if (guardadoController == null)
+            {
+                guardadoController = GetComponentInParent<GuardadoBeta>();
+            }
         }
 
         private void Awake()
@@ -19,6 +24,11 @@ namespace Somnia.UnityClient
             if (button == null)
             {
                 button = GetComponent<Button>();
+            }
+
+            if (guardadoController == null)
+            {
+                guardadoController = GetComponentInParent<GuardadoBeta>();
             }
 
             if (button != null)
@@ -30,13 +40,19 @@ namespace Somnia.UnityClient
 
         private void OnClickButton()
         {
-            if (menuController == null)
+            if (guardadoController != null)
             {
-                Debug.LogWarning("CreateGameSlotButton: falta asignar menuController.");
+                guardadoController.OnSlotClicked(slotNumber);
                 return;
             }
 
-            menuController.OnClickCreateSlot(slotNumber);
+            if (menuController != null)
+            {
+                menuController.OnSlotClicked(slotNumber);
+                return;
+            }
+
+            Debug.LogWarning("CreateGameSlotButton: falta asignar controlador de slots.");
         }
     }
 }

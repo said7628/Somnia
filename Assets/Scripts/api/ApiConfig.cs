@@ -6,7 +6,8 @@ namespace Somnia.UnityClient
     public class ApiConfig : ScriptableObject
     {
         [Header("Base URL del backend lambda")]
-        public string ApiBaseUrl = "https://nwbbsidozdpfkxpylna7pdg7qu0renci.lambda-url.us-east-1.on.aws/";
+        public const string DefaultApiBaseUrl = "https://nwbbsidozdpfkxpylna7pdg7qu0renci.lambda-url.us-east-1.on.aws/";
+        public string ApiBaseUrl = DefaultApiBaseUrl;
 
         [Header("Ruta para intercambio de ticket")]
         public string TicketExchangePath = "/game/auth/exchange";

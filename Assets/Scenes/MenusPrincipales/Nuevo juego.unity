@@ -822,6 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
   menuController: {fileID: 0}
+  guardadoController: {fileID: 0}
   button: {fileID: 725290900}
   slotNumber: 2
 --- !u!1 &820786115
@@ -1777,6 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
   menuController: {fileID: 0}
+  guardadoController: {fileID: 0}
   button: {fileID: 1285158339}
   slotNumber: 1
 --- !u!1 &1296319298
@@ -2316,7 +2318,10 @@ MonoBehaviour:
   toastMessage: {fileID: 0}
   escenaMapa: Mapa
   escenaMenuPrincipal: Pantalla_principal
-  permitirEntrarASlotOcupado: 0
+  slot1DefaultName: Partida 1
+  slot2DefaultName: Partida 2
+  slot3DefaultName: Partida 3
+  verboseLogs: 0
 --- !u!1 &1476331363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.CreateGameSlotButton
   menuController: {fileID: 0}
+  guardadoController: {fileID: 0}
   button: {fileID: 1476331366}
   slotNumber: 3
 --- !u!1 &1553717854

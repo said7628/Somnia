@@ -10,11 +10,19 @@ namespace Somnia.UnityClient
     {
         [SerializeField] private ApiConfig apiConfig;
 
+        
+        [SerializeField] private bool enableHttpDebugLogs = true;
+
         private void Awake()
         {
             if (apiConfig == null)
             {
                 apiConfig = ScriptableObject.CreateInstance<ApiConfig>();
+            }
+
+            if (enableHttpDebugLogs)
+            {
+                Debug.Log($"[GameApiClient] Base URL configurada: {apiConfig.ApiBaseUrl}");
             }
         }
 
@@ -32,7 +40,8 @@ namespace Somnia.UnityClient
 
         public IEnumerator PostJson(string path, string jsonBody, Action<string> onSuccess, Action<string> onError, bool withAuth = false)
         {
-            var request = new UnityWebRequest(apiConfig.BuildUrl(path), UnityWebRequest.kHttpVerbPOST);
+            var fullUrl = apiConfig.BuildUrl(path);
+            var request = new UnityWebRequest(fullUrl, UnityWebRequest.kHttpVerbPOST);
             var bodyRaw = Encoding.UTF8.GetBytes(jsonBody ?? "{}");
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -43,7 +52,17 @@ namespace Somnia.UnityClient
             }
             request.timeout = apiConfig.TimeoutSeconds;
 
+            if (enableHttpDebugLogs)
+            {
+                Debug.Log($"[HTTP] POST {fullUrl} | Request: {jsonBody}");
+            }
+
             yield return request.SendWebRequest();
+
+            if (enableHttpDebugLogs)
+            {
+                Debug.Log($"[HTTP] POST {fullUrl} -> {(int)request.responseCode} | Body: {request.downloadHandler.text}");
+            }
 
             if (request.result == UnityWebRequest.Result.Success)
             {
@@ -57,7 +76,8 @@ namespace Somnia.UnityClient
 
         public IEnumerator GetJson(string path, Action<string> onSuccess, Action<string> onError, bool withAuth = true)
         {
-            using var request = UnityWebRequest.Get(apiConfig.BuildUrl(path));
+            var fullUrl = apiConfig.BuildUrl(path);
+            using var request = UnityWebRequest.Get(fullUrl);
             request.SetRequestHeader("Content-Type", "application/json");
             if (withAuth && GameSessionManager.Instance != null && GameSessionManager.Instance.HasSession())
             {
@@ -65,7 +85,17 @@ namespace Somnia.UnityClient
             }
             request.timeout = apiConfig.TimeoutSeconds;
 
+            if (enableHttpDebugLogs)
+            {
+                Debug.Log($"[HTTP] GET {fullUrl}");
+            }
+
             yield return request.SendWebRequest();
+
+            if (enableHttpDebugLogs)
+            {
+                Debug.Log($"[HTTP] GET {fullUrl} -> {(int)request.responseCode} | Body: {request.downloadHandler.text}");
+            }
 
             if (request.result == UnityWebRequest.Result.Success)
             {

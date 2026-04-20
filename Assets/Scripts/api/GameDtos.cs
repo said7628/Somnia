@@ -34,8 +34,6 @@ namespace Somnia.UnityClient
         public string usuario;
         public string correo;
         public string rol;
-
-        // NUEVO
         public string fecha_nacimiento;
     }
 

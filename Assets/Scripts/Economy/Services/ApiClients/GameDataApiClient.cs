@@ -15,18 +15,34 @@ namespace Somnia.Economy.Services.ApiClients
         private readonly string _baseUrl;
         private readonly IPlayerSessionProvider _session;
 
+      
+        private const bool EnableHttpDebugLogs = true;
+
         public GameDataApiClient(string baseUrl, IPlayerSessionProvider session)
         {
             _baseUrl = baseUrl.TrimEnd('/');
             _session = session;
+
+            if (EnableHttpDebugLogs)
+            {
+                Debug.Log($"[GameDataApiClient] Base URL resuelta: {_baseUrl}");
+            }
         }
 
         public async Task<ApiResponse<SlotSummary[]>> GetSlotsAsync(CancellationToken ct = default)
         {
+            var url = $"{_baseUrl}/game/slots";
+
             try
             {
-                using var req = UnityWebRequestExtensions.CreateGet($"{_baseUrl}/game/slots", _session.Token);
+                using var req = UnityWebRequestExtensions.CreateGet(url, _session.Token);
                 var body = await req.SendAsync(ct);
+
+                if (EnableHttpDebugLogs)
+                {
+                    Debug.Log($"[HTTP] GET {url} -> {(int)req.responseCode} | Body: {body}");
+                }
+
                 var payload = JsonUtility.FromJson<SlotSummaryResponse>(body);
                 if (payload == null || !payload.success)
                 {
@@ -37,7 +53,7 @@ namespace Somnia.Economy.Services.ApiClients
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"GameDataApiClient GetSlots error: {ex.Message}");
+                Debug.LogWarning($"GameDataApiClient GetSlots error [{url}]: {ex.Message}");
                 return ApiResponse<SlotSummary[]>.Fail("network_error", ex.Message);
             }
         }
@@ -47,7 +63,8 @@ namespace Somnia.Economy.Services.ApiClients
 
         public async Task<ApiResponse<SlotDetailResponse>> CreateSlotAsync(CreateSlotRequest request, CancellationToken ct = default)
         {
-            var response = await SendEnvelopeAsync<SlotDetailResponse>($"{_baseUrl}/game/slots", UnityWebRequest.kHttpVerbPOST, request, ct);
+            var url = $"{_baseUrl}/game/slots";
+            var response = await SendEnvelopeAsync<SlotDetailResponse>(url, UnityWebRequest.kHttpVerbPOST, request, ct);
             if (response.success) return response;
             return response.error?.code == "invalid_payload"
                 ? await GetSlotDetailAsync(request.slot_numero, ct)
@@ -56,7 +73,8 @@ namespace Somnia.Economy.Services.ApiClients
 
         public async Task<ApiResponse<SlotDetailResponse>> InitializeNewGameAsync(int slotNumber, InitializeGameRequest request, CancellationToken ct = default)
         {
-            var response = await SendEnvelopeAsync<SlotDetailResponse>($"{_baseUrl}/game/slots/{slotNumber}/initialize", UnityWebRequest.kHttpVerbPOST, request, ct);
+            var url = $"{_baseUrl}/game/slots/{slotNumber}/initialize";
+            var response = await SendEnvelopeAsync<SlotDetailResponse>(url, UnityWebRequest.kHttpVerbPOST, request, ct);
             if (response.success) return response;
             return response.error?.code == "invalid_payload"
                 ? await GetSlotDetailAsync(slotNumber, ct)
@@ -75,6 +93,12 @@ namespace Somnia.Economy.Services.ApiClients
             {
                 using var req = UnityWebRequestExtensions.CreateGet(url, _session.Token);
                 var body = await req.SendAsync(ct);
+
+                if (EnableHttpDebugLogs)
+                {
+                    Debug.Log($"[HTTP] GET {url} -> {(int)req.responseCode} | Body: {body}");
+                }
+
                 var payload = JsonUtility.FromJson<SlotDetailResponse>(body);
                 if (payload == null || !payload.success || payload.slot == null)
                 {
@@ -85,7 +109,7 @@ namespace Somnia.Economy.Services.ApiClients
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"GameDataApiClient SlotDetail error: {ex.Message}");
+                Debug.LogWarning($"GameDataApiClient SlotDetail error [{url}]: {ex.Message}");
                 return ApiResponse<SlotDetailResponse>.Fail("network_error", ex.Message);
             }
         }
@@ -95,8 +119,19 @@ namespace Somnia.Economy.Services.ApiClients
             try
             {
                 var json = JsonUtility.ToJson(payload);
+
+                if (EnableHttpDebugLogs)
+                {
+                    Debug.Log($"[HTTP] {method} {url} | Request: {json}");
+                }
+
                 using var req = UnityWebRequestExtensions.CreateJsonRequest(url, method, json, _session.Token);
                 var body = await req.SendAsync(ct);
+
+                if (EnableHttpDebugLogs)
+                {
+                    Debug.Log($"[HTTP] {method} {url} -> {(int)req.responseCode} | Body: {body}");
+                }
 
                 var envelope = JsonUtility.FromJson<ApiResponse<T>>(body);
                 if (envelope != null && (envelope.success || envelope.data != null))
@@ -114,7 +149,7 @@ namespace Somnia.Economy.Services.ApiClients
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"GameDataApiClient {method} error: {ex.Message}");
+                Debug.LogWarning($"GameDataApiClient {method} error [{url}]: {ex.Message}");
                 return ApiResponse<T>.Fail("network_error", ex.Message);
             }
         }

@@ -1,14 +1,20 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Somnia.Economy.Core;
 using Somnia.Economy.Services;
 
 namespace Somnia.UnityClient
 {
     public class CreateGameMenuController : MonoBehaviour
     {
-        [Header("Escena a cargar al crear partida")]
-        [SerializeField] private string nextSceneName = "Menu";
+        [Header("Ranuras visuales")]
+        [SerializeField] private SaveRanura[] ranuras;
+
+        [Header("Escenas")]
+        [SerializeField] private string nextSceneName = "Mapa";
+        [SerializeField] private string escenaMenuPrincipal = "Pantalla_principal";
 
         [Header("Toast")]
         [SerializeField] private ToastMessage toastMessage;
@@ -18,8 +24,10 @@ namespace Somnia.UnityClient
         [SerializeField] private string slot2DefaultName = "Partida 2";
         [SerializeField] private string slot3DefaultName = "Partida 3";
 
-        [Header("Referencia directa al servicio")]
-        [SerializeField] private GameDataService gameDataService;
+        private GameDataService gameDataService;
+
+        [Header("Comportamiento")]
+        [SerializeField] private bool permitirEntrarASlotOcupado = false;
 
         private bool[] occupiedSlots = new bool[3];
         private bool isBusy;
@@ -27,11 +35,64 @@ namespace Somnia.UnityClient
 
         private void Start()
         {
+            Debug.Log("CreateGameMenuController: Start()");
+            InicializarRanurasVisualesVacias();
+            ResolveGameDataService();
             StartCoroutine(LoadSlotsRoutine());
+        }
+
+        private void InicializarRanurasVisualesVacias()
+        {
+            if (ranuras == null || ranuras.Length == 0)
+            {
+                Debug.LogWarning("CreateGameMenuController: no hay ranuras asignadas.");
+                return;
+            }
+
+            for (int i = 0; i < ranuras.Length; i++)
+            {
+                if (ranuras[i] == null)
+                {
+                    continue;
+                }
+
+                int slotNumber = i + 1;
+                ranuras[i].SetSlotNumber(slotNumber);
+                ranuras[i].ShowEmpty();
+                ranuras[i].SetInteractable(true);
+
+                int capturedSlot = slotNumber;
+                ranuras[i].ConfigureButton(() => OnSlotClicked(capturedSlot));
+                Debug.Log($"CreateGameMenuController: listener asignado slot={slotNumber} interactable={ranuras[i].IsInteractable}");
+            }
+        }
+
+
+        private void ResolveGameDataService()
+        {
+            if (gameDataService != null)
+            {
+                return;
+            }
+
+            var module = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>();
+            if (module == null)
+            {
+                var go = new GameObject("[EconomyModule]");
+                module = go.AddComponent<EconomyModule>();
+            }
+
+            gameDataService = module.GameDataService as GameDataService;
         }
 
         public void OnClickCreateSlot(int slotNumber)
         {
+            OnSlotClicked(slotNumber);
+        }
+
+        public void OnSlotClicked(int slotNumber)
+        {
+            Debug.Log($"CreateGameMenuController: click slot={slotNumber} isBusy={isBusy} slotsLoaded={slotsLoaded} occupied=[{FormatOccupiedSlots()}]");
             if (isBusy)
             {
                 return;
@@ -49,13 +110,24 @@ namespace Somnia.UnityClient
                 return;
             }
 
-            if (occupiedSlots[slotNumber - 1])
+            if (!occupiedSlots[slotNumber - 1])
             {
-                ShowToast("Ese espacio ya esta ocupado.");
+                StartCoroutine(CreateSlotRoutine(slotNumber));
                 return;
             }
 
-            StartCoroutine(CreateSlotRoutine(slotNumber));
+            if (!permitirEntrarASlotOcupado)
+            {
+                ShowToast("Ese slot ya esta ocupado.");
+                return;
+            }
+
+            if (GameSessionManager.Instance != null)
+            {
+                GameSessionManager.Instance.SetCurrentSlot(slotNumber);
+            }
+
+            SceneManager.LoadScene(nextSceneName);
         }
 
         public bool IsSlotOccupied(int slotNumber)
@@ -70,6 +142,7 @@ namespace Somnia.UnityClient
 
         private IEnumerator LoadSlotsRoutine()
         {
+            Debug.Log($"CreateGameMenuController: LoadSlotsRoutine BEFORE reset occupied=[{FormatOccupiedSlots()}]");
             isBusy = true;
             slotsLoaded = false;
 
@@ -92,10 +165,13 @@ namespace Somnia.UnityClient
             }
 
             var response = task.Result;
+            Debug.Log($"CreateGameMenuController: GetSlots backend success={response.success} message={response.message}");
 
             if (!response.success)
             {
-                ShowToast(string.IsNullOrWhiteSpace(response.message) ? "No se pudieron cargar los slots." : response.message);
+                ShowToast(string.IsNullOrWhiteSpace(response.message)
+                    ? "No se pudieron cargar los slots."
+                    : response.message);
                 yield break;
             }
 
@@ -114,10 +190,13 @@ namespace Somnia.UnityClient
             }
 
             slotsLoaded = true;
+            Debug.Log($"CreateGameMenuController: LoadSlotsRoutine AFTER load occupied=[{FormatOccupiedSlots()}]");
+            RefreshSlotsVisuals();
         }
 
         private IEnumerator CreateSlotRoutine(int slotNumber)
         {
+            Debug.Log($"CreateGameMenuController: CreateSlotRoutine slot={slotNumber} BEFORE create occupied=[{FormatOccupiedSlots()}]");
             isBusy = true;
 
             if (gameDataService == null)
@@ -141,6 +220,7 @@ namespace Somnia.UnityClient
             }
 
             var response = task.Result;
+            Debug.Log($"CreateGameMenuController: create/init response slot={slotNumber} success={response.success} message={response.message}");
 
             if (!response.success)
             {
@@ -150,16 +230,61 @@ namespace Somnia.UnityClient
 
                 ShowToast(backendMessage);
 
-                if (backendMessage.ToLower().Contains("ocupado"))
-                {
-                    occupiedSlots[slotNumber - 1] = true;
-                }
+                Debug.LogWarning($"CreateGameMenuController: create failed slot={slotNumber}. Reloading from backend for authoritative state.");
+                yield return LoadSlotsRoutine();
 
                 yield break;
             }
 
             occupiedSlots[slotNumber - 1] = true;
+            Debug.Log($"CreateGameMenuController: create success slot={slotNumber} occupied AFTER create=[{FormatOccupiedSlots()}]");
+            RefreshSlotsVisuals();
+
+            if (GameSessionManager.Instance != null)
+            {
+                GameSessionManager.Instance.SetCurrentSlot(slotNumber);
+            }
+
             SceneManager.LoadScene(nextSceneName);
+        }
+
+        private void RefreshSlotsVisuals()
+        {
+            if (ranuras == null || ranuras.Length == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < ranuras.Length; i++)
+            {
+                if (ranuras[i] == null)
+                {
+                    continue;
+                }
+
+                int slotNumber = i + 1;
+                ranuras[i].SetSlotNumber(slotNumber);
+                ranuras[i].SetInteractable(true);
+
+                if (IsSlotOccupied(slotNumber))
+                {
+                    ranuras[i].ShowData(1);
+                }
+                else
+                {
+                    ranuras[i].ShowEmpty();
+                }
+
+                int capturedSlot = slotNumber;
+                ranuras[i].ConfigureButton(() => OnSlotClicked(capturedSlot));
+                Debug.Log($"CreateGameMenuController: Refresh slot={slotNumber} occupied={IsSlotOccupied(slotNumber)} interactable={ranuras[i].IsInteractable}");
+            }
+        }
+
+        public void IrMenuPrincipal()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(escenaMenuPrincipal);
         }
 
         private void ShowToast(string message)
@@ -183,6 +308,11 @@ namespace Somnia.UnityClient
                 case 3: return slot3DefaultName;
                 default: return "Partida " + slotNumber;
             }
+        }
+
+        private string FormatOccupiedSlots()
+        {
+            return string.Join(", ", occupiedSlots.Select((value, idx) => $"S{idx + 1}:{value}"));
         }
     }
 }

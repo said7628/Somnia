@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51257848}
   - component: {fileID: 51257849}
+  - component: {fileID: 51257850}
   m_Layer: 0
   m_Name: TriggerNivel2
   m_TagString: Untagged
@@ -197,6 +198,88 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5.1495, y: 7.986308}
   m_EdgeRadius: 0
+--- !u!114 &51257850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51257847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
+  dbLevelId: 2
+  interactKey: 101
+  playerTag: Player
+  verboseLogs: 1
+--- !u!1 &247802129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 247802131}
+  - component: {fileID: 247802130}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &247802130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247802129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f90edb030d3a047a53051caf8f6203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IslandLevelManager
+  economyModuleBehaviour: {fileID: 0}
+  levels:
+  - dbLevelId: 1
+    sceneName: '"TextTyping"'
+    levelRoot: {fileID: 1499707361}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+  - dbLevelId: 2
+    sceneName: '"TextTyping5"'
+    levelRoot: {fileID: 1370482824}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+  - dbLevelId: 3
+    sceneName: '""'
+    levelRoot: {fileID: 0}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+  lockLevelsWithoutScene: 1
+  verboseLogs: 1
+--- !u!4 &247802131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247802129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4943, y: 1.10849, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &252476666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,6 +1372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 833025022}
   - component: {fileID: 833025023}
+  - component: {fileID: 833025024}
   m_Layer: 0
   m_Name: TriggerNivel3
   m_TagString: Untagged
@@ -1357,6 +1441,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5.1495, y: 7.986308}
   m_EdgeRadius: 0
+--- !u!114 &833025024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833025021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
+  dbLevelId: 3
+  interactKey: 101
+  playerTag: Player
+  verboseLogs: 1
 --- !u!1 &949379027
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,6 +2845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1599901228}
   - component: {fileID: 1599901229}
+  - component: {fileID: 1599901230}
   m_Layer: 0
   m_Name: TriggerNivel1
   m_TagString: Untagged
@@ -2813,6 +2914,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5.1495, y: 7.986308}
   m_EdgeRadius: 0
+--- !u!114 &1599901230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599901227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
+  dbLevelId: 1
+  interactKey: 101
+  playerTag: Player
+  verboseLogs: 1
 --- !u!1 &1670739781
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,3 +3503,4 @@ SceneRoots:
   - {fileID: 1499707365}
   - {fileID: 1370482828}
   - {fileID: 372867530}
+  - {fileID: 247802131}

@@ -6,10 +6,11 @@ using Somnia.Economy.DTOs;
 using Somnia.Economy.Interfaces;
 using Somnia.Economy.Managers;
 using Somnia.UnityClient;
+using UnityEngine;
 
 namespace Somnia.Economy.Services
 {
- 
+
     /// flujo de datos de juego/eco
 
     public class GameDataService : IGameDataService
@@ -48,6 +49,7 @@ namespace Somnia.Economy.Services
         public async Task<ApiResponse<SlotDetailResponse>> InitializeNewGameAsync(int slotNumber, string slotName, CancellationToken ct = default)
         {
             var createResult = await CreateSlotAsync(slotNumber, slotName, ct);
+            Debug.Log($"[GameDataService] CreateSlot slot={slotNumber} success={createResult.success} message={createResult.message}");
             if (!createResult.success)
             {
                 return createResult;
@@ -57,9 +59,23 @@ namespace Somnia.Economy.Services
             {
                 force_reset_yatzis = true
             }, ct);
+            Debug.Log($"[GameDataService] Initialize slot={slotNumber} success={initResult.success} message={initResult.message}");
 
             if (!initResult.success)
             {
+                // Degradación controlada: el slot pudo haberse creado aunque la inicialización falle.
+                // Reconsultamos el detalle para no bloquear la creación por dependencias secundarias (ej. economía).
+                var fallbackDetail = await GetSlotDetailAsync(slotNumber, ct);
+                Debug.LogWarning($"[GameDataService] Initialize failed for slot={slotNumber}. Fallback detail success={fallbackDetail.success} message={fallbackDetail.message}");
+
+                if (fallbackDetail.success && fallbackDetail.data != null)
+                {
+                    fallbackDetail.message = string.IsNullOrWhiteSpace(initResult.message)
+                        ? "Slot creado con inicialización parcial."
+                        : $"Slot creado con inicialización parcial: {initResult.message}";
+                    return fallbackDetail;
+                }
+
                 return initResult;
             }
 
@@ -67,7 +83,11 @@ namespace Somnia.Economy.Services
             if (slotBalance != 0)
             {
                 var delta = -slotBalance;
-                await _economyService.UpdateBalanceAsync(delta, "new_game_reset", "game_initializer", ct);
+                var balanceSync = await _economyService.UpdateBalanceAsync(delta, "new_game_reset", "game_initializer", ct);
+                if (!balanceSync.success)
+                {
+                    Debug.LogWarning($"[GameDataService] Economy balance sync failed for slot={slotNumber}: {balanceSync.message}");
+                }
             }
 
             return await GetSlotDetailAsync(slotNumber, ct);

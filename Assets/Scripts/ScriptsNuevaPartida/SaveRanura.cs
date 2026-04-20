@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 // Este script va en cada ranura (Ranura1, Ranura2, Ranura3)
 // Aquí controlo cómo se ve cada slot: si está vacío o si muestra progreso
@@ -31,6 +32,9 @@ public class SaveRanura : MonoBehaviour
 
     // Esto me deja acceder al índice del slot desde otros scripts
     public int SlotIndex => slotIndex;
+    public bool IsInteractable => slotButton != null && slotButton.interactable;
+
+    private UnityAction managedClickListener;
 
     private void Reset()
     {
@@ -52,6 +56,7 @@ public class SaveRanura : MonoBehaviour
     public void SetSlotNumber(int number)
     {
         // Aquí le pongo el número al slot (1., 2., 3.)
+        slotIndex = number;
         if (numText != null)
             numText.text = number + ".";
     }
@@ -101,7 +106,7 @@ public class SaveRanura : MonoBehaviour
             default: return isla1Sprite;
         }
     }
-    
+
     public void ConfigureButton(UnityEngine.Events.UnityAction onClick)
     {
         // Este método conecta el botón con lo que debe pasar al hacer click
@@ -112,11 +117,32 @@ public class SaveRanura : MonoBehaviour
 
         if (slotButton != null)
         {
-            // Limpio cualquier función vieja del botón
-            slotButton.onClick.RemoveAllListeners();
+            // Solo removemos el listener gestionado por este script para no romper otros flujos.
+            if (managedClickListener != null)
+            {
+                slotButton.onClick.RemoveListener(managedClickListener);
+            }
 
             // Le asigno la nueva función (la que me manda el script principal)
-            slotButton.onClick.AddListener(onClick);
+            managedClickListener = onClick;
+            slotButton.onClick.AddListener(managedClickListener);
+            slotButton.interactable = true;
+
+            Debug.Log($"[SaveRanura] ConfigureButton slot={slotIndex} interactable={slotButton.interactable} activeInHierarchy={gameObject.activeInHierarchy}");
+        }
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        if (slotButton == null)
+        {
+            slotButton = GetComponent<Button>();
+        }
+
+        if (slotButton != null)
+        {
+            slotButton.interactable = interactable;
+            Debug.Log($"[SaveRanura] SetInteractable slot={slotIndex} interactable={slotButton.interactable}");
         }
     }
 }
