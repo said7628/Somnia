@@ -53,6 +53,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Isla1.unity
     guid: 4414774ed1e03f443a7e81760c9c84dd
+  - enabled: 1
+    path: Assets/Scenes/tiendas/tiendaIsla1.unity
+    guid: 258b240fdfe6f6a418d431b06fb4c625
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

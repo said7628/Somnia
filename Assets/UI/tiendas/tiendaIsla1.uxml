@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/tiendas/tiendaIsla1.uss?fileID=7433441132597879392&amp;guid=a0a3d2445971f584381150b917d92e5f&amp;type=3#tiendaIsla1"/>
+    <ui:VisualElement name="contenedor" class="contenedor" style="flex-grow: 1;">
+        <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
+            <ui:Button text="" name="ventaOjos" class="botonOjos"/>
+            <ui:Button text="" name="ventaColor" class="botonColor"/>
+            <ui:Button text="" name="ventaOutfit" class="botonOutfit"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="puesto" class="puesto" style="flex-grow: 1; margin-top: 10px;">
+            <ui:VisualElement name="vendedorAleatorio" style="flex-grow: 1;"/>
+            <ui:VisualElement name="OjosIsla1" class="ojosIsla1" style="flex-grow: 1;">
+                <ui:Button text="" name="ojosRombo" class="ojosEstrella ojosRombo">
+                    <ui:VisualElement name="SoldOutRombo" class="soldOut" style="height: 380px;"/>
+                </ui:Button>
+                <ui:Button text="" name="ojosCansado" class="ojosCansado"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="yatzis" class="yatzis" style="flex-grow: 1;"/>
+        <ui:Button text="" name="Cerrar" class="cerrarTienda cerrar" style="translate: 0 0 5px;"/>
+    </ui:VisualElement>
+</ui:UXML>

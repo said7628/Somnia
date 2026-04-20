@@ -1,0 +1,116 @@
+:root {
+}
+
+.contenedor {
+}
+
+.botones {
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: flex-end;
+    height: 20px;
+    align-items: flex-end;
+    translate: -585px 23px;
+    margin-bottom: 0;
+}
+
+.botonOjos {
+    height: 210px;
+    width: 120px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/activados/ojos%20activado%20120x210.png?fileID=2800000&guid=0eb5bfe79c8d3914ba0e6dc165cb61a2&type=3#ojos activado 120x210");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 0 49px;
+    margin-right: 20px;
+}
+
+.botonColor {
+    width: 122px;
+    height: 122px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/desactivados/color%20desativado%20122x122.png?fileID=2800000&guid=46af73b4029e7eb4cbe8eb4396075bee&type=3#color desativado 122x122");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-right: 0;
+}
+
+.botonOutfit {
+    width: 122px;
+    height: 122px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/desactivados/outfit%20desactivado%20122x122.png?fileID=2800000&guid=7e20aeb0aa3bae34f8644501024f5c62&type=3#outfit desactivado 122x122");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-left: 20px;
+}
+
+.puesto {
+    flex-direction: row;
+    height: 200px;
+}
+
+.yatzis {
+    height: 1px;
+}
+
+.ojosIsla1 {
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    width: 10px;
+    translate: -229px -5px;
+}
+
+.ojosRombo {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/ojos/isla%201/rombo%20160x360.png?fileID=2800000&guid=f929e149898cfb34a80b83ec0855c758&type=3#rombo 160x360");
+    width: 160px;
+    height: 359px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-right: 60px;
+    align-self: center;
+}
+
+.ojosCansado {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/ojos/isla%201/cansado%20160x360.png?fileID=4224106898562449350&guid=360e3f53d7f046641a8c9bd81c7e5997&type=3#cansado_0");
+    background-color: rgba(0, 0, 0, 0);
+    width: 160px;
+    height: 359px;
+    margin-left: 65px;
+}
+
+
+
+.soldOut {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Base/Sold%20Out%20160x360.png?fileID=4108043143474587792&guid=b2768c560b7ab814388f4292a641b915&type=3#Sold Out_0");
+    width: 160px;
+    height: 370px;
+    translate: -15px -10px;
+}
+
+.cerrar {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/tache%2077x77.png?fileID=7707315224208153258&guid=8baca84e2db8fcb449b6a2491a8d0c16&type=3#tache 77x77_0");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    width: 77px;
+    height: 77px;
+    align-self: flex-end;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: auto;
+    position: absolute;
+}
