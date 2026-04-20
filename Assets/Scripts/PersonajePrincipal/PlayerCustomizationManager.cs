@@ -5,26 +5,24 @@ public class PlayerCustomizationManager : MonoBehaviour
     public static PlayerCustomizationManager Instance;
 
     [Header("Selección actual")]
-    public int selectedFaceColor;
-    public int selectedEyes;
-    public int selectedOutfit;
-
+    public int selectedFaceColor = 0;
+    public int selectedEyes = 0;
+    public int selectedOutfit = 0;
+    [SerializeField] private bool usarValoresDelInspector = true;
     private bool hasBeenInitialized = false;
 
+    
+
     void Awake()
-    {
-        if (Instance == null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (usarValoresDelInspector)
+            {
+                Debug.Log("Usando valores del Inspector");
+                return;
+            }
 
             LoadData();
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void LoadData()
     {
@@ -60,15 +58,27 @@ public class PlayerCustomizationManager : MonoBehaviour
     public void SetFace(int index)
     {
         selectedFaceColor = index;
+        ApplyToPlayer();
     }
 
     public void SetEyes(int index)
     {
         selectedEyes = index;
+        ApplyToPlayer();
     }
 
     public void SetOutfit(int index)
     {
         selectedOutfit = index;
+        ApplyToPlayer();
+    }
+    void ApplyToPlayer()
+    {
+        PlayerVisual player = FindObjectOfType<PlayerVisual>();
+
+        if (player != null)
+        {
+            player.ApplyCustomization();
+        }
     }
 }
