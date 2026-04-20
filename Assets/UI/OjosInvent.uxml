@@ -6,28 +6,28 @@
             <ui:VisualElement name="Ojos" style="flex-grow: 1; translate: 450px 45px; align-self: center;">
                 <ui:Button text="" name="ojosPredeterminado" class="ojospred" style="height: 140px; width: 135px;"/>
                 <ui:VisualElement name="seleccionOjos" class="seleccionOjos" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; width: 476px; align-self: auto; justify-content: space-evenly;">
-                    <ui:Button text="" name="ojos1" class="ojos1">
-                        <ui:VisualElement name="Ojosnuevo1" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosRombo" class="ojos1">
+                        <ui:VisualElement name="romboNuevo1" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos1" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
-                    <ui:Button text="" name="ojos2" class="ojos2">
-                        <ui:VisualElement name="Ojosnuevo2" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosCansados" class="ojos2">
+                        <ui:VisualElement name="cansadosNuevo2" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos2" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
-                    <ui:Button text="" name="ojos3" class="ojos3">
-                        <ui:VisualElement name="Ojosnuevo3" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosEstrella" class="ojos3">
+                        <ui:VisualElement name="estrellaNuevo3" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos3" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
-                    <ui:Button text="" name="ojos4" class="ojos4">
-                        <ui:VisualElement name="Ojosnuevo4" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosHappy" class="ojos4">
+                        <ui:VisualElement name="happyNuevo4" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos4" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
-                    <ui:Button text="" name="ojos5" class="ojos5">
-                        <ui:VisualElement name="Ojosnuevo5" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosPirata" class="ojos5">
+                        <ui:VisualElement name="pirataNuevo5" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos5" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
-                    <ui:Button text="" name="ojos6" class="ojos6">
-                        <ui:VisualElement name="Ojosnuevo6" class="nuevaCompra" style="flex-grow: 1;"/>
+                    <ui:Button text="" name="ojosEnojado" class="ojos6">
+                        <ui:VisualElement name="enojadoNuevo6" class="nuevaCompra" style="flex-grow: 1;"/>
                         <ui:VisualElement name="bloqueadoojos6" class="bloqueado" style="flex-grow: 1;"/>
                     </ui:Button>
                 </ui:VisualElement>

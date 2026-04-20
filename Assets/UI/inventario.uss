@@ -224,14 +224,14 @@
 .cara7 {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/rosita%20163x163.png?fileID=2800000&guid=17db0c0f64993c341bc3093e5fbf999c&type=3#rosita 163x163");
     width: 150px;
-    height: 160px;
+    height: 150px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     margin-top: 20px;
-    background-size: 90% 100%;
+    background-size: 88% 100%;
 }
 
 .cara8 {

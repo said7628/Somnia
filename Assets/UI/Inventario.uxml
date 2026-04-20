@@ -23,40 +23,40 @@
         <ui:VisualElement name="cosmeticos" class="cosmeticos" style="flex-grow: 1; translate: -590px 4px; scale: 1 1; flex-direction: column; align-self: center; width: 1900px; height: 691px;">
             <ui:Button text="" name="predeterminado" class="carapredeterminado"/>
             <ui:VisualElement name="seleccioncosmetico" class="seleccioncosmetico" style="flex-grow: 3; width: 520px; flex-direction: row; flex-wrap: wrap; flex-shrink: 3; justify-content: center;">
-                <ui:Button text="" name="cosmetico1" class="cara1">
-                    <ui:VisualElement name="Cosmeticonuevo1" class="nuevodInventario"/>
+                <ui:Button text="" name="skinNaranja" class="cara1">
+                    <ui:VisualElement name="naranjaNuevo1" class="nuevodInventario"/>
                     <ui:VisualElement name="bloqueado1" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico2" class="cara2">
-                    <ui:VisualElement name="Cosmeticonuevo2" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinMorado" class="cara2">
+                    <ui:VisualElement name="moradoNuevo2" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado2" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico3" class="cara3">
-                    <ui:VisualElement name="Cosmeticonuevo3" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinAmarillo" class="cara3">
+                    <ui:VisualElement name="amarilloNuevo3" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado3" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico4" class="cara4">
-                    <ui:VisualElement name="Cosmeticonuevo4" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinRojo" class="cara4">
+                    <ui:VisualElement name="rojoNuevo4" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado4" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico5" class="cara5">
-                    <ui:VisualElement name="Cosmeticonuevo5" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinTurquesa" class="cara5">
+                    <ui:VisualElement name="turquesaNuevo5" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado5" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico6" class="cara6">
-                    <ui:VisualElement name="Cosmeticonuevo6" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinVerde" class="cara6">
+                    <ui:VisualElement name="verdeNuevo6" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado6" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico7" class="cara7">
-                    <ui:VisualElement name="Cosmeticonuevo7" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinRosa" class="cara7">
+                    <ui:VisualElement name="rosaNuevo7" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado7" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico8" class="cara8">
-                    <ui:VisualElement name="Cosmeticonuevo8" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinAzul" class="cara8">
+                    <ui:VisualElement name="azulNuevo8" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado8" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
-                <ui:Button text="" name="cosmetico9" class="cara9">
-                    <ui:VisualElement name="Cosmeticonuevo9" class="nuevodInventario" style="flex-grow: 1;"/>
+                <ui:Button text="" name="skinNegro" class="cara9">
+                    <ui:VisualElement name="negroNuevo9" class="nuevodInventario" style="flex-grow: 1;"/>
                     <ui:VisualElement name="bloqueado9" class="bloqueado" style="flex-grow: 1;"/>
                 </ui:Button>
             </ui:VisualElement>
