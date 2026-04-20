@@ -1,0 +1,101 @@
+:root {
+}
+
+.contenedor {
+}
+
+.botones {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: flex-end;
+    min-height: auto;
+    height: 80px;
+    translate: -585px 35px;
+}
+
+.botonOjos {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/desactivados/ojos%20desactivado%20122x122.png?fileID=2800000&guid=2b4ddb2b8b13f7847957de1f586fadc2&type=3#ojos desactivado 122x122");
+    background-color: rgba(0, 0, 0, 0);
+    width: 122px;
+    height: 122px;
+    margin-right: 20px;
+}
+
+.botonColor {
+    width: 120px;
+    height: 210px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/activados/color%20activado%20120x210.png?fileID=2800000&guid=e18d5daa1412c5c4ca5da31e42b235fc&type=3#color activado 120x210");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 0 0;
+}
+
+.botonOutfit {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/Botones/desactivados/outfit%20desactivado%20122x122.png?fileID=2800000&guid=7e20aeb0aa3bae34f8644501024f5c62&type=3#outfit desactivado 122x122");
+    background-color: rgba(0, 0, 0, 0);
+    margin-left: 20px;
+    width: 122px;
+    height: 122px;
+}
+
+.puesto {
+    flex-direction: row;
+    height: 200px;
+}
+
+.colorisla1 {
+    translate: -215px -10px;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    min-width: auto;
+    width: 0;
+}
+
+.colorAmarillon {
+    translate: 0 0;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/color/isla%201/amarillon%20160x360.png?fileID=2800000&guid=81638704c69862a4b9849f321ec040df&type=3#amarillon 160x360");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-right: 60px;
+    width: 160px;
+    height: 360px;
+}
+
+.colorMorado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/color/isla%201/morado%20160x360.png?fileID=2800000&guid=26a4971ea9d41f04a93469b0284ae8f5&type=3#morado 160x360");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    width: 160px;
+    height: 360px;
+}
+
+.colorNaranja {
+    width: 160px;
+    height: 360px;
+    margin-left: 60px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Tienda/color/isla%201/naranja%20160x360.png?fileID=2800000&guid=104a1d7ed2233b54e8fab60dff0e18d9&type=3#naranja 160x360");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}

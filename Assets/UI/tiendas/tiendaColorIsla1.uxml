@@ -1,0 +1,20 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/tiendas/tiendaColorIslaUno.uss?fileID=7433441132597879392&amp;guid=e7c5b380407b9cd4cbc995ec85b718e5&amp;type=3#tiendaColorIslaUno"/>
+    <ui:VisualElement name="contenedor" class="contenedor" style="flex-grow: 1;">
+        <ui:VisualElement name="botones" class="botones" style="flex-grow: 1;">
+            <ui:Button text="" name="ventaOjos" class="botonOjos"/>
+            <ui:Button text="" name="ventaColor" class="botonColor"/>
+            <ui:Button text="" name="ventaOutfit" class="botonOutfit"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="puesto" class="puesto">
+            <ui:VisualElement name="vendedorAleatorio" style="flex-grow: 1;"/>
+            <ui:VisualElement name="ColorIsla1" class="colorisla1" style="flex-grow: 1;">
+                <ui:Button text="" name="colorAmarillon" class="colorAmarillon"/>
+                <ui:Button text="" name="colorMorado" class="colorMorado"/>
+                <ui:Button text="" name="colorNaranja" class="colorNaranja"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="yatzis" style="flex-grow: 1;"/>
+        <ui:Button text="Button" name="Cerrar"/>
+    </ui:VisualElement>
+</ui:UXML>

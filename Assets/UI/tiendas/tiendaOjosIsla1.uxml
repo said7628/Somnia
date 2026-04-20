@@ -10,12 +10,14 @@
             <ui:VisualElement name="vendedorAleatorio" style="flex-grow: 1;"/>
             <ui:VisualElement name="OjosIsla1" class="ojosIsla1" style="flex-grow: 1;">
                 <ui:Button text="" name="ojosRombo" class="ojosEstrella ojosRombo">
-                    <ui:VisualElement name="SoldOutRombo" class="soldOut" style="height: 380px;"/>
+                    <ui:VisualElement name="SoldOutRombo" class="soldOut"/>
                 </ui:Button>
-                <ui:Button text="" name="ojosCansado" class="ojosCansado"/>
+                <ui:Button text="" name="ojosCansado" class="ojosCansado">
+                    <ui:VisualElement name="SoldOutCansado" class="soldOut"/>
+                </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="yatzis" class="yatzis" style="flex-grow: 1;"/>
-        <ui:Button text="" name="Cerrar" class="cerrarTienda cerrar" style="translate: 0 0 5px;"/>
+        <ui:Button text="" name="Cerrar" class="cerrarTienda cerrar" style="translate: -50px 50px 5px;"/>
     </ui:VisualElement>
 </ui:UXML>

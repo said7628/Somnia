@@ -100,6 +100,7 @@
     width: 160px;
     height: 370px;
     translate: -15px -10px;
+    position: absolute;
 }
 
 .cerrar {
@@ -113,4 +114,9 @@
     justify-content: flex-start;
     align-content: auto;
     position: absolute;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    translate: 500px 0;
 }
