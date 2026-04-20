@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        // BOToN NUEVO JUEGO
+        
         Button botonNuevoJuego = root.Q<Button>("nuevo-juego");
         if (botonNuevoJuego != null)
         {
@@ -16,10 +16,10 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontr� el bot�n 'nuevo-juego'");
+            Debug.LogError("No se ");
         }
 
-        // BOT�N CONFIGURACI�N
+       
         Button botonConfig = root.Q<Button>("configuracion");
         if (botonConfig != null)
         {
@@ -27,10 +27,19 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontr� el bot�n 'configuracion'");
+            Debug.LogError("No se ");
         }
 
-        // BOT�N SALIR
+        Button botonContinuar = root.Q<Button>("continuar");
+        if (botonContinuar != null)
+        {
+            botonContinuar.clicked += IrAContinuar;
+        }
+        else
+        {
+            Debug.LogError("No se ");
+        }
+        
         Button botonSalir = root.Q<Button>("salir");
         if (botonSalir != null)
         {
@@ -38,7 +47,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontr� el bot�n 'salir'");
+            Debug.LogError("No se ");
         }
     }
 
@@ -50,6 +59,11 @@ public class MenuManager : MonoBehaviour
     void IrAConfiguracion()
     {
         SceneManager.LoadScene("Configuracion");
+    }
+
+    void IrAContinuar()
+    {
+        SceneManager.LoadScene("ContinuarPartida");
     }
 
     void SalirDelJuego()
