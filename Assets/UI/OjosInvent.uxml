@@ -43,7 +43,7 @@
             <ui:Button text="" name="botonoutfit" class="botonOutfit">
                 <ui:VisualElement name="Outfitnuevo" class="nuevoAlerta" style="flex-grow: 1;"/>
             </ui:Button>
-            <ui:Button text="" name="botoconf" class="botonConfig"/>
+            <ui:Button text="" name="botonconf" class="botonConfig"/>
             <ui:Button text="" name="botonHome" class="botonHome"/>
         </ui:VisualElement>
     </ui:VisualElement>
