@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Globalization;
 
 namespace Somnia.UnityClient
 {
@@ -41,6 +43,71 @@ namespace Somnia.UnityClient
         public bool HasSession()
         {
             return !string.IsNullOrEmpty(AccessToken);
+        }
+
+        public string GetBirthDateRaw()
+        {
+            return CurrentUser?.fecha_nacimiento;
+        }
+
+        public bool TryGetBirthDate(out DateTime birthDate)
+        {
+            birthDate = default;
+
+            var raw = GetBirthDateRaw();
+            if (string.IsNullOrWhiteSpace(raw))
+                return false;
+
+            // intenta parsear formatos comunes
+            string[] formats =
+            {
+                "yyyy-MM-dd",
+                "yyyy-MM-dd HH:mm:ss",
+                "yyyy-MM-ddTHH:mm:ss",
+                "yyyy-MM-ddTHH:mm:ssZ",
+                "MM/dd/yyyy",
+                "dd/MM/yyyy"
+            };
+
+            if (DateTime.TryParseExact(raw, formats, CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out birthDate))
+            {
+                return true;
+            }
+
+            if (DateTime.TryParse(raw, out birthDate))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public int GetPlayerAge()
+        {
+            if (!TryGetBirthDate(out DateTime birthDate))
+                return -1;
+
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+
+            if (birthDate.Date > today.AddYears(-age))
+                age--;
+
+            return age;
+        }
+
+        public int GetTextTypingMinimumScore()
+        {
+            int age = GetPlayerAge();
+
+            if (age >= 7 && age <= 10)
+                return 200;
+
+            if (age >= 11)
+                return 500;
+
+            return 500;
         }
     }
 }
