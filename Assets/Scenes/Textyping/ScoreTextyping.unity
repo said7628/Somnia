@@ -352,9 +352,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31d410e266cc75241bd29607adf706d0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResultMenuManager
+  m_EditorClassIdentifier: Assembly-CSharp::ResultFallidoManager
   botonMapa: {fileID: 587979261}
+  botonReintentar: {fileID: 0}
+  botonMenu: {fileID: 0}
   escenaMapa: Isla1
+  escenaMenu: Pantalla_principal
 --- !u!1 &351028093
 GameObject:
   m_ObjectHideFlags: 0
