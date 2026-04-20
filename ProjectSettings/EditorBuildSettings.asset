@@ -47,6 +47,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Inventario/InventarioOutfit.unity
     guid: fc3ecddc79b115148a1abd399ea0af72
+  - enabled: 1
+    path: Assets/Scenes/MenusPrincipales/ContinuarPartida.unity
+    guid: a446e4ddc103f564ab9290bc37f6f73e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
