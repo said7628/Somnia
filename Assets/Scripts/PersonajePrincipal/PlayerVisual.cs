@@ -18,7 +18,7 @@ public class PlayerVisual : MonoBehaviour
     void Start()
     {
         data = FindObjectOfType<PlayerCustomizationManager>();
-        ApplyCustomization();
+        // ApplyCustomization();  <-- Le pusimos las diagonales para apagar esta bomba
     }
 
     public void ApplyCustomization()
