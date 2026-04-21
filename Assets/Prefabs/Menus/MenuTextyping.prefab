@@ -329,8 +329,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuTextTypingUI
   scoreMaxText: {fileID: 0}
-  nombreEscenaJugar: Nuevo juego
-  nombreEscenaMapa: Mapa
+  nombreEscenaJugar: Textyping
+  nombreEscenaMapa: Isla1
   scoreMaxDebug: 0
 --- !u!1 &995393710116611561
 GameObject:
