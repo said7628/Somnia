@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 5074649940300291564}
   - component: {fileID: 9098195195042026536}
   - component: {fileID: 8777539007776605907}
+  - component: {fileID: 2209512287977898981}
   m_Layer: 5
   m_Name: MenuTextyping
   m_TagString: Untagged
@@ -332,6 +333,22 @@ MonoBehaviour:
   nombreEscenaJugar: Textyping
   nombreEscenaMapa: Isla1
   scoreMaxDebug: 0
+--- !u!114 &2209512287977898981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936685549776937903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffa8bb8859fc0541a7d28ff08af4314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuBotonesCanvas
+  jugarButton: {fileID: 4204510421917894665}
+  mapaButton: {fileID: 1612897742256914733}
+  escenaJuego: Textyping
+  escenaMapa: Isla1
 --- !u!1 &995393710116611561
 GameObject:
   m_ObjectHideFlags: 0

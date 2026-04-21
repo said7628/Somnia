@@ -8,8 +8,8 @@ public class MenuTextTypingUI : MonoBehaviour
     [SerializeField] private TMP_Text scoreMaxText;
 
     [Header("Escenas")]
-    [SerializeField] private string nombreEscenaJugar = "Nuevo juego";
-    [SerializeField] private string nombreEscenaMapa = "Mapa";
+    [SerializeField] private string nombreEscenaJugar = "Textyping";
+    [SerializeField] private string nombreEscenaMapa = "Isla1";
 
     [Header("Debug")]
     [SerializeField] private int scoreMaxDebug = 0;
@@ -53,6 +53,6 @@ public class MenuTextTypingUI : MonoBehaviour
     public void IrAMapa()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Mapa");
+        SceneManager.LoadScene("Isla1");
     }
 }
