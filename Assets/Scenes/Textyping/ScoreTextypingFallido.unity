@@ -2180,8 +2180,8 @@ MonoBehaviour:
   botonMapa: {fileID: 1091642316}
   botonReintentar: {fileID: 1805823745}
   botonMenu: {fileID: 1340305790}
-  escenaMapa: Isla1
   escenaMenu: Pantalla_principal
+  scoreValue: {fileID: 593876778}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

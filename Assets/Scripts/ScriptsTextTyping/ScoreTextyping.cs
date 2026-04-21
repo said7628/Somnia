@@ -1,22 +1,55 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class ResultadoNivelUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreValue;
     [SerializeField] private TMP_Text bonusValue;
     [SerializeField] private TMP_Text coinsValue;
+    [SerializeField] private TMP_Text minScoreValue;
+    [SerializeField] private TMP_Text estadoValue;
+
 
     private void Start()
     {
-        scoreValue.text = "300";
-        bonusValue.text = "+65";
-        coinsValue.text = "216";
+        if (scoreValue != null)
+        {
+            scoreValue.text = TextTypingSession.CurrentScore.ToString();
+        }
+
+        if (minScoreValue != null)
+        {
+            minScoreValue.text = TextTypingSession.MinimumScore.ToString();
+        }
+
+        if (estadoValue != null)
+        {
+            estadoValue.text = TextTypingSession.Passed ? "Completado" : "No completado";
+        }
+
+        if (bonusValue != null)
+        {
+            bonusValue.text = "+0";
+        }
+
+        if (coinsValue != null)
+        {
+            coinsValue.text = "0";
+        }
+
+        Debug.Log($"[TextTypingResultSuccess] Source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} sourceIslandScene={TextTypingSession.SourceIslandSceneName}");
+        Debug.Log($"[TextTypingResultSuccess] Final score={TextTypingSession.CurrentScore}");
+        Debug.Log($"[TextTypingResultSuccess] Previous personal best={TextTypingSession.PreviousPersonalBest}");
+        Debug.Log($"[TextTypingResultSuccess] New personal best={TextTypingSession.PersonalBest}");
+        Debug.Log($"[TextTypingResultSuccess] Save progress completed. passed={TextTypingSession.Passed}");
+        Debug.Log($"[TextTypingResultSuccess] Unlock next level evaluation for levelId={TextTypingSession.LastLevelId}");
     }
 
     public void IrAMapa()
     {
-        SceneManager.LoadScene("Mapa");
+        string returnScene = TextTypingSession.ResolveReturnScene();
+        Debug.Log($"[TextTypingResultSuccess] Map return sourceIslandScene={TextTypingSession.SourceIslandSceneName} sourceLevelScene={TextTypingSession.LastLevelSceneName} returnPosition={TextTypingSession.ReturnPosition} returnRotation={TextTypingSession.ReturnRotation.eulerAngles} sceneLoadedByMapReturn={returnScene}");
+        SceneManager.LoadScene(returnScene);
     }
 }

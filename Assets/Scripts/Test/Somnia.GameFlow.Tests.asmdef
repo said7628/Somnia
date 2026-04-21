@@ -1,0 +1,22 @@
+{
+  "name": "Somnia.GameFlow.Tests",
+  "rootNamespace": "Somnia.GameFlow.Tests",
+  "references": [
+    "Assembly-CSharp",
+    "Unity.TextMeshPro"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

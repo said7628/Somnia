@@ -1,36 +1,69 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class ResultFallidoManager : MonoBehaviour
 {
-    [Header("Botones")]
-    public Button botonMapa;
-    public Button botonReintentar;
-    public Button botonMenu;
+    [Header("Buttons")]
+    [SerializeField] private Button botonMapa;
+    [SerializeField] private Button botonReintentar;
+    [SerializeField] private Button botonMenu;
 
-    [Header("Escenas")]
-    public string escenaMapa = "Isla1";          // ponemos el nombre escena de mapa
-    public string escenaMenu = "Pantalla_principal"; // ponemos tu menu principal
+    [Header("Scenes")]
+    [SerializeField] private string escenaMenu = "Pantalla_principal";
+    [Header("UI")]
+    [SerializeField] private TMP_Text scoreValue;
 
-    void Start()
+    private void Start()
     {
-        botonMapa.onClick.AddListener(IrAMapa);
-        botonReintentar.onClick.AddListener(Reintentar);
-        botonMenu.onClick.AddListener(IrAMenu);
+        if (botonMapa != null) botonMapa.onClick.AddListener(IrAMapa);
+        if (botonReintentar != null) botonReintentar.onClick.AddListener(ReintentarUltimoNivel);
+        if (botonMenu != null) botonMenu.onClick.AddListener(IrAMenu);
+
+        int playerAge = TextTypingSession.EdadJugador > 0 ? TextTypingSession.EdadJugador : 11;
+        int requiredMinimumScore = TextTypingPlayerRules.ObtenerPuntajeMinimoPorEdad(playerAge);
+        TextTypingSession.MinimumScore = requiredMinimumScore;
+
+        if (scoreValue != null)
+        {
+            scoreValue.text = requiredMinimumScore.ToString();
+        }
+
+        Debug.Log($"[TextTypingResultFail] Loaded with source scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} score={TextTypingSession.CurrentScore}");
+        Debug.Log($"[TextTypingResultFail] player age={playerAge}");
+        Debug.Log($"[TextTypingResultFail] required minimum score for fail screen={requiredMinimumScore}");
+        Debug.Log($"[TextTypingResultFail] fail screen displayed value={(scoreValue != null ? scoreValue.text : requiredMinimumScore.ToString())}");
     }
 
-    void IrAMapa()
+    private void IrAMapa()
     {
-        SceneManager.LoadScene(escenaMapa);
+        string returnScene = TextTypingSession.ResolveReturnScene();
+        Debug.Log($"[TextTypingResultFail] Source island scene={TextTypingSession.SourceIslandSceneName} source level scene={TextTypingSession.LastLevelSceneName} return scene={returnScene} return position={TextTypingSession.ReturnPosition}");
+        SceneManager.LoadScene(returnScene);
     }
 
-    void Reintentar()
+    private void ReintentarUltimoNivel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        string retryScene = TextTypingSession.LastLevelSceneName;
+
+        if (string.IsNullOrWhiteSpace(retryScene))
+        {
+            retryScene = !string.IsNullOrWhiteSpace(TextTypingSession.LevelName)
+                ? TextTypingSession.LevelName
+                : TextTypingSession.ResolveSceneNameFromLevelId(TextTypingSession.LastLevelId > 0 ? TextTypingSession.LastLevelId : TextTypingSession.LevelId);
+        }
+
+        if (string.IsNullOrWhiteSpace(retryScene))
+        {
+            retryScene = "TextTyping";
+        }
+
+        Debug.Log($"[TextTypingResultFail] Retry target scene={retryScene} source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId}");
+        SceneManager.LoadScene(retryScene);
     }
 
-    void IrAMenu()
+    private void IrAMenu()
     {
         SceneManager.LoadScene(escenaMenu);
     }

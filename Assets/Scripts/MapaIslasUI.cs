@@ -13,7 +13,7 @@ public class MapaIslasUI : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private ToastUI toastUI;
 
-    [SerializeField] private string sceneBosque = "Isla1";
+    [SerializeField] private string sceneBosque = "Assets/Scenes/Islas/Isla 1/Isla1";
     [SerializeField] private string sceneNieve = "Mapa2";
     [SerializeField] private string sceneCiudad = "Mapa3";
     [SerializeField] private bool verboseLogs = true;
