@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MenusPrincipales/Nuevo juego.unity
     guid: 2ca20833b11e74f44ac85a0187cd3ba8
   - enabled: 1
-    path: Assets/Scenes/Mapas/Mapa.unity
+    path: Assets/Scenes/Mapa.unity
     guid: 251c690394fb87a4ea445530afd60ec6
   - enabled: 1
     path: Assets/Scenes/MenusPrincipales/Configuracion.unity
