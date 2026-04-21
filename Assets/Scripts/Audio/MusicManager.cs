@@ -85,13 +85,13 @@ public class MusicManager : MonoBehaviour
             case "ScoreTextypingFallido":
                 return musicaTextyping;
 
-            case "Mapa":
+            case "Isla1":
                 return musicaMapa1;
 
-            case "Mapa2":
+            case "Isla2":
                 return musicaMapa2;
 
-            case "Mapa3":
+            case "Isla3":
                 return musicaMapa3;
 
             default:

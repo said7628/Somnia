@@ -1787,9 +1787,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463cd8371e5f31f4b8b298efb1c44436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCustomizationManager
-  selectedFaceColor: 0
-  selectedEyes: 0
-  selectedOutfit: 0
+  selectedFaceColor: 1
+  selectedEyes: 1
+  selectedOutfit: 1
   usarValoresDelInspector: 1
 --- !u!4 &986768310
 Transform:
