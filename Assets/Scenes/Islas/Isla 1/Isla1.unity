@@ -1684,6 +1684,8 @@ GameObject:
   m_Component:
   - component: {fileID: 481686758}
   - component: {fileID: 481686757}
+  - component: {fileID: 481686760}
+  - component: {fileID: 481686759}
   m_Layer: 0
   m_Name: Outfit
   m_TagString: Untagged
@@ -1745,10 +1747,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.36, y: 3.67}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!4 &481686758
 Transform:
@@ -1765,6 +1767,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1738665243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &481686759
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481686756}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 5856a7283a04aa64b90a8196a5a76fc6, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
+--- !u!95 &481686760
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481686756}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6dac6aa1c3574ab4f9149ab896e2de23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &585692293
 GameObject:
   m_ObjectHideFlags: 0
@@ -4233,6 +4273,7 @@ GameObject:
   - component: {fileID: 1738665244}
   - component: {fileID: 1738665245}
   - component: {fileID: 1738665246}
+  - component: {fileID: 1738665247}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4482,6 +4523,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.82563186, y: 0.69417906}
   m_EdgeRadius: 0
+--- !u!111 &1738665247
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738665239}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 5856a7283a04aa64b90a8196a5a76fc6, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &1823926428
 GameObject:
   m_ObjectHideFlags: 0
