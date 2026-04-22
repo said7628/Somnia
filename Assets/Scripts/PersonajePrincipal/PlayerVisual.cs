@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
-    [Header("Renderers")]
-    [SerializeField] private SpriteRenderer faceRenderer;
-    [SerializeField] private SpriteRenderer eyesRenderer;
-    [SerializeField] private SpriteRenderer outfitRenderer;
+    [Header("Animators")]
+    [SerializeField] private Animator faceAnimator;
+    [SerializeField] private Animator eyesAnimator;
+    [SerializeField] private Animator outfitAnimator;
 
-    [Header("Sprites")]
-    [SerializeField] private Sprite[] faceSprites;
-    [SerializeField] private Sprite[] eyesSprites;
-    [SerializeField] private Sprite[] eyesWhiteSprites;
-    [SerializeField] private Sprite[] outfitSprites;
+    [Header("Animator Controllers")]
+    [SerializeField] private RuntimeAnimatorController[] faceAnimators;
+    [SerializeField] private RuntimeAnimatorController[] eyesAnimators;
+    [SerializeField] private RuntimeAnimatorController[] eyesWhiteAnimators;
+    [SerializeField] private RuntimeAnimatorController[] outfitAnimators;
 
     private PlayerCustomizationManager data;
 
     void Start()
     {
         data = FindObjectOfType<PlayerCustomizationManager>();
-        ApplyCustomization(); 
+        ApplyCustomization();
     }
 
     public void ApplyCustomization()
@@ -29,12 +29,20 @@ public class PlayerVisual : MonoBehaviour
             return;
         }
 
-        faceRenderer.sprite = faceSprites[data.selectedFaceColor];
-        outfitRenderer.sprite = outfitSprites[data.selectedOutfit];
+        // FACE
+        faceAnimator.runtimeAnimatorController = faceAnimators[data.selectedFaceColor];
 
+        // OUTFIT
+        outfitAnimator.runtimeAnimatorController = outfitAnimators[data.selectedOutfit];
+
+        // EYES
         if (data.selectedFaceColor == 9)
-            eyesRenderer.sprite = eyesWhiteSprites[data.selectedEyes];
+        {
+            eyesAnimator.runtimeAnimatorController = eyesWhiteAnimators[data.selectedEyes];
+        }
         else
-            eyesRenderer.sprite = eyesSprites[data.selectedEyes];
+        {
+            eyesAnimator.runtimeAnimatorController = eyesAnimators[data.selectedEyes];
+        }
     }
 }
