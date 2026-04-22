@@ -10,6 +10,7 @@ namespace Somnia.Economy.Interfaces
     {
         Task<ApiResponse<SlotSummary[]>> GetSlotsAsync(CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> GetSlotDetailAsync(int slotNumber, CancellationToken ct = default);
+        Task<ApiResponse<bool>> DeleteSlotAsync(int slotNumber, CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> CreateSlotAsync(CreateSlotRequest request, CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> InitializeNewGameAsync(int slotNumber, InitializeGameRequest request, CancellationToken ct = default);
         Task<ApiResponse<List<ProgressData>>> SaveProgressAsync(int slotNumber, SaveProgressRequest request, CancellationToken ct = default);
@@ -21,6 +22,7 @@ namespace Somnia.Economy.Interfaces
     {
         Task<ApiResponse<SlotSummary[]>> GetSlotsAsync(CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> GetSlotDetailAsync(int slotNumber, CancellationToken ct = default);
+        Task<ApiResponse<bool>> DeleteSlotAsync(int slotNumber, CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> CreateSlotAsync(int slotNumber, string slotName, CancellationToken ct = default);
         Task<ApiResponse<SlotDetailResponse>> InitializeNewGameAsync(int slotNumber, string slotName, CancellationToken ct = default);
         Task<ApiResponse<EconomyBalanceResponse>> GetBalanceAsync(CancellationToken ct = default);

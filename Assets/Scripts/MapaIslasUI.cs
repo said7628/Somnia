@@ -145,6 +145,13 @@ public class MapaIslasUI : MonoBehaviour
             yield break;
         }
 
+        if (task.Result.data.edad_jugador > 0)
+        {
+            GameSessionManager.Instance?.SetPlayerAgeFromBackend(task.Result.data.edad_jugador);
+            TextTypingSession.PlayerAge = task.Result.data.edad_jugador;
+            Log("edad_jugador sincronizada desde slot=" + task.Result.data.edad_jugador);
+        }
+
         highestUnlockedIsland = ComputeHighestIsland(task.Result.data.progreso);
         Log("Progreso mapa cargado. highestUnlockedIsland=" + highestUnlockedIsland + " slot=" + slot);
     }

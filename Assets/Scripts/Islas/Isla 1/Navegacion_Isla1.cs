@@ -56,13 +56,21 @@ public class Navegacion_Isla1 : MonoBehaviour
     private void Update()
     {
         RefreshLevelButtons();
+        ActualizarInterfaz();
     }
 
     private void ActualizarInterfaz()
     {
         if (textoMonedas != null)
         {
-            textoMonedas.text = Memoria_Islas.misMonedas.ToString();
+            if (IslandLevelManager.Instance != null && IslandLevelManager.Instance.IsInitialized)
+            {
+                textoMonedas.text = IslandLevelManager.Instance.CurrentTotalYatzis.ToString();
+            }
+            else
+            {
+                textoMonedas.text = Mathf.Max(0, Memoria_Islas.misMonedas).ToString();
+            }
         }
     }
 

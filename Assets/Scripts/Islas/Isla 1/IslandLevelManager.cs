@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Somnia.Economy.Core;
 using Somnia.Economy.DTOs;
+using Somnia.Economy.Interfaces;
 using Somnia.Economy.Services;
 using Somnia.UnityClient;
-using UnityEngine.UIElements;
 using System.Linq;
+using TMPro;
+using UnityEngine.UI;
+
 
 public class IslandLevelManager : MonoBehaviour
 {
@@ -41,9 +43,6 @@ public class IslandLevelManager : MonoBehaviour
 
     public static IslandLevelManager Instance { get; private set; }
 
-    [Header("Arrastra aqui el objeto que tenga la propiedad GameDataService")]
-    [SerializeField] private MonoBehaviour economyModuleBehaviour;
-
     [Header("Niveles configurados en orden")]
     [SerializeField] private LevelEntry[] levels;
 
@@ -51,15 +50,20 @@ public class IslandLevelManager : MonoBehaviour
     [SerializeField] private bool lockLevelsWithoutScene = true;
     [SerializeField] private bool verboseLogs = true;
     [SerializeField] private ToastMessage toastMessage;
-    [SerializeField] private ToastUI toastUI;
+    [Header("UI Yatzis (Isla1)")]
+    [SerializeField] private TextMeshProUGUI yatzisTotalText;
+    [SerializeField] private string yatzisTextObjectName = "Yatzis";
 
     private GameDataService gameDataService;
     private int currentSlot = 1;
+    private int currentTotalYatzis = 0;
     private bool isLoading;
     private bool isInitialized;
+    private EconomyModule economyModule;
 
     private readonly HashSet<int> playedLevels = new HashSet<int>();
     private readonly HashSet<int> completedLevels = new HashSet<int>();
+    private const string RuntimeToastName = "RuntimeToast_Isla1";
 
     public bool IsInitialized
     {
@@ -69,6 +73,11 @@ public class IslandLevelManager : MonoBehaviour
     public bool IsBusy
     {
         get { return isLoading; }
+    }
+
+    public int CurrentTotalYatzis
+    {
+        get { return Mathf.Max(0, currentTotalYatzis); }
     }
 
     private void Awake()
@@ -85,9 +94,11 @@ public class IslandLevelManager : MonoBehaviour
     private async void Start()
     {
         currentSlot = ResolveCurrentSlot();
+        PersistCurrentIslandScene();
         Log("Current slot resolved for island flow=" + currentSlot);
         Log("Active scene on island start=" + SceneManager.GetActiveScene().name);
         TryResolveToast();
+        RefreshYatzisText();
 
         bool resolved = await ResolveGameDataServiceWithRecoveryAsync();
         if (!resolved)
@@ -118,44 +129,37 @@ public class IslandLevelManager : MonoBehaviour
             return true;
         }
 
-        if (TryResolveFromBehaviour(economyModuleBehaviour))
+        if (economyModule == null)
         {
-            Log("GameDataService resuelto desde economyModuleBehaviour asignado.");
-            return true;
-        }
-
-        if (economyModuleBehaviour == null)
-        {
-            economyModuleBehaviour = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
-            if (economyModuleBehaviour != null)
+            economyModule = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
+            if (economyModule != null)
             {
-                Log("economyModuleBehaviour autodescubierto en escena.");
+                Log("EconomyModule autodescubierto en escena.");
             }
         }
 
-        if (TryResolveFromBehaviour(economyModuleBehaviour))
+        if (TryResolveFromModule(economyModule))
         {
-            Log("GameDataService resuelto por autodescubrimiento.");
+            Log("GameDataService resuelto desde EconomyModule existente.");
             return true;
         }
 
-        EconomyModule runtimeModule = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
-        if (runtimeModule == null)
+        economyModule = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
+        if (economyModule == null)
         {
-            runtimeModule = new GameObject("[EconomyModule]").AddComponent<EconomyModule>();
+            economyModule = new GameObject("[EconomyModule]").AddComponent<EconomyModule>();
             Log("Se creo EconomyModule runtime para recuperar GameDataService.");
         }
 
         const float timeoutSeconds = 6f;
         float elapsed = 0f;
-        while (runtimeModule != null && runtimeModule.GameDataService == null && elapsed < timeoutSeconds)
+        while (economyModule != null && economyModule.GameDataService == null && elapsed < timeoutSeconds)
         {
             elapsed += Time.unscaledDeltaTime;
             await Task.Yield();
         }
 
-        economyModuleBehaviour = runtimeModule;
-        if (TryResolveFromBehaviour(economyModuleBehaviour))
+        if (TryResolveFromModule(economyModule))
         {
             Log("GameDataService resuelto desde EconomyModule runtime.");
             return true;
@@ -198,6 +202,10 @@ public class IslandLevelManager : MonoBehaviour
                 ApplyFallbackRules();
                 return;
             }
+
+            currentTotalYatzis = Mathf.Max(0, response.data.slot != null ? response.data.slot.yatzis : 0);
+            Log("Loaded slot yatzis total=" + currentTotalYatzis + " slot=" + currentSlot);
+            RefreshYatzisText();
 
             ProgresoDto[] progreso = response.data.progreso ?? response.data.progress;
             Log("GetSlotDetailAsync response success=" + response.success + " slot=" + currentSlot + " progreso_count=" + (progreso != null ? progreso.Length : 0));
@@ -298,6 +306,7 @@ public class IslandLevelManager : MonoBehaviour
         }
 
         await MarkLevelAsPlayedAsync(dbLevelId);
+        PersistCurrentIslandScene();
 
         TextTypingSession.LevelId = dbLevelId;
         TextTypingSession.LevelName = level.sceneName;
@@ -314,6 +323,15 @@ public class IslandLevelManager : MonoBehaviour
         Log("Cargando escena: " + normalizedScene + " with dbLevelId=" + dbLevelId);
         Log("Source island scene=" + sourceIslandScene + " return scene=" + TextTypingSession.ResolveReturnScene() + " return position=" + returnPosition);
         SceneManager.LoadScene(normalizedScene);
+    }
+
+    private void PersistCurrentIslandScene()
+    {
+        string scene = SceneManager.GetActiveScene().name;
+        if (!string.IsNullOrWhiteSpace(scene))
+        {
+            GameSessionManager.Instance?.SetCurrentIslandSceneForSlot(currentSlot, scene);
+        }
     }
 
     private async Task MarkLevelAsPlayedAsync(int dbLevelId)
@@ -420,6 +438,8 @@ public class IslandLevelManager : MonoBehaviour
     {
         playedLevels.Clear();
         completedLevels.Clear();
+        currentTotalYatzis = Mathf.Max(0, Memoria_Islas.misMonedas);
+        RefreshYatzisText();
 
         ApplyUnlockRules();
         RefreshVisuals();
@@ -557,9 +577,9 @@ public class IslandLevelManager : MonoBehaviour
         {
             toastMessage.Show(message);
         }
-        else if (toastUI != null)
+        else
         {
-            toastUI.ShowToast(message);
+            Debug.LogWarning("IslandLevelManager: no se pudo mostrar toast visual en Isla1.");
         }
         Log("toast shown for blocked level");
     }
@@ -575,32 +595,137 @@ public class IslandLevelManager : MonoBehaviour
             }
         }
 
-        if (toastUI == null)
+        if (toastMessage == null)
         {
-            toastUI = FindFirstObjectByType<ToastUI>(FindObjectsInactive.Include);
-            if (toastUI != null)
+            toastMessage = CreateRuntimeToastIfNeeded();
+            if (toastMessage != null)
             {
-                Log("ToastUI encontrado automaticamente.");
+                Log("ToastMessage runtime creado para Canvas (Isla1).");
             }
         }
     }
 
-    private bool TryResolveFromBehaviour(MonoBehaviour behaviour)
+    private ToastMessage CreateRuntimeToastIfNeeded()
     {
-        if (behaviour == null)
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogWarning("IslandLevelManager: no se encontro Canvas para crear runtime toast.");
+            return null;
+        }
+
+        Transform existing = canvas.transform.Find(RuntimeToastName);
+        if (existing != null)
+        {
+            return existing.GetComponent<ToastMessage>();
+        }
+
+        GameObject toastRoot = new GameObject(RuntimeToastName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(ToastMessage));
+        toastRoot.transform.SetParent(canvas.transform, false);
+
+        RectTransform rootRect = toastRoot.GetComponent<RectTransform>();
+        rootRect.anchorMin = new Vector2(0.5f, 0f);
+        rootRect.anchorMax = new Vector2(0.5f, 0f);
+        rootRect.pivot = new Vector2(0.5f, 0f);
+        rootRect.anchoredPosition = new Vector2(0f, 64f);
+        rootRect.sizeDelta = new Vector2(980f, 170f);
+
+        Image background = toastRoot.GetComponent<Image>();
+        background.color = new Color(0f, 0f, 0f, 0.86f);
+        background.raycastTarget = false;
+
+        GameObject textGO = new GameObject("Message", typeof(RectTransform), typeof(TextMeshProUGUI));
+        textGO.transform.SetParent(toastRoot.transform, false);
+
+        RectTransform textRect = textGO.GetComponent<RectTransform>();
+        textRect.anchorMin = new Vector2(0f, 0f);
+        textRect.anchorMax = new Vector2(1f, 1f);
+        textRect.offsetMin = new Vector2(40f, 24f);
+        textRect.offsetMax = new Vector2(-40f, -24f);
+
+        TextMeshProUGUI tmp = textGO.GetComponent<TextMeshProUGUI>();
+        tmp.text = string.Empty;
+        tmp.alignment = TextAlignmentOptions.MidlineLeft;
+        tmp.enableWordWrapping = true;
+        tmp.fontSize = 42f;
+        tmp.color = Color.white;
+        tmp.raycastTarget = false;
+
+        toastRoot.SetActive(false);
+        return toastRoot.GetComponent<ToastMessage>();
+    }
+
+    private void RefreshYatzisText()
+    {
+        TryResolveYatzisText();
+        if (yatzisTotalText == null)
+        {
+            Log("No se pudo resolver TextMeshProUGUI para Yatzis en Isla1.");
+            return;
+        }
+
+        yatzisTotalText.text = CurrentTotalYatzis.ToString();
+        Log("UI Yatzis actualizada en Isla1 -> " + yatzisTotalText.text);
+    }
+
+    private void TryResolveYatzisText()
+    {
+        if (yatzisTotalText != null)
+        {
+            return;
+        }
+
+        TextMeshProUGUI[] candidates = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < candidates.Length; i++)
+        {
+            TextMeshProUGUI candidate = candidates[i];
+            if (candidate == null)
+            {
+                continue;
+            }
+
+            if (!string.IsNullOrWhiteSpace(yatzisTextObjectName)
+                && string.Equals(candidate.gameObject.name, yatzisTextObjectName, StringComparison.OrdinalIgnoreCase))
+            {
+                yatzisTotalText = candidate;
+                Log("TextMeshProUGUI de Yatzis resuelto por nombre: " + candidate.gameObject.name);
+                return;
+            }
+        }
+
+        for (int i = 0; i < candidates.Length; i++)
+        {
+            TextMeshProUGUI candidate = candidates[i];
+            if (candidate == null)
+            {
+                continue;
+            }
+
+            string candidateName = candidate.gameObject.name;
+            if (candidateName.IndexOf("yatz", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                yatzisTotalText = candidate;
+                Log("TextMeshProUGUI de Yatzis resuelto por coincidencia parcial de nombre: " + candidateName);
+                return;
+            }
+        }
+    }
+
+    private bool TryResolveFromModule(EconomyModule module)
+    {
+        if (module == null)
         {
             return false;
         }
 
-        Type moduleType = behaviour.GetType();
-        PropertyInfo property = moduleType.GetProperty("GameDataService", BindingFlags.Public | BindingFlags.Instance);
-        if (property == null)
+        IGameDataService moduleService = module.GameDataService;
+        if (moduleService is GameDataService concreteService)
         {
-            return false;
+            gameDataService = concreteService;
+            return true;
         }
 
-        gameDataService = property.GetValue(behaviour) as GameDataService;
-        return gameDataService != null;
+        return false;
     }
 
     private static string NormalizeSceneName(string rawSceneName)

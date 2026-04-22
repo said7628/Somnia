@@ -207,6 +207,7 @@ namespace Somnia.UnityClient
         private IEnumerator CreateSlotRoutine(int slotNumber)
         {
             Debug.Log($"CreateGameMenuController: CreateSlotRoutine slot={slotNumber} BEFORE create occupied=[{FormatOccupiedSlots()}]");
+            Debug.Log("[NewGame] Initial Yatzis = 0");
             SetBusyState(true, $"Creando slot {slotNumber}");
 
             if (gameDataService == null)
@@ -230,6 +231,9 @@ namespace Somnia.UnityClient
 
             var response = task.Result;
             Debug.Log($"CreateGameMenuController: create/init response slot={slotNumber} success={response.success} message={response.message}");
+            int backendYatzis = Mathf.Max(0, response.data?.slot != null ? response.data.slot.yatzis : 0);
+            Debug.Log($"[NewGame] Backend Yatzis received = {backendYatzis}");
+            Memoria_Islas.misMonedas = backendYatzis;
 
             if (!response.success)
             {

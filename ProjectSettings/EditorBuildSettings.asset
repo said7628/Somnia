@@ -59,6 +59,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Textyping/TextTyping2.unity
     guid: c8d4e3ad5b6e82a45b7e08a4899c6312
+  - enabled: 1
+    path: Assets/Scenes/Textyping/TextTyping6.unity
+    guid: ec75762f7ea883c429b1dd5d1537b664
+  - enabled: 1
+    path: Assets/Scenes/Textyping/TextTyping5.unity
+    guid: 59740cfcd6dbaf64a9b927b66e82c86a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
