@@ -1,38 +1,39 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+public class GameOverMenu : MonoBehaviour
 {
-    [Header("Botones")]
-    public Button botonReintentar;
-    public Button botonMenu;
-    public Button botonMapa;
-
     [Header("Escenas")]
-    public string escenaMenu = "MenuPrincipal";
-    public string escenaMapa = "Mapa";
+    [SerializeField] private string escenaMenu = "Pantalla_principal";
 
-    void Start()
+    private void Start()
     {
-        botonReintentar.onClick.AddListener(Reintentar);
-        botonMenu.onClick.AddListener(IrAMenu);
-        botonMapa.onClick.AddListener(IrAMapa);
+        Time.timeScale = 1f;
     }
 
-    void Reintentar()
+    public void Reintentar()
     {
-        // Pendiente de implementar
-        Debug.Log("Reintentar aún no implementado");
+        string escenaActual = SceneManager.GetActiveScene().name;
+
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(escenaActual);
     }
 
-    void IrAMenu()
+    public void IrAMapa()
     {
+        string returnScene = TextTypingSession.ResolveReturnScene();
+
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(returnScene);
+    }
+
+    public void IrAMenu()
+    {
+        Time.timeScale = 1f;
+
+        Debug.Log("[GameOver] Volviendo al menú principal: " + escenaMenu);
         SceneManager.LoadScene(escenaMenu);
-    }
-
-    void IrAMapa()
-    {
-        SceneManager.LoadScene(escenaMapa);
     }
 }
