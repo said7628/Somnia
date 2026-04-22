@@ -24,7 +24,7 @@ public class InventarioConfiguracionUI : MonoBehaviour
 
         if (AudioManager.Instancia != null)
         {
-            nivelVoz = AudioManager.Instancia.GetMasterLevel();
+            nivelVoz = AudioManager.Instancia.GetSFXLevel();
             nivelMusica = AudioManager.Instancia.GetMusicLevel();
         }
 
@@ -125,9 +125,9 @@ public class InventarioConfiguracionUI : MonoBehaviour
         }
 
         if (AudioManager.Instancia != null)
-            AudioManager.Instancia.SetMasterLevel(nivel);
+            AudioManager.Instancia.SetSFXLevel(nivel);
 
-        Debug.Log("Voz: " + nivel);
+        Debug.Log("SFX: " + nivel);
     }
 
     private void ActualizarMusica(int nivel)

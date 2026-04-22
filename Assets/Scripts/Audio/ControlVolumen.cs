@@ -22,7 +22,7 @@ public class ControlVolumen : MonoBehaviour
 
         if (AudioManager.Instancia != null)
         {
-            nivelAudioGeneral = AudioManager.Instancia.GetMasterLevel();
+            nivelAudioGeneral = AudioManager.Instancia.GetSFXLevel();
             nivelMusica = AudioManager.Instancia.GetMusicLevel();
         }
 
@@ -53,7 +53,7 @@ public class ControlVolumen : MonoBehaviour
         ActualizarVisualAudio();
 
         if (AudioManager.Instancia != null)
-            AudioManager.Instancia.SetMasterLevel(nivelAudioGeneral);
+            AudioManager.Instancia.SetSFXLevel(nivelAudioGeneral);
     }
 
     public void SeleccionarNivelMusica(int nuevoNivel)

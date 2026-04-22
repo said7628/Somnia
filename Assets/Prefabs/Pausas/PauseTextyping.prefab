@@ -331,9 +331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60e1fc5d6be18e4485591e28df2540c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PantallaVolumenCanvas
-  nivelAudioGeneral: 5
+  nivelSFX: 5
   nivelMusica: 5
-  botonesAudio:
+  botonesSFX:
   - {fileID: 1446211607414984144}
   - {fileID: 2601438876218889596}
   - {fileID: 160023244297242590}
@@ -347,7 +347,7 @@ MonoBehaviour:
   - {fileID: 1895128371709752753}
   - {fileID: 7284345370581343212}
   - {fileID: 3841950674930613504}
-  barrasAudio:
+  barrasSFX:
   - {fileID: 8902402682160176074}
   - {fileID: 8352138923940500139}
   - {fileID: 267235439875798984}
@@ -360,7 +360,7 @@ MonoBehaviour:
   - {fileID: 2094001716947579596}
   - {fileID: 4538885098931498098}
   barraVacia: {fileID: 1975042100052581827, guid: e993a599018e6ba4aaf1f2313c85888c, type: 3}
-  barraLlenaAudio: {fileID: 9208957021499928951, guid: 3b49aca6492c3b740a6ef26b649562f4, type: 3}
+  barraLlenaSFX: {fileID: 9208957021499928951, guid: 3b49aca6492c3b740a6ef26b649562f4, type: 3}
   barraLlenaMusica: {fileID: -1475232516877450197, guid: 9d036dd52ab4b3e459f406de65354f98, type: 3}
 --- !u!1 &1300013175390173670
 GameObject:

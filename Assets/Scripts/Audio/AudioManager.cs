@@ -24,14 +24,14 @@ public class AudioManager : MonoBehaviour
         CargarVolumenes();
     }
 
-    // MASTER (audio general)
-    public void SetMasterLevel(int nivel)
+    // SFX
+    public void SetSFXLevel(int nivel)
     {
         nivel = Mathf.Clamp(nivel, 0, 5);
         float db = NivelADb(nivel);
 
-        audioMixer.SetFloat("MasterVolume", db);
-        PlayerPrefs.SetInt("NivelMaster", nivel);
+        audioMixer.SetFloat("SFXVolume", db);
+        PlayerPrefs.SetInt("NivelSFX", nivel);
     }
 
     // MÚSICA
@@ -44,10 +44,10 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetInt("NivelMusica", nivel);
     }
 
-    // GETTERS (para que UI se sincronice)
-    public int GetMasterLevel()
+    // GETTERS
+    public int GetSFXLevel()
     {
-        return PlayerPrefs.GetInt("NivelMaster", 5);
+        return PlayerPrefs.GetInt("NivelSFX", 5);
     }
 
     public int GetMusicLevel()
@@ -58,21 +58,21 @@ public class AudioManager : MonoBehaviour
     // Cargar al iniciar
     private void CargarVolumenes()
     {
-        SetMasterLevel(GetMasterLevel());
+        SetSFXLevel(GetSFXLevel());
         SetMusicLevel(GetMusicLevel());
     }
 
-    // 🎚️ Conversión a decibeles
+    // Conversión a decibeles
     private float NivelADb(int nivel)
     {
         switch (nivel)
         {
-            case 0: return -80f; // mute
+            case 0: return -80f;
             case 1: return -25f;
             case 2: return -18f;
             case 3: return -12f;
             case 4: return -6f;
-            case 5: return 0f;  // máximo
+            case 5: return 0f;
             default: return 0f;
         }
     }
