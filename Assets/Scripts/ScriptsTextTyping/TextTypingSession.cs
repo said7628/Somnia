@@ -13,6 +13,11 @@ public static class TextTypingSession
     public static int PersonalBest = 0;
     public static int PreviousPersonalBest = 0;
 
+    public static int CalculatedYatzis = 0;
+    public static int AwardedYatzis = 0;
+    public static int TotalYatzis = 0;
+    public static bool RewardSavedInBackend = false;
+
     public static bool Passed = false;
     public static bool WasPlayed = false;
 

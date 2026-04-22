@@ -102,12 +102,12 @@ namespace Somnia.UnityClient
             int age = GetPlayerAge();
 
             if (age >= 7 && age <= 10)
-                return 200;
+                return 1000;
 
             if (age >= 11)
-                return 500;
+                return 1700;
 
-            return 500;
+            return 1700;
         }
     }
 }

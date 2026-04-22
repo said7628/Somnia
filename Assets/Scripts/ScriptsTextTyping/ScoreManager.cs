@@ -1,117 +1,95 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    private const int PointsPerCorrectAnswer = 50;
+    private const int PenaltyPerWrongAnswer = 20;
+
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text multiplierText;
     [SerializeField] private Animator multiplicadorAnimator;
 
-    private int score = 0;
-    private int streak = 0;
-    private int multiplier = 1;
+    private int score;
+    private int streak;
+    private int currentMultiplier = 1;
 
-    private static readonly int triggerCorrecto = Animator.StringToHash("cambioMultiplicador");
-    private static readonly int triggerFallo = Animator.StringToHash("FalloMultiplicador");
+    private static readonly int TriggerCorrecto = Animator.StringToHash("cambioMultiplicador");
+    private static readonly int TriggerFallo = Animator.StringToHash("falloMultiplicador");
 
-    private const int basePoints = 50;
-
-    void Start()
+    private void Start()
     {
+        score = 0;
+        streak = 0;
+        currentMultiplier = 1;
         UpdateUI();
     }
 
     public void CorrectAnswer()
     {
         streak++;
-
-        int oldMultiplier = multiplier;
-
-        UpdateMultiplier();
-
-        Debug.Log("Streak: " + streak);
-        Debug.Log("Old Mult: " + oldMultiplier);
-        Debug.Log("New Mult: " + multiplier);
-
-        int pointsEarned = basePoints * multiplier;
-        score += pointsEarned;
+        currentMultiplier = ResolveMultiplier(streak);
+        score += PointsPerCorrectAnswer * currentMultiplier;
 
         UpdateUI();
 
-        //SOLO si el multiplicador SUBE
-        if (multiplier > oldMultiplier)
+        if (multiplicadorAnimator != null)
         {
-            Debug.Log("CAMBIO DE MULTIPLICADOR → ANIMACION");
-
-            if (multiplicadorAnimator != null)
-            {
-                multiplicadorAnimator.ResetTrigger(triggerFallo); // evita conflicto
-                multiplicadorAnimator.SetTrigger(triggerCorrecto);
-            }
-            else
-            {
-                Debug.LogError("Animator NO asignado");
-            }
+            multiplicadorAnimator.ResetTrigger(TriggerFallo);
+            multiplicadorAnimator.SetTrigger(TriggerCorrecto);
         }
     }
 
-public void WrongAnswer()
-{
-    streak = 0;
-    multiplier = 1;
-
-    UpdateUI();
-
-    if (multiplicadorAnimator != null)
+    public void WrongAnswer()
     {
-        multiplicadorAnimator.SetTrigger("falloMultiplicador");
-    }
-}
+        score = Mathf.Max(0, score - PenaltyPerWrongAnswer);
+        streak = 0;
+        currentMultiplier = 1;
 
-void ReactivarAnimator()
-{
-    multiplicadorAnimator.enabled = true;
-}
+        UpdateUI();
 
-    void UpdateMultiplier()
-    {
-        if (streak >= 200)
-            multiplier = 200;
-        else if (streak >= 150)
-            multiplier = 150;
-        else if (streak >= 100)
-            multiplier = 30;
-        else if (streak >= 75)
-            multiplier = 30;
-        else if (streak >= 50)
-            multiplier = 20;
-        else if (streak >= 30)
-            multiplier = 10;
-        else if (streak >= 15)
-            multiplier = 5;
-        else if (streak >= 5)
-            multiplier = 2;
-        else
-            multiplier = 1;
+        if (multiplicadorAnimator != null)
+        {
+            multiplicadorAnimator.ResetTrigger(TriggerCorrecto);
+            multiplicadorAnimator.SetTrigger(TriggerFallo);
+        }
     }
 
-    void UpdateUI()
+    private void UpdateUI()
     {
         if (scoreText != null)
+        {
             scoreText.text = score.ToString();
-        else
-            Debug.LogError("scoreText NO asignado");
+        }
 
         if (multiplierText != null)
-            multiplierText.text = "x" + multiplier;
-        else
-            Debug.LogError("multiplierText NO asignado");
+        {
+            multiplierText.text = $"x{currentMultiplier}";
+        }
+    }
+
+    private static int ResolveMultiplier(int currentStreak)
+    {
+        if (currentStreak >= 200) return 200;
+        if (currentStreak >= 150) return 100;
+        if (currentStreak >= 100) return 50;
+        if (currentStreak >= 75) return 30;
+        if (currentStreak >= 50) return 20;
+        if (currentStreak >= 30) return 10;
+        if (currentStreak >= 15) return 5;
+        if (currentStreak >= 5) return 2;
+        return 1;
     }
 
     public int GetStreak()
     {
         return streak;
+    }
+
+    public int GetMultiplier()
+    {
+        return currentMultiplier;
     }
 
     public int GetScore()

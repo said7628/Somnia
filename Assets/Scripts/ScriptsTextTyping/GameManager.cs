@@ -22,6 +22,7 @@ public class MathGameManager : MonoBehaviour
 
     private int correctAnswer;
     private bool endFlowTriggered;
+    private bool questionResolved;
 
     public enum GameMode
     {
@@ -81,6 +82,9 @@ public class MathGameManager : MonoBehaviour
 
     void GenerateQuestion()
     {
+        questionResolved = false;
+        EnableAllButtons();
+
         switch (gameMode)
         {
             case GameMode.SumaResta:
@@ -184,7 +188,7 @@ public class MathGameManager : MonoBehaviour
 
         switch (tipo)
         {
-            
+
             case 0:
                 {
                     int a = Random.Range(1, 10);
@@ -199,7 +203,7 @@ public class MathGameManager : MonoBehaviour
                     break;
                 }
 
-          
+
             case 1:
                 {
                     int start = Random.Range(1, 5);
@@ -216,7 +220,7 @@ public class MathGameManager : MonoBehaviour
                     break;
                 }
 
-          
+
             case 2:
                 {
                     int start = Random.Range(20, 50);
@@ -256,7 +260,7 @@ public class MathGameManager : MonoBehaviour
             questionText.text = "¿Cuál es MENOR?\n" + a + " o " + b;
         }
 
-       
+
         List<int> answers = new List<int>();
         answers.Add(a);
         answers.Add(b);
@@ -345,7 +349,7 @@ public class MathGameManager : MonoBehaviour
 
     void SelectAnswer(int selected, int index)
     {
-        if (timerScript == null || timerScriptFinished()) return;
+        if (timerScript == null || timerScriptFinished() || questionResolved) return;
 
         if (scoreManager == null)
         {
@@ -355,9 +359,10 @@ public class MathGameManager : MonoBehaviour
 
         if (selected == correctAnswer)
         {
+            questionResolved = true;
+            DisableAllButtons();
             scoreManager.CorrectAnswer();
 
-         
             if (answerAnimators != null && index < answerAnimators.Length)
             {
                 if (answerAnimators[index] != null)
@@ -365,7 +370,6 @@ public class MathGameManager : MonoBehaviour
                     Debug.Log("💥 Activando animación en botón: " + index);
                     answerAnimators[index].Play("Explode", 0, 0f);
 
-                    
                     if (answerAudioSources != null && index < answerAudioSources.Length)
                     {
                         if (answerAudioSources[index] != null)
@@ -380,7 +384,7 @@ public class MathGameManager : MonoBehaviour
                 }
             }
 
-           
+            CancelInvoke(nameof(GenerateQuestion));
             Invoke(nameof(GenerateQuestion), 1f);
         }
         else
@@ -396,6 +400,14 @@ public class MathGameManager : MonoBehaviour
         foreach (Button btn in answerButtons)
         {
             btn.interactable = false;
+        }
+    }
+
+    void EnableAllButtons()
+    {
+        foreach (Button btn in answerButtons)
+        {
+            btn.interactable = true;
         }
     }
 

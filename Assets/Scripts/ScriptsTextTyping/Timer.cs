@@ -1,28 +1,60 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private TMP_Text TimeText;
+    private const float FixedDurationSeconds = 150f;
 
-    private float tiempo = 180f; // 3 minutos
+    [FormerlySerializedAs("TimeText")]
+    [SerializeField] private TMP_Text timeText;
 
-    void Update()
+    private float tiempoRestante;
+
+    private void Awake()
     {
-        tiempo -= Time.deltaTime;
+        if (Time.timeScale <= 0f)
+        {
+            Time.timeScale = 1f;
+        }
 
-        if (tiempo < 0)
-            tiempo = 0;
-
-        int minutos = Mathf.FloorToInt(tiempo / 60);
-        int segundos = Mathf.FloorToInt(tiempo % 60);
-
-        TimeText.text = minutos.ToString("00") + ":" + segundos.ToString("00");
+        tiempoRestante = FixedDurationSeconds;
+        UpdateUI();
     }
 
-    // ✅ MÉTODO PÚBLICO (clave para el GameManager)
+    private void Update()
+    {
+        
+
+        if (tiempoRestante <= 0f)
+        {
+            return;
+        }
+
+        tiempoRestante -= Time.deltaTime;
+
+        if (tiempoRestante < 0f)
+        {
+            tiempoRestante = 0f;
+        }
+
+        UpdateUI();
+    }
+
     public float GetTime()
     {
-        return tiempo;
+        return tiempoRestante;
+    }
+
+    private void UpdateUI()
+    {
+        if (timeText == null)
+        {
+            return;
+        }
+
+        int minutos = Mathf.FloorToInt(tiempoRestante / 60f);
+        int segundos = Mathf.FloorToInt(tiempoRestante % 60f);
+        timeText.text = $"{minutos:00}:{segundos:00}";
     }
 }

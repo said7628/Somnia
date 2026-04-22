@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class ResultadoNivelUITextTyping : MonoBehaviour
 {
@@ -8,7 +8,8 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
     [SerializeField] private TMP_Text minScoreValue;
     [SerializeField] private TMP_Text maxScoreValue;
     [SerializeField] private TMP_Text estadoValue;
-
+    [SerializeField] private TMP_Text yatzisGanadosValue;
+    [SerializeField] private TMP_Text yatzisTotalesValue;
 
     private void Start()
     {
@@ -24,10 +25,17 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
         if (estadoValue != null)
             estadoValue.text = TextTypingSession.Passed ? "Completado" : "No completado";
 
+        if (yatzisGanadosValue != null)
+            yatzisGanadosValue.text = $"+{TextTypingSession.AwardedYatzis}";
+
+        if (yatzisTotalesValue != null)
+            yatzisTotalesValue.text = TextTypingSession.TotalYatzis.ToString();
+
         Debug.Log($"[TextTypingResultUI] Source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} sourceIslandScene={TextTypingSession.SourceIslandSceneName}");
         Debug.Log($"[TextTypingResultUI] Final score={TextTypingSession.CurrentScore}");
         Debug.Log($"[TextTypingResultUI] Previous personal best={TextTypingSession.PreviousPersonalBest}");
         Debug.Log($"[TextTypingResultUI] New personal best={TextTypingSession.PersonalBest}");
+        Debug.Log($"[TextTypingResultUI] Yatzis awarded={TextTypingSession.AwardedYatzis} total={TextTypingSession.TotalYatzis} persisted={TextTypingSession.RewardSavedInBackend}");
     }
 
     public void IrAMapa()

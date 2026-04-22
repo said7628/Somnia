@@ -56,6 +56,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tiendas_Islas/tiendaOjosIsla1.unity
     guid: 258b240fdfe6f6a418d431b06fb4c625
+  - enabled: 1
+    path: Assets/Scenes/Textyping/TextTyping2.unity
+    guid: c8d4e3ad5b6e82a45b7e08a4899c6312
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

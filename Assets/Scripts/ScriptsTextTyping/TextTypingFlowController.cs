@@ -100,23 +100,36 @@ public class TextTypingFlowController : MonoBehaviour
         TextTypingSession.Passed = passed;
         TextTypingSession.WasPlayed = true;
         TextTypingSession.EdadJugador = playerAge;
+        TextTypingSession.CalculatedYatzis = TextTypingYatzisCalculator.CalcularComponenteExtraRedondeada(scoreFinal, playerAge);
+        TextTypingSession.AwardedYatzis = 0;
+        TextTypingSession.TotalYatzis = 0;
+        TextTypingSession.RewardSavedInBackend = false;
 
         int previousBest = Mathf.Max(0, TextTypingSession.PersonalBest);
         int newBest = Mathf.Max(previousBest, scoreFinal);
-        bool progressSaved = false;
         bool completedAfterSave = passed;
 
         if (saveProgressToBackend)
         {
             int slot = Mathf.Max(1, GameSessionManager.Instance != null ? GameSessionManager.Instance.CurrentSlotNumber : 1);
             TextTypingProgressService.SaveAttemptResult saveResult = await TextTypingProgressService.SaveAttemptAsync(levelId, scoreFinal, passed, slot);
+            TextTypingProgressService.ScoreRewardResult scoreRewardResult = await TextTypingProgressService.SaveScoreAndRewardAsync(levelId, scoreFinal);
 
             previousBest = saveResult.PreviousMaxScore;
             newBest = saveResult.NewMaxScore;
-            progressSaved = saveResult.Success;
             completedAfterSave = saveResult.CompletedAfterSave;
 
-            Debug.Log($"[TextTypingFlow] Progress save status success={progressSaved} slot={slot} levelId={levelId}");
+            TextTypingSession.AwardedYatzis = scoreRewardResult.AwardedYatzis;
+            TextTypingSession.TotalYatzis = scoreRewardResult.TotalYatzis;
+            TextTypingSession.RewardSavedInBackend = scoreRewardResult.Success;
+
+            Debug.Log($"[TextTypingFlow] Progress save status success={saveResult.Success} slot={slot} levelId={levelId}");
+            Debug.Log($"[TextTypingFlow] Reward save status success={scoreRewardResult.Success} awarded={scoreRewardResult.AwardedYatzis} total={scoreRewardResult.TotalYatzis} backendMultiplier={scoreRewardResult.BackendMultiplier}");
+
+            if (!scoreRewardResult.Success)
+            {
+                Debug.LogWarning($"[TextTypingFlow] Could not persist yatzis reward in backend. reason={scoreRewardResult.Message}");
+            }
         }
         else
         {

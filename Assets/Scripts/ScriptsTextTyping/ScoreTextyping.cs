@@ -10,7 +10,6 @@ public class ResultadoNivelUI : MonoBehaviour
     [SerializeField] private TMP_Text minScoreValue;
     [SerializeField] private TMP_Text estadoValue;
 
-
     private void Start()
     {
         if (scoreValue != null)
@@ -30,18 +29,19 @@ public class ResultadoNivelUI : MonoBehaviour
 
         if (bonusValue != null)
         {
-            bonusValue.text = "+0";
+            bonusValue.text = $"+{TextTypingSession.AwardedYatzis}";
         }
 
         if (coinsValue != null)
         {
-            coinsValue.text = "0";
+            coinsValue.text = TextTypingSession.TotalYatzis.ToString();
         }
 
         Debug.Log($"[TextTypingResultSuccess] Source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} sourceIslandScene={TextTypingSession.SourceIslandSceneName}");
         Debug.Log($"[TextTypingResultSuccess] Final score={TextTypingSession.CurrentScore}");
         Debug.Log($"[TextTypingResultSuccess] Previous personal best={TextTypingSession.PreviousPersonalBest}");
         Debug.Log($"[TextTypingResultSuccess] New personal best={TextTypingSession.PersonalBest}");
+        Debug.Log($"[TextTypingResultSuccess] Yatzis awarded={TextTypingSession.AwardedYatzis} total={TextTypingSession.TotalYatzis} persisted={TextTypingSession.RewardSavedInBackend}");
         Debug.Log($"[TextTypingResultSuccess] Save progress completed. passed={TextTypingSession.Passed}");
         Debug.Log($"[TextTypingResultSuccess] Unlock next level evaluation for levelId={TextTypingSession.LastLevelId}");
     }
