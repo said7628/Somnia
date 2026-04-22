@@ -58,6 +58,7 @@ namespace Somnia.UnityClient
             BootstrapAuth = gameObject.AddComponent<GameBootstrapAuth>();
             BootstrapAuth.SetApiClient(ApiClient);
             BootstrapAuth.SetAutoStart(false);
+            BootstrapAuth.SetLoadFailSceneOnError(false);
 
             SlotsLoader = gameObject.AddComponent<SlotsLoader>();
             SlotsLoader.SetApiClient(ApiClient);

@@ -30,7 +30,7 @@ public class ResultFallidoManager : MonoBehaviour
 
         if (scoreValue != null)
         {
-            scoreValue.text = finalScore.ToString();
+            scoreValue.text = requiredMinimumScore.ToString();
         }
 
         bool passed = TextTypingPlayerRules.PasoNivel(playerAge, finalScore);
@@ -40,7 +40,7 @@ public class ResultFallidoManager : MonoBehaviour
         Debug.Log($"[TextTypingResultFail] player age={playerAge}");
         Debug.Log($"[TextTypingResultFail] required minimum score for fail screen={requiredMinimumScore}");
         Debug.Log($"[TextTypingResultFail] pass/fail recomputed from age+score={(passed ? "PASS" : "FAIL")}");
-        Debug.Log($"[TextTypingResultFail] fail screen displayed score={(scoreValue != null ? scoreValue.text : finalScore.ToString())}");
+        Debug.Log($"[TextTypingResultFail] fail screen displayed minimum required score={(scoreValue != null ? scoreValue.text : requiredMinimumScore.ToString())}");
     }
 
     private void IrAMapa()

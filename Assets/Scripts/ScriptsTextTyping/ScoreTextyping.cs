@@ -27,9 +27,11 @@ public class ResultadoNivelUI : MonoBehaviour
             estadoValue.text = TextTypingSession.Passed ? "Completado" : "No completado";
         }
 
+        int perfectBonus = TextTypingPlayerRules.ObtenerBonoPerfectoPorIsla(TextTypingSession.SourceIslandSceneName, TextTypingSession.LastLevelId);
+
         if (bonusValue != null)
         {
-            bonusValue.text = $"+{TextTypingSession.AwardedYatzis}";
+            bonusValue.text = $"+{perfectBonus}";
         }
 
         if (coinsValue != null)
@@ -41,6 +43,7 @@ public class ResultadoNivelUI : MonoBehaviour
         Debug.Log($"[TextTypingResultSuccess] Final score={TextTypingSession.CurrentScore}");
         Debug.Log($"[TextTypingResultSuccess] Previous personal best={TextTypingSession.PreviousPersonalBest}");
         Debug.Log($"[TextTypingResultSuccess] New personal best={TextTypingSession.PersonalBest}");
+        Debug.Log($"[TextTypingResultSuccess] Perfect bonus displayed={perfectBonus}");
         Debug.Log($"[TextTypingResultSuccess] Yatzis awarded={TextTypingSession.AwardedYatzis} total={TextTypingSession.TotalYatzis} persisted={TextTypingSession.RewardSavedInBackend}");
         Debug.Log($"[TextTypingResultSuccess] Save progress completed. passed={TextTypingSession.Passed}");
         Debug.Log($"[TextTypingResultSuccess] Unlock next level evaluation for levelId={TextTypingSession.LastLevelId}");

@@ -19,6 +19,7 @@ namespace Somnia.UnityClient
         [SerializeField] private bool loadFailSceneOnError = true;
         [SerializeField] private string failSceneName = "Fail";
         private bool failSceneTriggered;
+        private bool isBootstrapping;
 
         private void Start()
         {
@@ -30,6 +31,12 @@ namespace Somnia.UnityClient
 
         public IEnumerator Bootstrap()
         {
+            if (isBootstrapping)
+            {
+                yield break;
+            }
+
+            isBootstrapping = true;
             IsReady = false;
             LastError = null;
             failSceneTriggered = false;
@@ -37,6 +44,7 @@ namespace Somnia.UnityClient
             if (apiClient == null)
             {
                 Fail("No hay GameApiClient configurado");
+                isBootstrapping = false;
                 yield break;
             }
 
@@ -44,6 +52,7 @@ namespace Somnia.UnityClient
             if (string.IsNullOrWhiteSpace(resolvedTicket))
             {
                 Fail("No se recibió game ticket");
+                isBootstrapping = false;
                 yield break;
             }
 
@@ -78,7 +87,7 @@ namespace Somnia.UnityClient
 
                     if (string.IsNullOrWhiteSpace(auth.tokens.accessToken) || string.IsNullOrWhiteSpace(auth.tokens.refreshToken))
                     {
-                       
+
                         Fail("Tokens inválidos en respuesta de autenticación");
                         return;
                     }
@@ -89,6 +98,8 @@ namespace Somnia.UnityClient
                 onError: (err) => Fail(string.IsNullOrWhiteSpace(err) ? "Falló la llamada de intercambio de ticket" : err),
                 withAuth: false
             );
+
+            isBootstrapping = false;
         }
 
         private void Fail(string error)
@@ -140,6 +151,11 @@ namespace Somnia.UnityClient
         public void SetFailScene(string sceneName)
         {
             failSceneName = sceneName;
+        }
+
+        public void SetLoadFailSceneOnError(bool enabled)
+        {
+            loadFailSceneOnError = enabled;
         }
     }
 }

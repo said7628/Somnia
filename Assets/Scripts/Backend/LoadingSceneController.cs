@@ -14,6 +14,7 @@ namespace Somnia.UnityClient
         [SerializeField] private string gameTicket = string.Empty;
 
         private bool isRunning;
+        private bool sceneTransitionTriggered;
 
         private void Start()
         {
@@ -42,7 +43,7 @@ namespace Somnia.UnityClient
             if (!string.IsNullOrEmpty(services.BootstrapAuth.LastError))
             {
                 services.SetBootstrapError(services.BootstrapAuth.LastError);
-                SceneManager.LoadScene(failSceneName);
+                LoadSceneOnce(failSceneName);
                 yield break;
             }
 
@@ -51,18 +52,29 @@ namespace Somnia.UnityClient
             if (session == null)
             {
                 services.SetBootstrapError("No existe GameSessionManager.");
-                SceneManager.LoadScene(failSceneName);
+                LoadSceneOnce(failSceneName);
                 yield break;
             }
 
             if (!session.HasSession())
             {
                 services.SetBootstrapError("No se pudo crear una sesion valida.");
-                SceneManager.LoadScene(failSceneName);
+                LoadSceneOnce(failSceneName);
                 yield break;
             }
 
-            SceneManager.LoadScene(successSceneName);
+            LoadSceneOnce(successSceneName);
+        }
+
+        private void LoadSceneOnce(string sceneName)
+        {
+            if (sceneTransitionTriggered)
+            {
+                return;
+            }
+
+            sceneTransitionTriggered = true;
+            SceneManager.LoadScene(sceneName);
         }
     }
 }
