@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverMenu : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     [Header("Escenas")]
     [SerializeField] private string escenaMenu = "Pantalla_principal";
