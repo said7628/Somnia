@@ -39,7 +39,8 @@ public class TextTypingFlowController : MonoBehaviour
 
         TextTypingSession.TrackLevelContext(resolvedLevelId, activeSceneName);
 
-        Debug.Log($"[TextTypingFlow] Source level scene={activeSceneName} levelId={resolvedLevelId}");
+        int startSlot = Mathf.Max(1, GameSessionManager.Instance != null ? GameSessionManager.Instance.CurrentSlotNumber : 1);
+        Debug.Log($"[TextTypingFlow] Enter level -> slot={startSlot} levelId={resolvedLevelId} scene={activeSceneName}");
 
         await LoadPersonalBestForHudAsync(resolvedLevelId);
     }

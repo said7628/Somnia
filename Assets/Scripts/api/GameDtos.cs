@@ -80,6 +80,7 @@ namespace Somnia.UnityClient
         public EquipamientoDto equipamiento;
         public InventarioItemDto[] inventario_cosmeticos;
         public ProgresoDto[] progreso;
+        public ProgresoDto[] progress;
         public int[] niveles_completados;
         public CompraDto[] compras;
     }

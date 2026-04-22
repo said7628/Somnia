@@ -8,6 +8,8 @@ using Somnia.Economy.Core;
 using Somnia.Economy.DTOs;
 using Somnia.Economy.Services;
 using Somnia.UnityClient;
+using UnityEngine.UIElements;
+using System.Linq;
 
 public class IslandLevelManager : MonoBehaviour
 {
@@ -48,8 +50,6 @@ public class IslandLevelManager : MonoBehaviour
     [Header("Config")]
     [SerializeField] private bool lockLevelsWithoutScene = true;
     [SerializeField] private bool verboseLogs = true;
-
-    [Header("Toasts opcionales")]
     [SerializeField] private ToastMessage toastMessage;
     [SerializeField] private ToastUI toastUI;
 
@@ -61,8 +61,15 @@ public class IslandLevelManager : MonoBehaviour
     private readonly HashSet<int> playedLevels = new HashSet<int>();
     private readonly HashSet<int> completedLevels = new HashSet<int>();
 
-    public bool IsInitialized => isInitialized;
-    public bool IsBusy => isLoading;
+    public bool IsInitialized
+    {
+        get { return isInitialized; }
+    }
+
+    public bool IsBusy
+    {
+        get { return isLoading; }
+    }
 
     private void Awake()
     {
@@ -78,6 +85,8 @@ public class IslandLevelManager : MonoBehaviour
     private async void Start()
     {
         currentSlot = ResolveCurrentSlot();
+        Log("Current slot resolved for island flow=" + currentSlot);
+        Log("Active scene on island start=" + SceneManager.GetActiveScene().name);
         TryResolveToast();
 
         bool resolved = await ResolveGameDataServiceWithRecoveryAsync();
@@ -163,13 +172,6 @@ public class IslandLevelManager : MonoBehaviour
             return;
         }
 
-        if (gameDataService == null)
-        {
-            Debug.LogWarning("IslandLevelManager: gameDataService es null en LoadStateAsync.");
-            ApplyFallbackRules();
-            return;
-        }
-
         isLoading = true;
         isInitialized = false;
 
@@ -197,7 +199,8 @@ public class IslandLevelManager : MonoBehaviour
                 return;
             }
 
-            ProgresoDto[] progreso = response.data.progreso;
+            ProgresoDto[] progreso = response.data.progreso ?? response.data.progress;
+            Log("GetSlotDetailAsync response success=" + response.success + " slot=" + currentSlot + " progreso_count=" + (progreso != null ? progreso.Length : 0));
 
             if (progreso != null)
             {
@@ -213,6 +216,12 @@ public class IslandLevelManager : MonoBehaviour
                         completedLevels.Add(p.id_nivel);
                     }
                 }
+            }
+
+            if (progreso != null && progreso.Length > 0)
+            {
+                string levelIds = string.Join(",", Array.ConvertAll(progreso, p => p != null ? p.id_nivel.ToString() : "null"));
+                Log("GetSlotDetailAsync progress level ids=[" + levelIds + "]");
             }
 
             Log("loaded progress for level 1 -> completed=" + completedLevels.Contains(1));
@@ -292,6 +301,7 @@ public class IslandLevelManager : MonoBehaviour
 
         TextTypingSession.LevelId = dbLevelId;
         TextTypingSession.LevelName = level.sceneName;
+        Log("Entering level -> slot=" + currentSlot + " levelId=" + dbLevelId + " scene=" + level.sceneName);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Vector3 returnPosition = player != null ? player.transform.position : Vector3.zero;
@@ -303,7 +313,6 @@ public class IslandLevelManager : MonoBehaviour
         string normalizedScene = NormalizeSceneName(level.sceneName);
         Log("Cargando escena: " + normalizedScene + " with dbLevelId=" + dbLevelId);
         Log("Source island scene=" + sourceIslandScene + " return scene=" + TextTypingSession.ResolveReturnScene() + " return position=" + returnPosition);
-
         SceneManager.LoadScene(normalizedScene);
     }
 
@@ -328,6 +337,7 @@ public class IslandLevelManager : MonoBehaviour
             isLoading = true;
 
             var progressResponse = await gameDataService.LoadProgressAsync(currentSlot);
+
             List<ProgressData> updatedProgress = new List<ProgressData>();
 
             if (progressResponse != null && progressResponse.success && progressResponse.data != null)
@@ -366,7 +376,9 @@ public class IslandLevelManager : MonoBehaviour
                 });
             }
 
+            Debug.Log("[Progress] Saving -> slot=" + currentSlot + " levelId=" + dbLevelId + " score=0 completo=0");
             var saveResponse = await gameDataService.SaveProgressAsync(currentSlot, updatedProgress);
+            Debug.Log("[Progress] Save response -> success=" + (saveResponse != null && saveResponse.success) + " message=" + (saveResponse != null ? saveResponse.message : "null") + " levelId=" + dbLevelId + " slot=" + currentSlot + " score=0 completo=0");
 
             if (saveResponse == null || !saveResponse.success)
             {
@@ -377,6 +389,14 @@ public class IslandLevelManager : MonoBehaviour
                 );
             }
 
+            var verify = await gameDataService.LoadProgressAsync(currentSlot);
+            int verifyCount = verify != null && verify.data != null ? verify.data.Count : 0;
+            string ids = verify != null && verify.data != null
+                ? string.Join(",", verify.data.Select(x => x != null ? x.id_nivel.ToString() : "null"))
+                : "<none>";
+            bool hasLevel = verify != null && verify.success && verify.data != null && verify.data.Any(x => x != null && x.id_nivel == dbLevelId);
+            Log("MarkLevelAsPlayed verify reload -> entries=" + verifyCount + " levelIds=[" + ids + "] hasLevel=" + hasLevel + " targetLevel=" + dbLevelId);
+
             playedLevels.Add(dbLevelId);
             ApplyUnlockRules();
             RefreshVisuals();
@@ -385,6 +405,7 @@ public class IslandLevelManager : MonoBehaviour
         {
             Debug.LogError("IslandLevelManager: error guardando progreso: " + ex.Message);
 
+            // Para no frenar el flujo, lo marcamos localmente
             playedLevels.Add(dbLevelId);
             ApplyUnlockRules();
             RefreshVisuals();
@@ -423,6 +444,8 @@ public class IslandLevelManager : MonoBehaviour
             level.isUnlocked = false;
         }
 
+        // Logica especifica que me pediste:
+        // Nivel 1 siempre desbloqueado
         LevelEntry level1 = GetLevel(1);
         if (level1 == null && levels.Length > 0)
         {
@@ -434,6 +457,7 @@ public class IslandLevelManager : MonoBehaviour
             level1.isUnlocked = true;
         }
 
+        // Nivel 2 solo si el nivel 1 fue aprobado
         LevelEntry level2 = GetLevel(2);
         if (level2 == null && levels.Length > 1)
         {
@@ -448,6 +472,7 @@ public class IslandLevelManager : MonoBehaviour
             Log("final locked/unlocked state for level 2 -> " + (level2.isUnlocked ? "UNLOCKED" : "LOCKED"));
         }
 
+        // Nivel 3 bloqueado por ahora
         if (levels.Length > 2 && levels[2] != null)
         {
             levels[2].isUnlocked = false;
@@ -527,24 +552,16 @@ public class IslandLevelManager : MonoBehaviour
     private void ShowToast(string message)
     {
         TryResolveToast();
-
         Debug.Log("[IslandLevelManager.Toast] " + message);
-
         if (toastMessage != null)
         {
             toastMessage.Show(message);
-            Log("toast shown through ToastMessage");
-            return;
         }
-
-        if (toastUI != null)
+        else if (toastUI != null)
         {
             toastUI.ShowToast(message);
-            Log("toast shown through ToastUI");
-            return;
         }
-
-        Debug.LogWarning("[IslandLevelManager.Toast] No hay ToastMessage ni ToastUI en la escena.");
+        Log("toast shown for blocked level");
     }
 
     private void TryResolveToast()

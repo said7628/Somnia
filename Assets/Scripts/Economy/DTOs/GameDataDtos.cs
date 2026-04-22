@@ -23,6 +23,19 @@ namespace Somnia.Economy.DTOs
     }
 
     [Serializable]
+    public class ProgressSaveResult
+    {
+        public bool success;
+        public string message;
+        public int id_partida;
+        public int slot_numero;
+        public int id_nivel;
+        public int completo;
+        public int puntuacion_maxima;
+        public string ultima_actualizacion;
+    }
+
+    [Serializable]
     public class UpdateEquipmentRequest
     {
         public int id_item_cara;

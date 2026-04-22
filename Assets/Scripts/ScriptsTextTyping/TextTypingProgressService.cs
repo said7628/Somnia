@@ -31,7 +31,9 @@ public static class TextTypingProgressService
             return 0;
         }
 
-        var loadResponse = await gameDataService.LoadProgressAsync(Mathf.Max(1, slot));
+        int validSlot = Mathf.Max(1, slot);
+        Debug.Log($"[TextTypingProgress] LoadPersonalBest start slot={validSlot} levelId={levelId}");
+        var loadResponse = await gameDataService.LoadProgressAsync(validSlot);
         if (loadResponse == null || !loadResponse.success)
         {
             Debug.LogWarning($"[TextTypingProgress] LoadProgress failed while reading best. slot={slot} message={(loadResponse != null ? loadResponse.message : "null")}");
@@ -43,7 +45,8 @@ public static class TextTypingProgressService
             : null;
 
         int loadedBest = existing != null ? Mathf.Max(0, existing.puntuacion_maxima) : 0;
-        Debug.Log($"[TextTypingProgress] loaded personal best from backend levelId={levelId} slot={Mathf.Max(1, slot)} best={loadedBest}");
+        int count = loadResponse.data != null ? loadResponse.data.Count : 0;
+        Debug.Log($"[TextTypingProgress] loaded personal best from backend levelId={levelId} slot={validSlot} best={loadedBest} entries={count}");
         return loadedBest;
     }
 
@@ -71,6 +74,7 @@ public static class TextTypingProgressService
         }
 
         int validSlot = Mathf.Max(1, slot);
+        Debug.Log($"[TextTypingProgress] SaveAttempt load-before-save slot={validSlot} levelId={levelId}");
         var loadResponse = await gameDataService.LoadProgressAsync(validSlot);
         if (loadResponse == null || !loadResponse.success)
         {
@@ -106,10 +110,24 @@ public static class TextTypingProgressService
         existing.puntuacion_maxima = result.NewMaxScore;
         existing.ultimo_intento = DateTime.UtcNow;
 
+        Debug.Log($"[Progress] Saving -> slot={validSlot} levelId={levelId} score={existing.puntuacion_maxima} completo={(existing.completo ? 1 : 0)}");
+
         var saveResponse = await gameDataService.SaveProgressAsync(validSlot, updatedProgress);
         result.Success = saveResponse != null && saveResponse.success;
         result.CompletedAfterSave = existing.completo;
+        Debug.Log($"[Progress] Save response -> success={result.Success} message={(saveResponse != null ? saveResponse.message : "null")} levelId={levelId} slot={validSlot} score={existing.puntuacion_maxima} completo={(result.CompletedAfterSave ? 1 : 0)}");
         Debug.Log($"[TextTypingProgress] persisted personal best save {(result.Success ? "success" : "failure")} levelId={levelId} slot={validSlot} completed={result.CompletedAfterSave} message={(saveResponse != null ? saveResponse.message : "null")}");
+
+        var verifyResponse = await gameDataService.LoadProgressAsync(validSlot);
+        int verifyCount = verifyResponse != null && verifyResponse.data != null ? verifyResponse.data.Count : 0;
+        bool existsAfterSave = verifyResponse != null
+            && verifyResponse.success
+            && verifyResponse.data != null
+            && verifyResponse.data.Any(p => p != null && p.id_nivel == levelId);
+        string ids = verifyResponse != null && verifyResponse.data != null
+            ? string.Join(",", verifyResponse.data.Where(p => p != null).Select(p => p.id_nivel))
+            : "<none>";
+        Debug.Log($"[TextTypingProgress] verify-after-save slot={validSlot} entries={verifyCount} levelIds=[{ids}] hasLevel={existsAfterSave} targetLevel={levelId}");
 
         return result;
     }

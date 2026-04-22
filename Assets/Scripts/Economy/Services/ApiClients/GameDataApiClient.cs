@@ -15,7 +15,7 @@ namespace Somnia.Economy.Services.ApiClients
         private readonly string _baseUrl;
         private readonly IPlayerSessionProvider _session;
 
-      
+
         private const bool EnableHttpDebugLogs = true;
 
         public GameDataApiClient(string baseUrl, IPlayerSessionProvider session)
@@ -81,8 +81,176 @@ namespace Somnia.Economy.Services.ApiClients
                 : response;
         }
 
-        public Task<ApiResponse<List<ProgressData>>> SaveProgressAsync(int slotNumber, SaveProgressRequest request, CancellationToken ct = default) =>
-            SendEnvelopeAsync<List<ProgressData>>($"{_baseUrl}/game/slots/{slotNumber}/progress", UnityWebRequest.kHttpVerbPUT, request, ct);
+        public async Task<ApiResponse<List<ProgressData>>> SaveProgressAsync(int slotNumber, SaveProgressRequest request, CancellationToken ct = default)
+        {
+            List<ProgressData> entries = request?.progreso ?? new List<ProgressData>();
+            if (entries.Count == 0)
+            {
+                Debug.Log($"[Progress][HTTP] SaveProgressAsync(slot={slotNumber}) skipped: request.progreso vacio.");
+                return ApiResponse<List<ProgressData>>.Ok(new List<ProgressData>(), "Sin cambios de progreso para guardar.");
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                ProgressData entry = entries[i];
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                ApiResponse<ProgressSaveResult> result = await SaveProgressEntryAsync(slotNumber, entry, ct);
+                if (result == null || !result.success)
+                {
+                    return ApiResponse<List<ProgressData>>.Fail(
+                        result?.error?.code ?? "save_progress_error",
+                        result?.message ?? $"No fue posible guardar progreso para nivel {entry.id_nivel}."
+                    );
+                }
+            }
+
+            return ApiResponse<List<ProgressData>>.Ok(entries, "Progreso guardado por entradas.");
+        }
+
+        public async Task<ApiResponse<ProgressSaveResult>> SaveProgressEntryAsync(int slotNumber, ProgressData progress, CancellationToken ct = default)
+        {
+            if (progress == null)
+            {
+                return ApiResponse<ProgressSaveResult>.Fail("invalid_progress", "El progreso a guardar es nulo.");
+            }
+
+            var primaryPayload = new SaveProgressPrimaryRequest
+            {
+                id_nivel = progress.id_nivel,
+                idNivel = progress.id_nivel,
+                puntuacion_maxima = Mathf.Max(0, progress.puntuacion_maxima),
+                puntuacionMaxima = Mathf.Max(0, progress.puntuacion_maxima),
+                score = Mathf.Max(0, progress.puntuacion_maxima),
+                completo = progress.completo,
+                completed = progress.completo,
+                is_completed = progress.completo,
+                passed = progress.completo
+            };
+
+            string primaryPayloadJson = JsonUtility.ToJson(primaryPayload);
+            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/game/slots/{{slot}}/progress json={primaryPayloadJson}");
+
+            ApiResponse<ProgressSaveResult> response = await SendProgressSaveWithValidationAsync(
+                $"{_baseUrl}/game/slots/{slotNumber}/progress",
+                primaryPayloadJson,
+                progress,
+                ct);
+
+            Debug.Log($"[Progress][HTTP] Endpoint result -> endpoint=/game/slots/{{slot}}/progress success={response.success} message={response.message}");
+
+            if (response.success)
+            {
+                Debug.Log("[Progress][HTTP] SaveProgress used primary endpoint: /game/slots/{slotNumber}/progress");
+                return response;
+            }
+
+            var fallbackPayload = new SaveProgressFallbackRequest
+            {
+                slot_numero = slotNumber,
+                slotNumber = slotNumber,
+                id_nivel = progress.id_nivel,
+                idNivel = progress.id_nivel,
+                puntuacion_maxima = Mathf.Max(0, progress.puntuacion_maxima),
+                puntuacionMaxima = Mathf.Max(0, progress.puntuacion_maxima),
+                score = Mathf.Max(0, progress.puntuacion_maxima),
+                completo = progress.completo,
+                completed = progress.completo,
+                is_completed = progress.completo,
+                passed = progress.completo
+            };
+
+            string fallbackPayloadJson = JsonUtility.ToJson(fallbackPayload);
+            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/game/progress/save json={fallbackPayloadJson}");
+
+            response = await SendProgressSaveWithValidationAsync(
+                $"{_baseUrl}/game/progress/save",
+                fallbackPayloadJson,
+                progress,
+                ct);
+
+            Debug.Log($"[Progress][HTTP] Endpoint result -> endpoint=/game/progress/save success={response.success} message={response.message}");
+
+            if (response.success)
+            {
+                Debug.Log("[Progress][HTTP] SaveProgress fallback used: /game/progress/save");
+                return response;
+            }
+
+            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/progress/save json={fallbackPayloadJson}");
+            response = await SendProgressSaveWithValidationAsync(
+                $"{_baseUrl}/progress/save",
+                fallbackPayloadJson,
+                progress,
+                ct);
+
+            Debug.Log($"[Progress][HTTP] Endpoint result -> endpoint=/progress/save success={response.success} message={response.message}");
+            if (response.success)
+            {
+                Debug.Log("[Progress][HTTP] SaveProgress fallback used: /progress/save");
+            }
+
+            return response;
+        }
+
+        private async Task<ApiResponse<ProgressSaveResult>> SendProgressSaveWithValidationAsync(
+            string url,
+            string jsonPayload,
+            ProgressData expected,
+            CancellationToken ct)
+        {
+            try
+            {
+                Debug.Log($"[Progress][HTTP] POST {url} | payload={jsonPayload}");
+                using var req = UnityWebRequestExtensions.CreateJsonRequest(url, UnityWebRequest.kHttpVerbPOST, jsonPayload, _session.Token);
+                var body = await req.SendAsync(ct);
+                long statusCode = req.responseCode;
+
+                Debug.Log($"[Progress][HTTP] POST {url} -> status={(int)statusCode} body={body}");
+
+                bool bodyExplicitlyFailed = !string.IsNullOrWhiteSpace(body) && body.IndexOf("\"success\":false", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (bodyExplicitlyFailed)
+                {
+                    return ApiResponse<ProgressSaveResult>.Fail("save_progress_error", "Backend respondio success=false.");
+                }
+
+                ApiResponse<ProgressSaveResult> envelope = JsonUtility.FromJson<ApiResponse<ProgressSaveResult>>(body);
+                if (envelope != null && envelope.success)
+                {
+                    return envelope;
+                }
+
+                ProgressSaveResult direct = JsonUtility.FromJson<ProgressSaveResult>(body);
+                if (direct != null)
+                {
+                    bool accepted = direct.success
+                        || direct.id_partida > 0
+                        || (direct.id_nivel > 0 && direct.id_nivel == expected.id_nivel)
+                        || direct.slot_numero > 0;
+
+                    if (accepted)
+                    {
+                        return ApiResponse<ProgressSaveResult>.Ok(direct, direct.message ?? "OK");
+                    }
+                }
+
+                string message = envelope?.message;
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    message = "Respuesta no valida en guardado de progreso.";
+                }
+
+                return ApiResponse<ProgressSaveResult>.Fail("invalid_payload", message);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"GameDataApiClient POST error [{url}]: {ex.Message}");
+                return ApiResponse<ProgressSaveResult>.Fail("network_error", ex.Message);
+            }
+        }
 
         public Task<ApiResponse<EquippedItemsData>> UpdateEquipmentAsync(int slotNumber, UpdateEquipmentRequest request, CancellationToken ct = default) =>
             SendEnvelopeAsync<EquippedItemsData>($"{_baseUrl}/game/slots/{slotNumber}/equipment", UnityWebRequest.kHttpVerbPUT, request, ct);
@@ -152,6 +320,36 @@ namespace Somnia.Economy.Services.ApiClients
                 Debug.LogWarning($"GameDataApiClient {method} error [{url}]: {ex.Message}");
                 return ApiResponse<T>.Fail("network_error", ex.Message);
             }
+        }
+
+        [Serializable]
+        private class SaveProgressPrimaryRequest
+        {
+            public int id_nivel;
+            public int idNivel;
+            public int puntuacion_maxima;
+            public int puntuacionMaxima;
+            public int score;
+            public bool completo;
+            public bool completed;
+            public bool is_completed;
+            public bool passed;
+        }
+
+        [Serializable]
+        private class SaveProgressFallbackRequest
+        {
+            public int slot_numero;
+            public int slotNumber;
+            public int id_nivel;
+            public int idNivel;
+            public int puntuacion_maxima;
+            public int puntuacionMaxima;
+            public int score;
+            public bool completo;
+            public bool completed;
+            public bool is_completed;
+            public bool passed;
         }
     }
 }
