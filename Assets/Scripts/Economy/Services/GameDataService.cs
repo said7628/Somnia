@@ -51,6 +51,7 @@ namespace Somnia.Economy.Services
 
         public async Task<ApiResponse<SlotDetailResponse>> InitializeNewGameAsync(int slotNumber, string slotName, CancellationToken ct = default)
         {
+            Debug.Log("[NewGame] Initial Yatzis = 0");
             var createResult = await CreateSlotAsync(slotNumber, slotName, ct);
             Debug.Log($"[GameDataService] CreateSlot slot={slotNumber} success={createResult.success} message={createResult.message}");
             if (!createResult.success)
@@ -82,7 +83,13 @@ namespace Somnia.Economy.Services
                 return initResult;
             }
 
-            var slotBalance = initResult.data?.slot?.yatzis ?? 0;
+            var finalDetail = await GetSlotDetailAsync(slotNumber, ct);
+            var backendYatzis = finalDetail.success && finalDetail.data != null
+                ? Mathf.Max(0, finalDetail.data.slot != null ? finalDetail.data.slot.yatzis : 0)
+                : Mathf.Max(0, initResult.data?.slot?.yatzis ?? 0);
+            Debug.Log($"[NewGame] Backend Yatzis received = {backendYatzis}");
+
+            var slotBalance = backendYatzis;
             if (slotBalance != 0)
             {
                 var delta = -slotBalance;
@@ -91,9 +98,18 @@ namespace Somnia.Economy.Services
                 {
                     Debug.LogWarning($"[GameDataService] Economy balance sync failed for slot={slotNumber}: {balanceSync.message}");
                 }
+                else
+                {
+                    finalDetail = await GetSlotDetailAsync(slotNumber, ct);
+                }
             }
 
-            return await GetSlotDetailAsync(slotNumber, ct);
+            if (finalDetail.success && finalDetail.data != null)
+            {
+                return finalDetail;
+            }
+
+            return initResult;
         }
 
         public Task<ApiResponse<EconomyBalanceResponse>> GetBalanceAsync(CancellationToken ct = default) => _economyService.GetBalanceAsync(ct);

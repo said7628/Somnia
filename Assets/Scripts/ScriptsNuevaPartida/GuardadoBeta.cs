@@ -259,6 +259,7 @@ public class GuardadoBeta : MonoBehaviour
     private IEnumerator CrearNuevaPartidaBackend(int slotNumber)
     {
         Debug.Log($"GuardadoBeta: CrearNuevaPartidaBackend slot={slotNumber} BEFORE create occupied=[{FormatOccupiedSlots()}]");
+        Debug.Log("[NewGame] Initial Yatzis = 0");
         SetBusyState(true, $"Creando slot {slotNumber}");
 
         string slotName = GetDefaultSlotName(slotNumber);
@@ -276,6 +277,9 @@ public class GuardadoBeta : MonoBehaviour
 
         var response = task.Result;
         Debug.Log($"GuardadoBeta: Create/init response slot={slotNumber} success={response.success} message={response.message}");
+        int backendYatzis = Mathf.Max(0, response.data?.slot != null ? response.data.slot.yatzis : 0);
+        Debug.Log($"[NewGame] Backend Yatzis received = {backendYatzis}");
+        Memoria_Islas.misMonedas = backendYatzis;
 
         if (!response.success)
         {

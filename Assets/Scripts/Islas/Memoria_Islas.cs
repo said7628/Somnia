@@ -3,8 +3,8 @@ using UnityEngine;
 public class Memoria_Islas : MonoBehaviour
 {
     // El post-it para saber de que isla venimos
-    public static string islaDeDondeVengo = "Isla1"; 
+    public static string islaDeDondeVengo = "Isla1";
 
-    // El post-it para nuestra monedas que tenemos hipoteticamente hasta que se conecte la BD (Le ponemos 200 de prueba)
-    public static int misMonedas = 200; 
+    // Fallback local: jugador nuevo inicia siempre en 0 mientras carga backend.
+    public static int misMonedas = 0;
 }

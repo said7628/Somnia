@@ -1177,7 +1177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f90edb030d3a047a53051caf8f6203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandLevelManager
-  economyModuleBehaviour: {fileID: 0}
   levels:
   - dbLevelId: 1
     sceneName: '"TextTyping"'
@@ -1199,8 +1198,9 @@ MonoBehaviour:
     playedVisual: {fileID: 0}
   lockLevelsWithoutScene: 1
   verboseLogs: 1
-  toastMessage: {fileID: 0}
-  toastUI: {fileID: 517766215}
+  toastMessage: {fileID: 1325891925}
+  yatzisTotalText: {fileID: 754175333}
+  yatzisTextObjectName: Yatzis
 --- !u!4 &247802131
 Transform:
   m_ObjectHideFlags: 0
@@ -2728,7 +2728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3000
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59ce6ccf1ef3ec34bb02871525373d57, type: 2}
   m_sharedMaterial: {fileID: 1432872219395422882, guid: 59ce6ccf1ef3ec34bb02871525373d57, type: 2}
@@ -4820,6 +4820,57 @@ Transform:
   - {fileID: 1478769537}
   - {fileID: 1996796872}
   - {fileID: 535407719}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1325891924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1325891926}
+  - component: {fileID: 1325891925}
+  m_Layer: 0
+  m_Name: toast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1325891925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325891924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be314f84657133e459ec6fd6fdfd7fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.UnityClient.ToastMessage
+  root: {fileID: 0}
+  messageText: {fileID: 0}
+  tmpMessageText: {fileID: 0}
+  defaultDuration: 2.8
+  minToastSize: {x: 860, y: 150}
+  minFontSize: 40
+  forceOnTop: 1
+--- !u!4 &1325891926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325891924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1349.2305, y: 1166.1628, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1340567704
@@ -7231,3 +7282,4 @@ SceneRoots:
   - {fileID: 1167652455}
   - {fileID: 1340567705}
   - {fileID: 1401869936}
+  - {fileID: 1325891926}
