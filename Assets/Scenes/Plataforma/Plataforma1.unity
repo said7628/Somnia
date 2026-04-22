@@ -438,6 +438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pausa
       objectReference: {fileID: 0}
+    - target: {fileID: 3241188391092883594, guid: c8a370bb78e5e764a9c3a342513fc374, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -458,6 +462,10 @@ PrefabInstance:
     - target: {fileID: 5930601691959675352, guid: dc77e6050676b1d4aabfe5bbe8589e7c, type: 3}
       propertyPath: m_Name
       value: HUDPlataforma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5930601691959675352, guid: dc77e6050676b1d4aabfe5bbe8589e7c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6169772245932349068, guid: dc77e6050676b1d4aabfe5bbe8589e7c, type: 3}
       propertyPath: m_Pivot.x
