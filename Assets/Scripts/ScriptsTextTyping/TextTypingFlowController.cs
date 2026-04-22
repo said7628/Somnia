@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Somnia.UnityClient;
 using UnityEngine;
@@ -99,7 +98,7 @@ public class TextTypingFlowController : MonoBehaviour
         TextTypingSession.MinimumScore = minimumScore;
         TextTypingSession.Passed = passed;
         TextTypingSession.WasPlayed = true;
-        TextTypingSession.EdadJugador = playerAge;
+        TextTypingSession.PlayerAge = playerAge;
         TextTypingSession.CalculatedYatzis = TextTypingYatzisCalculator.CalcularComponenteExtraRedondeada(scoreFinal, playerAge);
         TextTypingSession.AwardedYatzis = 0;
         TextTypingSession.TotalYatzis = 0;
@@ -170,20 +169,19 @@ public class TextTypingFlowController : MonoBehaviour
 
         if (session == null)
         {
-            Debug.LogWarning("[TextTypingFlow] No GameSessionManager found. Using fallback age >=11.");
-            return 11;
+            Debug.LogWarning("[TextTypingFlow] No GameSessionManager found. Using fallback age >11.");
+            return 12;
         }
 
-        string rawBirthDate = session.GetBirthDateRaw();
-        if (session.TryGetBirthDate(out DateTime birthDate))
+        int backendAge = session.PlayerAge > 0 ? session.PlayerAge : TextTypingSession.PlayerAge;
+        if (backendAge > 0)
         {
-            int age = session.GetPlayerAge();
-            Debug.Log($"[TextTypingFlow] Birth date from DB/session={birthDate:yyyy-MM-dd}. Calculated age={age}");
-            return age;
+            Debug.Log($"[TextTypingFlow] Age from backend/session={backendAge}");
+            return backendAge;
         }
 
-        Debug.LogWarning($"[TextTypingFlow] Birth date unavailable or invalid. rawBirthDate='{rawBirthDate}'. Using fallback age >=11.");
-        return 11;
+        Debug.LogWarning("[TextTypingFlow] backend age unavailable. Using fallback age >11.");
+        return 12;
     }
 
     private async Task LoadPersonalBestForHudAsync(int levelId)

@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 public static class TextTypingSession
 {
     public static int EdadJugador = 0;
+    public static int PlayerAge
+    {
+        get => EdadJugador;
+        set => EdadJugador = Mathf.Max(0, value);
+    }
 
     public static int LevelId = 0;
     public static string LevelName = "";

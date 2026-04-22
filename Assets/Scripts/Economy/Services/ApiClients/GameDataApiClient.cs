@@ -61,6 +61,9 @@ namespace Somnia.Economy.Services.ApiClients
         public Task<ApiResponse<SlotDetailResponse>> GetSlotDetailAsync(int slotNumber, CancellationToken ct = default) =>
             GetSlotDetailFromEndpointAsync($"{_baseUrl}/game/slots/{slotNumber}", ct);
 
+        public Task<ApiResponse<bool>> DeleteSlotAsync(int slotNumber, CancellationToken ct = default) =>
+            SendNoContentEnvelopeAsync($"{_baseUrl}/game/slots/{slotNumber}", UnityWebRequest.kHttpVerbDELETE, ct);
+
         public async Task<ApiResponse<SlotDetailResponse>> CreateSlotAsync(CreateSlotRequest request, CancellationToken ct = default)
         {
             var url = $"{_baseUrl}/game/slots";
@@ -81,35 +84,8 @@ namespace Somnia.Economy.Services.ApiClients
                 : response;
         }
 
-        public async Task<ApiResponse<List<ProgressData>>> SaveProgressAsync(int slotNumber, SaveProgressRequest request, CancellationToken ct = default)
-        {
-            List<ProgressData> entries = request?.progreso ?? new List<ProgressData>();
-            if (entries.Count == 0)
-            {
-                Debug.Log($"[Progress][HTTP] SaveProgressAsync(slot={slotNumber}) skipped: request.progreso vacio.");
-                return ApiResponse<List<ProgressData>>.Ok(new List<ProgressData>(), "Sin cambios de progreso para guardar.");
-            }
-
-            for (int i = 0; i < entries.Count; i++)
-            {
-                ProgressData entry = entries[i];
-                if (entry == null)
-                {
-                    continue;
-                }
-
-                ApiResponse<ProgressSaveResult> result = await SaveProgressEntryAsync(slotNumber, entry, ct);
-                if (result == null || !result.success)
-                {
-                    return ApiResponse<List<ProgressData>>.Fail(
-                        result?.error?.code ?? "save_progress_error",
-                        result?.message ?? $"No fue posible guardar progreso para nivel {entry.id_nivel}."
-                    );
-                }
-            }
-
-            return ApiResponse<List<ProgressData>>.Ok(entries, "Progreso guardado por entradas.");
-        }
+        public Task<ApiResponse<List<ProgressData>>> SaveProgressAsync(int slotNumber, SaveProgressRequest request, CancellationToken ct = default) =>
+            SendEnvelopeAsync<List<ProgressData>>($"{_baseUrl}/game/slots/{slotNumber}/progress", UnityWebRequest.kHttpVerbPUT, request, ct);
 
         public async Task<ApiResponse<ProgressSaveResult>> SaveProgressEntryAsync(int slotNumber, ProgressData progress, CancellationToken ct = default)
         {
@@ -118,25 +94,27 @@ namespace Somnia.Economy.Services.ApiClients
                 return ApiResponse<ProgressSaveResult>.Fail("invalid_progress", "El progreso a guardar es nulo.");
             }
 
-            var primaryPayload = new SaveProgressPrimaryRequest
+            var payload = new SaveProgressCompatRequest
             {
+                slot_numero = slotNumber,
+                slotNumber = slotNumber,
                 id_nivel = progress.id_nivel,
                 idNivel = progress.id_nivel,
                 puntuacion_maxima = Mathf.Max(0, progress.puntuacion_maxima),
                 puntuacionMaxima = Mathf.Max(0, progress.puntuacion_maxima),
                 score = Mathf.Max(0, progress.puntuacion_maxima),
-                completo = progress.completo,
+                completo = progress.completo ? 1 : 0,
                 completed = progress.completo,
                 is_completed = progress.completo,
                 passed = progress.completo
             };
 
-            string primaryPayloadJson = JsonUtility.ToJson(primaryPayload);
-            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/game/slots/{{slot}}/progress json={primaryPayloadJson}");
+            string payloadJson = JsonUtility.ToJson(payload);
+            Debug.Log($"[Progress][HTTP] SaveProgress payload -> {payloadJson}");
 
             ApiResponse<ProgressSaveResult> response = await SendProgressSaveWithValidationAsync(
                 $"{_baseUrl}/game/slots/{slotNumber}/progress",
-                primaryPayloadJson,
+                payloadJson,
                 progress,
                 ct);
 
@@ -148,27 +126,9 @@ namespace Somnia.Economy.Services.ApiClients
                 return response;
             }
 
-            var fallbackPayload = new SaveProgressFallbackRequest
-            {
-                slot_numero = slotNumber,
-                slotNumber = slotNumber,
-                id_nivel = progress.id_nivel,
-                idNivel = progress.id_nivel,
-                puntuacion_maxima = Mathf.Max(0, progress.puntuacion_maxima),
-                puntuacionMaxima = Mathf.Max(0, progress.puntuacion_maxima),
-                score = Mathf.Max(0, progress.puntuacion_maxima),
-                completo = progress.completo,
-                completed = progress.completo,
-                is_completed = progress.completo,
-                passed = progress.completo
-            };
-
-            string fallbackPayloadJson = JsonUtility.ToJson(fallbackPayload);
-            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/game/progress/save json={fallbackPayloadJson}");
-
             response = await SendProgressSaveWithValidationAsync(
                 $"{_baseUrl}/game/progress/save",
-                fallbackPayloadJson,
+                payloadJson,
                 progress,
                 ct);
 
@@ -180,10 +140,9 @@ namespace Somnia.Economy.Services.ApiClients
                 return response;
             }
 
-            Debug.Log($"[Progress][HTTP] SaveProgress payload -> endpoint=/progress/save json={fallbackPayloadJson}");
             response = await SendProgressSaveWithValidationAsync(
                 $"{_baseUrl}/progress/save",
-                fallbackPayloadJson,
+                payloadJson,
                 progress,
                 ct);
 
@@ -322,22 +281,54 @@ namespace Somnia.Economy.Services.ApiClients
             }
         }
 
-        [Serializable]
-        private class SaveProgressPrimaryRequest
+        private async Task<ApiResponse<bool>> SendNoContentEnvelopeAsync(string url, string method, CancellationToken ct)
         {
-            public int id_nivel;
-            public int idNivel;
-            public int puntuacion_maxima;
-            public int puntuacionMaxima;
-            public int score;
-            public bool completo;
-            public bool completed;
-            public bool is_completed;
-            public bool passed;
+            try
+            {
+                using var req = UnityWebRequestExtensions.CreateJsonRequest(url, method, "{}", _session.Token);
+                var body = await req.SendAsync(ct);
+
+                if (EnableHttpDebugLogs)
+                {
+                    Debug.Log($"[HTTP] {method} {url} -> {(int)req.responseCode} | Body: {body}");
+                }
+
+                if (string.IsNullOrWhiteSpace(body))
+                {
+                    return req.responseCode >= 200 && req.responseCode < 300
+                        ? ApiResponse<bool>.Ok(true)
+                        : ApiResponse<bool>.Fail("http_error", $"HTTP {(int)req.responseCode}");
+                }
+
+                var envelope = JsonUtility.FromJson<ApiResponse<bool>>(body);
+                if (envelope != null && envelope.success)
+                {
+                    return envelope;
+                }
+
+                var slotDetailEnvelope = JsonUtility.FromJson<ApiResponse<SlotDetailResponse>>(body);
+                if (slotDetailEnvelope != null)
+                {
+                    return slotDetailEnvelope.success
+                        ? ApiResponse<bool>.Ok(true, slotDetailEnvelope.message)
+                        : ApiResponse<bool>.Fail(slotDetailEnvelope.error?.code ?? "delete_slot_error", slotDetailEnvelope.message ?? "No fue posible eliminar slot.");
+                }
+
+                if (req.responseCode >= 200 && req.responseCode < 300)
+                {
+                    return ApiResponse<bool>.Ok(true);
+                }
+
+                return ApiResponse<bool>.Fail("delete_slot_error", "Respuesta no reconocida del backend al eliminar slot.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.Fail("network_error", ex.Message);
+            }
         }
 
         [Serializable]
-        private class SaveProgressFallbackRequest
+        private class SaveProgressCompatRequest
         {
             public int slot_numero;
             public int slotNumber;
@@ -346,7 +337,7 @@ namespace Somnia.Economy.Services.ApiClients
             public int puntuacion_maxima;
             public int puntuacionMaxima;
             public int score;
-            public bool completo;
+            public int completo;
             public bool completed;
             public bool is_completed;
             public bool passed;

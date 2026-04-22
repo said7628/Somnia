@@ -2316,12 +2316,19 @@ MonoBehaviour:
   - {fileID: 725290899}
   - {fileID: 1476331365}
   toastMessage: {fileID: 0}
+  toastUI: {fileID: 0}
   escenaMapa: Mapa
   escenaMenuPrincipal: Pantalla_principal
+  escenaIsla1: Isla1
+  escenaIsla2: Isla2
+  escenaIsla3: Isla3
   slot1DefaultName: Partida 1
   slot2DefaultName: Partida 2
   slot3DefaultName: Partida 3
   verboseLogs: 0
+  loadingMessage: Cargando...
+  autoDetectModeBySceneName: 1
+  continueMode: 0
 --- !u!1 &1476331363
 GameObject:
   m_ObjectHideFlags: 0

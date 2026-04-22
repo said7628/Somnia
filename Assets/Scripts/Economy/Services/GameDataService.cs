@@ -37,6 +37,9 @@ namespace Somnia.Economy.Services
         public Task<ApiResponse<SlotDetailResponse>> GetSlotDetailAsync(int slotNumber, CancellationToken ct = default) =>
             _gameDataApiClient.GetSlotDetailAsync(slotNumber, ct);
 
+        public Task<ApiResponse<bool>> DeleteSlotAsync(int slotNumber, CancellationToken ct = default) =>
+            _gameDataApiClient.DeleteSlotAsync(slotNumber, ct);
+
         public Task<ApiResponse<SlotDetailResponse>> CreateSlotAsync(int slotNumber, string slotName, CancellationToken ct = default)
         {
             return _gameDataApiClient.CreateSlotAsync(new CreateSlotRequest
@@ -176,7 +179,8 @@ namespace Somnia.Economy.Services
                 return ApiResponse<IReadOnlyList<ProgressData>>.Fail("slot_detail_unavailable", detail.message ?? "No se pudo obtener progreso");
             }
 
-            var mapped = (detail.data.progreso ?? new ProgresoDto[0]).Select(p => new ProgressData
+            var sourceProgress = detail.data.progreso ?? detail.data.progress ?? new ProgresoDto[0];
+            var mapped = sourceProgress.Select(p => new ProgressData
             {
                 id_nivel = p.id_nivel,
                 completo = p.completo == 1,
@@ -188,14 +192,38 @@ namespace Somnia.Economy.Services
 
         public async Task<ApiResponse<IReadOnlyList<ProgressData>>> SaveProgressAsync(int slotNumber, IReadOnlyList<ProgressData> progress, CancellationToken ct = default)
         {
-            var response = await _gameDataApiClient.SaveProgressAsync(slotNumber, new SaveProgressRequest
+            List<ProgressData> entries = progress?.ToList() ?? new List<ProgressData>();
+            if (entries.Count == 0)
             {
-                progreso = progress?.ToList() ?? new List<ProgressData>()
-            }, ct);
+                return ApiResponse<IReadOnlyList<ProgressData>>.Ok(entries, "Sin cambios de progreso para guardar.");
+            }
 
-            return response.success
-                ? ApiResponse<IReadOnlyList<ProgressData>>.Ok(response.data ?? new List<ProgressData>(), response.message)
-                : ApiResponse<IReadOnlyList<ProgressData>>.Fail(response.error?.code ?? "save_progress_error", response.message);
+            ApiResponse<ProgressSaveResult> lastResponse = null;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                ProgressData entry = entries[i];
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                lastResponse = await _gameDataApiClient.SaveProgressEntryAsync(slotNumber, entry, ct);
+                if (lastResponse == null || !lastResponse.success)
+                {
+                    return ApiResponse<IReadOnlyList<ProgressData>>.Fail(
+                        lastResponse?.error?.code ?? "save_progress_error",
+                        lastResponse?.message ?? $"No fue posible guardar progreso para nivel {entry.id_nivel}."
+                    );
+                }
+            }
+
+            var reloaded = await LoadProgressAsync(slotNumber, ct);
+            if (reloaded != null && reloaded.success)
+            {
+                return ApiResponse<IReadOnlyList<ProgressData>>.Ok(reloaded.data ?? new List<ProgressData>(), lastResponse?.message ?? reloaded.message);
+            }
+
+            return ApiResponse<IReadOnlyList<ProgressData>>.Ok(entries, lastResponse?.message ?? "Progreso guardado.");
         }
 
         private static EquippedItemsData MapEquipped(EquipamientoDto dto)

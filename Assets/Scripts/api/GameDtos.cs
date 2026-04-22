@@ -34,7 +34,7 @@ namespace Somnia.UnityClient
         public string usuario;
         public string correo;
         public string rol;
-        public string fecha_nacimiento;
+        public int edad_jugador;
     }
 
     [Serializable]
@@ -77,6 +77,7 @@ namespace Somnia.UnityClient
     {
         public bool success;
         public SlotCore slot;
+        public int edad_jugador;
         public EquipamientoDto equipamiento;
         public InventarioItemDto[] inventario_cosmeticos;
         public ProgresoDto[] progreso;
