@@ -685,7 +685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 23.787415, y: 250}
+  m_AnchoredPosition: {x: 23.787354, y: 250}
   m_SizeDelta: {x: -1048.4252, y: -500.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &435101011
@@ -738,6 +738,7 @@ GameObject:
   - component: {fileID: 541556077}
   - component: {fileID: 541556076}
   - component: {fileID: 541556075}
+  - component: {fileID: 541556079}
   m_Layer: 5
   m_Name: Dialogos
   m_TagString: Untagged
@@ -833,6 +834,115 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &541556079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541556074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1895ffd80d64e4983867f579eb05db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SistemaDialogoCanvas
+  jugador: {fileID: 360054270}
+  opaco: {fileID: 313217438}
+  npc: {fileID: 1636707378}
+  dialogoText: {fileID: 1157727005}
+  opciones: {fileID: 435101009}
+  siguiente: {fileID: 409166525}
+  opcion1: {fileID: 847065889}
+  opcion2: {fileID: 4247033}
+  opcion3: {fileID: 1289348341}
+  opcionText1: {fileID: 830519202}
+  opcionText2: {fileID: 53809554}
+  opcionText3: {fileID: 1756052294}
+  audioEscritura: {fileID: 0}
+  audioError: {fileID: 0}
+  velocidadEscritura: 0.03
+  pausaDespuesRespuesta: 0.7
+  lineas:
+  - hablante: 0
+    texto: que apedasdoandsas ____ askdaskjd
+    esPregunta: 1
+    respuestaCorrecta: ASSDAD
+    indiceCorrecto: 1
+    opcion1: ASSDAD
+    opcion2: ASDA
+    opcion3: SDA
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
+  - hablante: 0
+    texto: 
+    esPregunta: 0
+    respuestaCorrecta: 
+    indiceCorrecto: 0
+    opcion1: 
+    opcion2: 
+    opcion3: 
 --- !u!1 &830519200
 GameObject:
   m_ObjectHideFlags: 0
