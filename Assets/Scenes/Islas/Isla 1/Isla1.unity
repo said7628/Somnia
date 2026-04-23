@@ -1656,7 +1656,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 102
+  m_SortingOrder: 101
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3910,9 +3910,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463cd8371e5f31f4b8b298efb1c44436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCustomizationManager
-  selectedFaceColor: 0
-  selectedEyes: 0
-  selectedOutfit: 0
+  selectedFaceColor: 1
+  selectedEyes: 1
+  selectedOutfit: 1
   usarValoresDelInspector: 1
 --- !u!4 &986768310
 Transform:
@@ -5109,7 +5109,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 101
+  m_SortingOrder: 102
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2163188104729724027, guid: ffaf109f72b0d5f43be491f8f76ee33d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5130,7 +5130,7 @@ Transform:
   m_GameObject: {fileID: 1391556008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5264,7 +5264,7 @@ Transform:
   m_GameObject: {fileID: 1408609283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5280,7 +5280,7 @@ Animator:
   m_GameObject: {fileID: 1408609283}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f6d34207866aa9249b3ea019b53d160a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5341,15 +5341,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 103
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -33100286, guid: 887eea74a70217c438fb778553a548c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.14, y: 0.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &1415386448
 GameObject:
@@ -6419,7 +6419,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1738665243}
   - component: {fileID: 1738665241}
-  - component: {fileID: 1738665240}
   - component: {fileID: 1738665244}
   - component: {fileID: 1738665245}
   - component: {fileID: 1738665246}
@@ -6431,28 +6430,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1738665240
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1738665239}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1738665241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6465,13 +6442,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10244b3daf2a80849a24c2b8e55a5998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisual
-  faceAnimator: {fileID: 0}
-  eyesAnimator: {fileID: 0}
-  outfitAnimator: {fileID: 0}
-  faceAnimators: []
-  eyesAnimators: []
-  eyesWhiteAnimators: []
-  outfitAnimators: []
+  faceAnimator: {fileID: 1391556011}
+  outfitAnimator: {fileID: 481686759}
+  eyesNormalAnimator: {fileID: 1823926431}
+  eyesWhiteAnimator: {fileID: 1408609285}
+  faceClips:
+  - {fileID: 7400000, guid: a1dcace6256e7084fabfc6056f64a67a, type: 2}
+  - {fileID: 7400000, guid: 2db985987cfc8f042b4610fd26cf474c, type: 2}
+  - {fileID: 7400000, guid: e26ccaf0dff4c2b44971c6774b2ada64, type: 2}
+  - {fileID: 7400000, guid: 4b5e7f8d1a5422641a877376d4f4bbf1, type: 2}
+  - {fileID: 7400000, guid: 9f2d394fc91d6594693fa77bb059a7cd, type: 2}
+  - {fileID: 7400000, guid: 8288a08c6381c1e458bb5bfe87818fa3, type: 2}
+  - {fileID: 7400000, guid: 84b426e134f305a4e891cabe18697385, type: 2}
+  - {fileID: 7400000, guid: df098bc471d2f6944a3b007aed2b73c4, type: 2}
+  - {fileID: 7400000, guid: 15e4544d33c81774d8d2afc9372b87cd, type: 2}
+  - {fileID: 7400000, guid: dfdf45148e0cdcd418b41d1d259ea725, type: 2}
+  outfitClips:
+  - {fileID: 7400000, guid: ed0e298f458879d41831dc207be04409, type: 2}
+  - {fileID: 7400000, guid: 9d7592de05f816844a37721d85875727, type: 2}
+  - {fileID: 7400000, guid: a7d2050eb94623a479a1c8e9e3fa8161, type: 2}
+  - {fileID: 7400000, guid: 3120a9181b2a7a74cbcb03ade41d9449, type: 2}
+  eyesClips:
+  - {fileID: 7400000, guid: bba3ef5fdcb972b4ab398b0e19eb844e, type: 2}
+  - {fileID: 7400000, guid: 0f32fe1f8cc8fb742808271e322118ab, type: 2}
+  - {fileID: 7400000, guid: 347997e21a6e77b4ea05358895160669, type: 2}
+  - {fileID: 7400000, guid: c16ff8c7005e6924da323dbdf0678da6, type: 2}
+  - {fileID: 7400000, guid: 678306c22e270b44ca7fdcea5e520756, type: 2}
+  - {fileID: 7400000, guid: c248281fe408fb241b50de2c4cf41308, type: 2}
+  - {fileID: 7400000, guid: d6a2447e966f27e4e8190db81f3de579, type: 2}
+  eyesWhiteClips:
+  - {fileID: 7400000, guid: 521d928081780634da6a47f723738d26, type: 2}
+  - {fileID: 7400000, guid: 1b7c79dfdf02e514ebdac7a0b69a9536, type: 2}
+  - {fileID: 7400000, guid: 60450c600f2e6c3479eb3b23119835aa, type: 2}
+  - {fileID: 7400000, guid: 71c7f41f5deded244be0995ea3da112f, type: 2}
+  - {fileID: 7400000, guid: 06a78803e4fb65e4c919b124def022ed, type: 2}
+  - {fileID: 7400000, guid: 096bbfc77212be2419690c0df8c5809c, type: 2}
+  - {fileID: 7400000, guid: 4bd6402b677a203498a841472022618c, type: 2}
 --- !u!4 &1738665243
 Transform:
   m_ObjectHideFlags: 0
@@ -6481,7 +6487,7 @@ Transform:
   m_GameObject: {fileID: 1738665239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.25, y: 0.31, z: 0}
+  m_LocalPosition: {x: -16.25, y: 0.5, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6867,7 +6873,7 @@ Transform:
   m_GameObject: {fileID: 1823926428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
