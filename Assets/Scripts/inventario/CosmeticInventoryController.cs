@@ -1,0 +1,603 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Somnia.Economy.Core;
+using Somnia.Economy.Interfaces;
+using Somnia.UnityClient;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
+namespace Somnia.Inventory
+{
+    [RequireComponent(typeof(UIDocument))]
+    public class CosmeticInventoryController : MonoBehaviour
+    {
+        [Header("Backend")]
+        [SerializeField] private int[] catalogIslandIds = { 1, 2, 3 };
+        [SerializeField] private CosmeticInventoryDefaults defaults = new();
+
+        [Header("Visual")]
+        [SerializeField] private string homeSceneName = "Pantalla_Principal";
+        [SerializeField] private CosmeticCategory initialCategory = CosmeticCategory.Color;
+
+        private UIDocument _document;
+        private Label _statusLabel;
+        private VisualElement _loadingOverlay;
+        private Button _tabColor;
+        private Button _tabOjos;
+        private Button _tabOutfit;
+        private Button _configButton;
+        private Button _homeButton;
+        private Button _closeButton;
+        private Button _defaultPreview;
+
+        private readonly Dictionary<int, CosmeticUiBinding> _uiBindings = new();
+        private readonly Dictionary<Button, EventCallback<ClickEvent>> _itemButtonHandlers = new();
+
+        private CosmeticInventoryService _inventoryService;
+        private CosmeticInventorySnapshot _snapshot;
+        private CosmeticCategory _activeCategory = CosmeticCategory.Color;
+        private CancellationTokenSource _cts;
+
+        private EventCallback<ClickEvent> _onTabColor;
+        private EventCallback<ClickEvent> _onTabOjos;
+        private EventCallback<ClickEvent> _onTabOutfit;
+        private EventCallback<ClickEvent> _onConfig;
+        private EventCallback<ClickEvent> _onHome;
+        private EventCallback<ClickEvent> _onClose;
+        private EventCallback<ClickEvent> _onDefaultPressed;
+
+        private const string EquippedClass = "inventory-equipped";
+
+        private sealed class CosmeticUiBinding
+        {
+            public int itemId;
+            public CosmeticCategory category;
+            public string itemElementName;
+            public string lockElementName;
+            public Button itemButton;
+            public VisualElement lockOverlay;
+        }
+
+        private void OnEnable()
+        {
+            _document = GetComponent<UIDocument>();
+            _activeCategory = initialCategory;
+
+            BindUi();
+            InitializeService();
+
+            _ = LoadAsync();
+        }
+
+        private void OnDisable()
+        {
+            UnbindUiCallbacks();
+
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+        }
+
+        private void BindUi()
+        {
+            var root = _document.rootVisualElement;
+
+            _statusLabel = root.Q<Label>("inventoryStatusLabel");
+            _loadingOverlay = root.Q<VisualElement>("inventoryLoadingOverlay");
+
+            _tabColor = root.Q<Button>("botoncara");
+            _tabOjos = root.Q<Button>("botonojos");
+            _tabOutfit = root.Q<Button>("botonoutfit");
+
+            _configButton = root.Q<Button>("botonconf");
+            _homeButton = root.Q<Button>("botonHome");
+            _closeButton = root.Q<Button>("cerrar");
+
+            _defaultPreview = root.Q<Button>("predeterminado");
+
+            _onTabColor = evt =>
+            {
+                SceneManager.LoadScene("Inventario");
+            };
+
+            _onTabOjos = evt =>
+            {
+                SceneManager.LoadScene("InventarioOjos");
+            };
+
+            _onTabOutfit = evt =>
+            {
+                SceneManager.LoadScene("InventarioOutfit");
+            };
+
+            _onConfig = evt =>
+            {
+                SceneManager.LoadScene("InventarioConfiguracion");
+            };
+
+            _onHome = evt =>
+            {
+                SceneManager.LoadScene(homeSceneName);
+            };
+
+            _onClose = evt =>
+            {
+                SceneManager.LoadScene(homeSceneName);
+            };
+
+            _onDefaultPressed = evt =>
+            {
+                _ = HandleDefaultPressedAsync();
+            };
+
+            RegisterButtonCallback(_tabColor, _onTabColor);
+            RegisterButtonCallback(_tabOjos, _onTabOjos);
+            RegisterButtonCallback(_tabOutfit, _onTabOutfit);
+
+            RegisterButtonCallback(_configButton, _onConfig);
+            RegisterButtonCallback(_homeButton, _onHome);
+            RegisterButtonCallback(_closeButton, _onClose);
+
+            RegisterButtonCallback(_defaultPreview, _onDefaultPressed);
+
+            BuildBindings(root);
+        }
+
+        private void InitializeService()
+        {
+            IGameDataService gameDataService = EconomyModule.Instance?.GameDataService;
+
+            if (gameDataService == null)
+            {
+                var module = FindFirstObjectByType<EconomyModule>();
+                gameDataService = module?.GameDataService;
+            }
+
+            if (gameDataService == null)
+            {
+                throw new InvalidOperationException(
+                    "No se encontró EconomyModule.GameDataService para cargar inventario cosmético."
+                );
+            }
+
+            _inventoryService = new CosmeticInventoryService(gameDataService, defaults, catalogIslandIds);
+        }
+
+        private async Task LoadAsync()
+        {
+            if (_inventoryService == null)
+            {
+                return;
+            }
+
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = new CancellationTokenSource();
+
+            SetLoading(true, "Cargando inventario...");
+
+            try
+            {
+                int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
+
+                Debug.Log($"[Inventory] Slot activo detectado: {slot}");
+
+                _snapshot = await _inventoryService.LoadSnapshotAsync(slot, _cts.Token);
+
+                Debug.Log(
+                    $"[Inventory] Snapshot cargado. slot={_snapshot.slotNumber} partida={_snapshot.partidaId} items={_snapshot.items.Count}"
+                );
+
+                Debug.Log(
+                    $"[Inventory] IDs poseídos: {string.Join(",", _snapshot.items.Where(x => x.owned).Select(x => x.itemId).OrderBy(x => x))}"
+                );
+
+                Debug.Log(
+                    $"[Inventory] Equipamiento actual color={_snapshot.equippedByCategory[CosmeticCategory.Color]} ojos={_snapshot.equippedByCategory[CosmeticCategory.Ojos]} outfit={_snapshot.equippedByCategory[CosmeticCategory.Outfit]}"
+                );
+
+                SetLoading(false, $"Partida #{_snapshot.partidaId} | Slot {slot}");
+                RenderCurrentCategory();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[Inventory] Error cargando inventario: {ex}");
+                SetLoading(false, $"Error: {ex.Message}");
+            }
+        }
+
+        private void SwitchCategory(CosmeticCategory category)
+        {
+            _activeCategory = category;
+
+            Debug.Log($"[Inventory] Categoría activa: {_activeCategory}");
+
+            RenderCurrentCategory();
+        }
+
+        private void RenderCurrentCategory()
+        {
+            if (_snapshot?.items == null)
+            {
+                return;
+            }
+
+            UpdateTabClasses();
+
+            foreach (var binding in _uiBindings.Values)
+            {
+                bool visible = binding.category == _activeCategory;
+
+                if (binding.itemButton != null)
+                {
+                    binding.itemButton.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+                }
+            }
+
+            foreach (var item in _snapshot.items)
+            {
+                if (!_uiBindings.TryGetValue(item.itemId, out var binding))
+                {
+                    continue;
+                }
+
+                if (binding.lockOverlay != null)
+                {
+                    binding.lockOverlay.style.display = item.owned ? DisplayStyle.None : DisplayStyle.Flex;
+                    binding.lockOverlay.pickingMode = PickingMode.Ignore;
+                }
+
+                if (binding.itemButton != null)
+                {
+                    binding.itemButton.SetEnabled(item.owned);
+                    binding.itemButton.EnableInClassList(EquippedClass, item.equipped);
+                }
+            }
+
+            if (_defaultPreview != null)
+            {
+                _defaultPreview.style.display = DisplayStyle.Flex;
+                _defaultPreview.SetEnabled(true);
+
+                _defaultPreview.EnableInClassList(EquippedClass, IsDefaultEquipped());
+
+                _defaultPreview.RemoveFromClassList("default-color-preview");
+                _defaultPreview.RemoveFromClassList("default-ojos-preview");
+                _defaultPreview.RemoveFromClassList("default-outfit-preview");
+
+                if (_activeCategory == CosmeticCategory.Color)
+                {
+                    _defaultPreview.AddToClassList("default-color-preview");
+                }
+
+                if (_activeCategory == CosmeticCategory.Ojos)
+                {
+                    _defaultPreview.AddToClassList("default-ojos-preview");
+                }
+
+                if (_activeCategory == CosmeticCategory.Outfit)
+                {
+                    _defaultPreview.AddToClassList("default-outfit-preview");
+                }
+            }
+        }
+
+        private async Task HandleDefaultPressedAsync()
+        {
+            if (_snapshot?.items == null)
+            {
+                SetStatus("Inventario todavía no cargado.");
+                return;
+            }
+
+            int defaultItemId = defaults.GetDefaultId(_activeCategory);
+
+            var item = _snapshot.items.FirstOrDefault(i =>
+                i.itemId == defaultItemId && i.category == _activeCategory
+            );
+
+            if (item == null)
+            {
+                Debug.LogWarning(
+                    $"[Inventory] Default no encontrado para {_activeCategory}. itemId={defaultItemId}"
+                );
+
+                SetStatus($"Default no encontrado para {_activeCategory}.");
+                return;
+            }
+
+            Debug.Log(
+                $"[Inventory] Botón predeterminado presionado para {_activeCategory}. item={item.itemId}"
+            );
+
+            await TryEquipItemAsync(item);
+        }
+
+        private async Task HandleItemPressedAsync(int itemId)
+        {
+            Debug.Log($"[Inventory] Botón presionado: item={itemId}");
+
+            if (_snapshot?.items == null)
+            {
+                SetStatus("Inventario todavía no cargado.");
+                return;
+            }
+
+            var item = _snapshot.items.FirstOrDefault(i => i.itemId == itemId);
+
+            if (item == null)
+            {
+                SetStatus($"Item {itemId} no encontrado en snapshot.");
+                return;
+            }
+
+            await TryEquipItemAsync(item);
+        }
+
+        private async Task TryEquipItemAsync(CosmeticInventoryItemViewModel item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            if (!item.owned)
+            {
+                SetStatus("Ítem bloqueado: compra requerida en tienda.");
+                return;
+            }
+
+            if (item.equipped)
+            {
+                SetStatus($"{item.name} ya está equipado.");
+                return;
+            }
+
+            await EquipItemAsync(item);
+        }
+
+        private async Task EquipItemAsync(CosmeticInventoryItemViewModel item)
+        {
+            if (_inventoryService == null || _snapshot == null)
+            {
+                SetStatus("No se pudo equipar: inventario no inicializado.");
+                return;
+            }
+
+            Debug.Log(
+                $"[Inventory] Intento de equipar item={item.itemId} category={item.category} slot={_snapshot.slotNumber}"
+            );
+
+            SetStatus($"Equipando {item.name}...");
+
+            try
+            {
+                var response = await _inventoryService.EquipAsync(
+                    _snapshot.slotNumber,
+                    _snapshot,
+                    item.category,
+                    item.itemId,
+                    _cts.Token
+                );
+
+                if (!response.success)
+                {
+                    SetStatus($"No se pudo equipar: {response.message}");
+                    Debug.LogWarning(
+                        $"[Inventory] Equip failed item={item.itemId} reason={response.message}"
+                    );
+                    return;
+                }
+
+                var equippedData = response.data;
+
+                Debug.Log(
+                    $"[Inventory] Backend equip response color={equippedData.id_item_color} ojos={equippedData.id_item_cara} outfit={equippedData.id_item_outfit}"
+                );
+
+                _snapshot.equippedByCategory[CosmeticCategory.Ojos] = equippedData.id_item_cara;
+                _snapshot.equippedByCategory[CosmeticCategory.Color] = equippedData.id_item_color;
+                _snapshot.equippedByCategory[CosmeticCategory.Outfit] = equippedData.id_item_outfit;
+
+                foreach (var vm in _snapshot.items)
+                {
+                    vm.equipped =
+                        _snapshot.equippedByCategory.TryGetValue(vm.category, out var equippedId)
+                        && equippedId == vm.itemId;
+                }
+
+                SetStatus($"Equipado: {item.name}");
+                RenderCurrentCategory();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[Inventory] Error equipando item {item.itemId}: {ex}");
+                SetStatus($"Error equipando: {ex.Message}");
+            }
+        }
+
+        private void SetLoading(bool loading, string message)
+        {
+            if (_loadingOverlay != null)
+            {
+                _loadingOverlay.style.display = loading ? DisplayStyle.Flex : DisplayStyle.None;
+                _loadingOverlay.pickingMode = loading ? PickingMode.Position : PickingMode.Ignore;
+            }
+
+            SetStatus(message);
+        }
+
+        private void SetStatus(string message)
+        {
+            if (_statusLabel != null)
+            {
+                _statusLabel.text = message;
+            }
+        }
+
+        private bool IsDefaultEquipped()
+        {
+            if (_snapshot == null)
+            {
+                return false;
+            }
+
+            int defaultId = defaults.GetDefaultId(_activeCategory);
+
+            return _snapshot.equippedByCategory.TryGetValue(_activeCategory, out var equippedId)
+                   && equippedId == defaultId;
+        }
+
+        private void BuildBindings(VisualElement root)
+        {
+            _uiBindings.Clear();
+            _itemButtonHandlers.Clear();
+
+            AddBinding(root, 2, CosmeticCategory.Color, "skinNaranja", "bloqueado1");
+            AddBinding(root, 3, CosmeticCategory.Color, "skinMorado", "bloqueado2");
+            AddBinding(root, 4, CosmeticCategory.Color, "skinAmarillo", "bloqueado3");
+            AddBinding(root, 5, CosmeticCategory.Color, "skinRojo", "bloqueado4");
+            AddBinding(root, 6, CosmeticCategory.Color, "skinTurquesa", "bloqueado5");
+            AddBinding(root, 7, CosmeticCategory.Color, "skinVerde", "bloqueado6");
+            AddBinding(root, 8, CosmeticCategory.Color, "skinRosa", "bloqueado7");
+            AddBinding(root, 9, CosmeticCategory.Color, "skinAzul", "bloqueado8");
+            AddBinding(root, 10, CosmeticCategory.Color, "skinNegro", "bloqueado9");
+
+            AddBinding(root, 12, CosmeticCategory.Ojos, "ojosRombo", "bloqueadoojos1");
+            AddBinding(root, 13, CosmeticCategory.Ojos, "ojosCansado", "bloqueadoojos2");
+            AddBinding(root, 14, CosmeticCategory.Ojos, "ojosEstrella", "bloqueadoojos3");
+            AddBinding(root, 15, CosmeticCategory.Ojos, "ojosHappy", "bloqueadoojos4");
+            AddBinding(root, 16, CosmeticCategory.Ojos, "ojosPirata", "bloqueadoojos5");
+            AddBinding(root, 17, CosmeticCategory.Ojos, "ojosEmputado", "bloqueadoojos6");
+
+            AddBinding(root, 19, CosmeticCategory.Outfit, "outfitEngrane", "bloqueadoOutfit1");
+            AddBinding(root, 20, CosmeticCategory.Outfit, "outfitRana", "bloqueadoOutfit2");
+            AddBinding(root, 21, CosmeticCategory.Outfit, "outfitDiablito", "bloqueadoOutfit3");
+        }
+
+        private void AddBinding(
+            VisualElement root,
+            int itemId,
+            CosmeticCategory category,
+            string itemElementName,
+            string lockElementName
+        )
+        {
+            var button = root.Q<Button>(itemElementName);
+
+            if (button == null)
+            {
+                Debug.LogWarning(
+                    $"[Inventory] No se encontró botón UXML para item {itemId}: {itemElementName}"
+                );
+                return;
+            }
+
+            var lockOverlay = root.Q<VisualElement>(lockElementName);
+
+            if (lockOverlay == null)
+            {
+                Debug.LogWarning(
+                    $"[Inventory] No se encontró lock overlay para item {itemId}: {lockElementName}"
+                );
+            }
+            else
+            {
+                lockOverlay.pickingMode = PickingMode.Ignore;
+            }
+
+            var binding = new CosmeticUiBinding
+            {
+                itemId = itemId,
+                category = category,
+                itemElementName = itemElementName,
+                lockElementName = lockElementName,
+                itemButton = button,
+                lockOverlay = lockOverlay
+            };
+
+            _uiBindings[itemId] = binding;
+
+            EventCallback<ClickEvent> handler = evt =>
+            {
+                _ = HandleItemPressedAsync(itemId);
+            };
+
+            _itemButtonHandlers[button] = handler;
+
+            RegisterButtonCallback(button, handler);
+
+            Debug.Log(
+                $"[Inventory] Binding registrado item={itemId} category={category} ui={itemElementName} lock={lockElementName}"
+            );
+        }
+
+        private void UnbindUiCallbacks()
+        {
+            UnregisterButtonCallback(_tabColor, _onTabColor);
+            UnregisterButtonCallback(_tabOjos, _onTabOjos);
+            UnregisterButtonCallback(_tabOutfit, _onTabOutfit);
+
+            UnregisterButtonCallback(_configButton, _onConfig);
+            UnregisterButtonCallback(_homeButton, _onHome);
+            UnregisterButtonCallback(_closeButton, _onClose);
+
+            UnregisterButtonCallback(_defaultPreview, _onDefaultPressed);
+
+            foreach (var pair in _itemButtonHandlers)
+            {
+                UnregisterButtonCallback(pair.Key, pair.Value);
+            }
+
+            _itemButtonHandlers.Clear();
+        }
+
+        private static void RegisterButtonCallback(Button button, EventCallback<ClickEvent> callback)
+        {
+            if (button == null || callback == null)
+            {
+                return;
+            }
+
+            button.RegisterCallback(callback);
+        }
+
+        private static void UnregisterButtonCallback(Button button, EventCallback<ClickEvent> callback)
+        {
+            if (button == null || callback == null)
+            {
+                return;
+            }
+
+            button.UnregisterCallback(callback);
+        }
+
+        private void UpdateTabClasses()
+        {
+            SetTabState(_tabColor, _activeCategory == CosmeticCategory.Color);
+            SetTabState(_tabOjos, _activeCategory == CosmeticCategory.Ojos);
+            SetTabState(_tabOutfit, _activeCategory == CosmeticCategory.Outfit);
+        }
+
+        private static void SetTabState(VisualElement tab, bool active)
+        {
+            if (tab == null)
+            {
+                return;
+            }
+
+            if (active)
+            {
+                tab.AddToClassList("inventory-tab-active");
+            }
+            else
+            {
+                tab.RemoveFromClassList("inventory-tab-active");
+            }
+        }
+    }
+}

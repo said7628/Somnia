@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 550456195}
   - component: {fileID: 550456194}
   - component: {fileID: 550456196}
+  - component: {fileID: 550456197}
   m_Layer: 5
   m_Name: OjosInventario
   m_TagString: Untagged
@@ -187,6 +188,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3928b03a6c20545b30f347caf331df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavegacionInventario
+--- !u!114 &550456197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550456193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd7d31a2148c264bb4a7553980c91a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Somnia.Inventory.CosmeticInventoryController
+  catalogIslandIds: 010000000200000003000000
+  defaults:
+    defaultColorItemId: 1
+    defaultOjosItemId: 11
+    defaultOutfitItemId: 18
+  homeSceneName: Pantalla_Principal
+  initialCategory: 0
 --- !u!1 &636394965
 GameObject:
   m_ObjectHideFlags: 0
