@@ -36,6 +36,10 @@ namespace Somnia.Inventory
 
         private readonly Dictionary<int, CosmeticUiBinding> _uiBindings = new();
         private readonly Dictionary<Button, EventCallback<ClickEvent>> _itemButtonHandlers = new();
+        private readonly Dictionary<Button, int> _displayedItemByButton = new();
+        private readonly Dictionary<int, string> _visualClassByItemId = new();
+        private readonly Dictionary<CosmeticCategory, string> _defaultPreviewClassByCategory = new();
+        private readonly Dictionary<CosmeticCategory, List<string>> _categoryVisualClassPool = new();
 
         private CosmeticInventoryService _inventoryService;
         private CosmeticInventorySnapshot _snapshot;
@@ -54,12 +58,14 @@ namespace Somnia.Inventory
 
         private sealed class CosmeticUiBinding
         {
-            public int itemId;
+            public int originalItemId;
+            public int displayedItemId;
             public CosmeticCategory category;
+            public string visualClassName;
             public string itemElementName;
             public string lockElementName;
             public string unlockedElementName;
-            public Button itemButton;
+            public Button button;
             public VisualElement lockOverlay;
             public VisualElement unlockedVisual;
         }
@@ -269,61 +275,113 @@ namespace Somnia.Inventory
             {
                 bool visible = binding.category == _activeCategory;
 
-                if (binding.itemButton != null)
+                if (binding.button != null)
                 {
-                    binding.itemButton.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+                    binding.button.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
                 }
             }
 
-            foreach (var item in _snapshot.items)
+            int equippedItemId = GetEquippedIdForCategory(_activeCategory);
+            int defaultItemId = defaults.GetDefaultId(_activeCategory);
+
+            _displayedItemByButton.Clear();
+            ApplyDefaultPreviewVisual(_activeCategory, equippedItemId);
+            if (_defaultPreview != null)
             {
-                if (!_uiBindings.TryGetValue(item.itemId, out var binding))
+                _displayedItemByButton[_defaultPreview] = equippedItemId;
+            }
+
+            foreach (var binding in _uiBindings.Values.Where(x => x.category == _activeCategory))
+            {
+                int displayedItemId = binding.originalItemId;
+
+                if (binding.originalItemId == equippedItemId)
                 {
-                    continue;
+                    displayedItemId = defaultItemId;
                 }
 
-                ApplyLockState(binding, item.owned);
+                binding.displayedItemId = displayedItemId;
 
-                if (binding.itemButton != null)
+                var displayedItem = FindItem(displayedItemId, binding.category);
+                bool owned = displayedItem?.owned ?? false;
+                bool equipped = displayedItemId == equippedItemId;
+
+                ApplyLockState(binding, owned);
+                ApplyItemVisual(binding, displayedItemId);
+
+                if (binding.button != null)
                 {
-                    binding.itemButton.SetEnabled(true);
-                    binding.itemButton.EnableInClassList(EquippedClass, item.equipped);
+                    binding.button.EnableInClassList(EquippedClass, equipped);
+                    _displayedItemByButton[binding.button] = displayedItemId;
                 }
 
                 string lockDisplay = binding.lockOverlay?.style.display.value.ToString() ?? "none";
                 string lockVisibility = binding.lockOverlay?.style.visibility.value.ToString() ?? "none";
-                string lockStateLabel = item.owned ? "hidden" : "visible";
                 Debug.Log(
-                    $"[Inventory] item={item.itemId} owned={item.owned} equipped={item.equipped} button={binding.itemElementName} lock={binding.lockElementName} lockDisplay={lockDisplay} lockVisibility={lockVisibility} inBackend={item.existsInBackendInventory} -> {lockStateLabel}"
+                    $"[InventorySwap] button={binding.itemElementName} original={binding.originalItemId} displayed={displayedItemId} owned={owned} equipped={equipped} lockDisplay={lockDisplay} lockVisibility={lockVisibility}"
                 );
             }
 
             if (_defaultPreview != null)
             {
                 _defaultPreview.style.display = DisplayStyle.Flex;
-                _defaultPreview.SetEnabled(true);
+                _defaultPreview.EnableInClassList(EquippedClass, true);
+            }
+        }
 
-                _defaultPreview.EnableInClassList(EquippedClass, IsDefaultEquipped());
+        private void ApplyDefaultPreviewVisual(CosmeticCategory category, int equippedItemId)
+        {
+            if (_defaultPreview == null)
+            {
+                return;
+            }
 
-                _defaultPreview.RemoveFromClassList("default-color-preview");
-                _defaultPreview.RemoveFromClassList("default-ojos-preview");
-                _defaultPreview.RemoveFromClassList("default-outfit-preview");
+            int fallbackDefaultId = defaults.GetDefaultId(category);
+            int visualItemId = equippedItemId > 0 ? equippedItemId : fallbackDefaultId;
 
-                if (_activeCategory == CosmeticCategory.Color)
+            if (_visualClassByItemId.TryGetValue(visualItemId, out var equippedVisualClass))
+            {
+                ApplyVisualClassForCategory(_defaultPreview, category, equippedVisualClass);
+                return;
+            }
+
+            if (_defaultPreviewClassByCategory.TryGetValue(category, out var defaultPreviewClass))
+            {
+                ApplyVisualClassForCategory(_defaultPreview, category, defaultPreviewClass);
+            }
+        }
+
+        private void ApplyItemVisual(CosmeticUiBinding binding, int visualItemId)
+        {
+            if (binding?.button == null)
+            {
+                return;
+            }
+
+            if (!_visualClassByItemId.TryGetValue(visualItemId, out var visualClass))
+            {
+                visualClass = binding.visualClassName;
+            }
+
+            ApplyVisualClassForCategory(binding.button, binding.category, visualClass);
+        }
+
+        private void ApplyVisualClassForCategory(VisualElement element, CosmeticCategory category, string visualClass)
+        {
+            if (element == null || string.IsNullOrWhiteSpace(visualClass))
+            {
+                return;
+            }
+
+            if (_categoryVisualClassPool.TryGetValue(category, out var classPool))
+            {
+                foreach (var className in classPool)
                 {
-                    _defaultPreview.AddToClassList("default-color-preview");
-                }
-
-                if (_activeCategory == CosmeticCategory.Ojos)
-                {
-                    _defaultPreview.AddToClassList("default-ojos-preview");
-                }
-
-                if (_activeCategory == CosmeticCategory.Outfit)
-                {
-                    _defaultPreview.AddToClassList("default-outfit-preview");
+                    element.RemoveFromClassList(className);
                 }
             }
+
+            element.AddToClassList(visualClass);
         }
 
         private void ApplyLockState(CosmeticUiBinding binding, bool owned)
@@ -360,7 +418,7 @@ namespace Somnia.Inventory
             }
 
             Debug.Log(
-                $"[Inventory][LockState] itemId={binding.itemId} owned={owned} button={binding.itemElementName} lockOverlay={binding.lockElementName} display={binding.lockOverlay.style.display.value} visibility={binding.lockOverlay.style.visibility.value} removedClasses={removedClasses} addedClasses={addedClasses}"
+                $"[Inventory][LockState] originalItemId={binding.originalItemId} displayedItemId={binding.displayedItemId} owned={owned} button={binding.itemElementName} lockOverlay={binding.lockElementName} display={binding.lockOverlay.style.display.value} visibility={binding.lockOverlay.style.visibility.value} removedClasses={removedClasses} addedClasses={addedClasses}"
             );
         }
 
@@ -418,6 +476,10 @@ namespace Somnia.Inventory
             }
 
             int defaultItemId = defaults.GetDefaultId(_activeCategory);
+            if (_displayedItemByButton.TryGetValue(_defaultPreview, out var displayedDefaultId))
+            {
+                defaultItemId = displayedDefaultId;
+            }
 
             var item = _snapshot.items.FirstOrDefault(i =>
                 i.itemId == defaultItemId && i.category == _activeCategory
@@ -562,50 +624,128 @@ namespace Somnia.Inventory
             }
         }
 
-        private bool IsDefaultEquipped()
+        private int GetEquippedIdForCategory(CosmeticCategory category)
         {
-            if (_snapshot == null)
+            if (_snapshot?.equippedByCategory == null)
             {
-                return false;
+                return defaults.GetDefaultId(category);
             }
 
-            int defaultId = defaults.GetDefaultId(_activeCategory);
+            return _snapshot.equippedByCategory.TryGetValue(category, out var equippedId)
+                ? equippedId
+                : defaults.GetDefaultId(category);
+        }
 
-            return _snapshot.equippedByCategory.TryGetValue(_activeCategory, out var equippedId)
-                   && equippedId == defaultId;
+        private CosmeticInventoryItemViewModel FindItem(int itemId, CosmeticCategory category)
+        {
+            if (_snapshot?.items == null)
+            {
+                return null;
+            }
+
+            return _snapshot.items.FirstOrDefault(i => i.itemId == itemId && i.category == category);
         }
 
         private void BuildBindings(VisualElement root)
         {
             _uiBindings.Clear();
             _itemButtonHandlers.Clear();
+            _displayedItemByButton.Clear();
+            _visualClassByItemId.Clear();
+            _defaultPreviewClassByCategory.Clear();
+            _categoryVisualClassPool.Clear();
 
-            AddBinding(root, 2, CosmeticCategory.Color, "skinNaranja", "bloqueado1", "naranjaNuevo1");
-            AddBinding(root, 3, CosmeticCategory.Color, "skinMorado", "bloqueado2");
-            AddBinding(root, 4, CosmeticCategory.Color, "skinAmarillo", "bloqueado3");
-            AddBinding(root, 5, CosmeticCategory.Color, "skinRojo", "bloqueado4");
-            AddBinding(root, 6, CosmeticCategory.Color, "skinTurquesa", "bloqueado5");
-            AddBinding(root, 7, CosmeticCategory.Color, "skinVerde", "bloqueado6");
-            AddBinding(root, 8, CosmeticCategory.Color, "skinRosa", "bloqueado7");
-            AddBinding(root, 9, CosmeticCategory.Color, "skinAzul", "bloqueado8");
-            AddBinding(root, 10, CosmeticCategory.Color, "skinNegro", "bloqueado9");
+            RegisterCategoryVisuals(
+                CosmeticCategory.Color,
+                "inv-color-blanco",
+                new Dictionary<int, string>
+                {
+                    { defaults.defaultColorItemId, "inv-color-blanco" },
+                    { 2, "inv-color-naranja" },
+                    { 3, "inv-color-morado" },
+                    { 4, "inv-color-amarillo" },
+                    { 5, "inv-color-rojo" },
+                    { 6, "inv-color-turquesa" },
+                    { 7, "inv-color-verde" },
+                    { 8, "inv-color-rosa" },
+                    { 9, "inv-color-azul" },
+                    { 10, "inv-color-negro" }
+                }
+            );
 
-            AddBinding(root, 12, CosmeticCategory.Ojos, "ojosRombo", "bloqueadoojos1");
-            AddBinding(root, 13, CosmeticCategory.Ojos, "ojosCansado", "bloqueadoojos2");
-            AddBinding(root, 14, CosmeticCategory.Ojos, "ojosEstrella", "bloqueadoojos3");
-            AddBinding(root, 15, CosmeticCategory.Ojos, "ojosHappy", "bloqueadoojos4");
-            AddBinding(root, 16, CosmeticCategory.Ojos, "ojosPirata", "bloqueadoojos5");
-            AddBinding(root, 17, CosmeticCategory.Ojos, "ojosEmputado", "bloqueadoojos6");
+            RegisterCategoryVisuals(
+                CosmeticCategory.Ojos,
+                "inv-ojos-default",
+                new Dictionary<int, string>
+                {
+                    { defaults.defaultOjosItemId, "inv-ojos-default" },
+                    { 12, "inv-ojos-rombo" },
+                    { 13, "inv-ojos-cansado" },
+                    { 14, "inv-ojos-estrella" },
+                    { 15, "inv-ojos-happy" },
+                    { 16, "inv-ojos-pirata" },
+                    { 17, "inv-ojos-emputado" }
+                }
+            );
 
-            AddBinding(root, 19, CosmeticCategory.Outfit, "outfitEngrane", "bloqueadoOutfit1");
-            AddBinding(root, 20, CosmeticCategory.Outfit, "outfitRana", "bloqueadoOutfit2");
-            AddBinding(root, 21, CosmeticCategory.Outfit, "outfitDiablito", "bloqueadoOutfit3");
+            RegisterCategoryVisuals(
+                CosmeticCategory.Outfit,
+                "inv-outfit-default",
+                new Dictionary<int, string>
+                {
+                    { defaults.defaultOutfitItemId, "inv-outfit-default" },
+                    { 19, "inv-outfit-engrane" },
+                    { 20, "inv-outfit-rana" },
+                    { 21, "inv-outfit-diablito" }
+                }
+            );
+
+            AddBinding(root, 2, CosmeticCategory.Color, "cara1", "skinNaranja", "bloqueado1", "naranjaNuevo1");
+            AddBinding(root, 3, CosmeticCategory.Color, "cara2", "skinMorado", "bloqueado2");
+            AddBinding(root, 4, CosmeticCategory.Color, "cara3", "skinAmarillo", "bloqueado3");
+            AddBinding(root, 5, CosmeticCategory.Color, "cara4", "skinRojo", "bloqueado4");
+            AddBinding(root, 6, CosmeticCategory.Color, "cara5", "skinTurquesa", "bloqueado5");
+            AddBinding(root, 7, CosmeticCategory.Color, "cara6", "skinVerde", "bloqueado6");
+            AddBinding(root, 8, CosmeticCategory.Color, "cara7", "skinRosa", "bloqueado7");
+            AddBinding(root, 9, CosmeticCategory.Color, "cara8", "skinAzul", "bloqueado8");
+            AddBinding(root, 10, CosmeticCategory.Color, "cara9", "skinNegro", "bloqueado9");
+
+            AddBinding(root, 12, CosmeticCategory.Ojos, "ojos1", "ojosRombo", "bloqueadoojos1");
+            AddBinding(root, 13, CosmeticCategory.Ojos, "ojos2", "ojosCansado", "bloqueadoojos2");
+            AddBinding(root, 14, CosmeticCategory.Ojos, "ojos3", "ojosEstrella", "bloqueadoojos3");
+            AddBinding(root, 15, CosmeticCategory.Ojos, "ojos4", "ojosHappy", "bloqueadoojos4");
+            AddBinding(root, 16, CosmeticCategory.Ojos, "ojos5", "ojosPirata", "bloqueadoojos5");
+            AddBinding(root, 17, CosmeticCategory.Ojos, "ojos6", "ojosEmputado", "bloqueadoojos6");
+
+            AddBinding(root, 19, CosmeticCategory.Outfit, "outfit3", "outfitEngrane", "bloqueadoOutfit1");
+            AddBinding(root, 20, CosmeticCategory.Outfit, "outfit1", "outfitRana", "bloqueadoOutfit2");
+            AddBinding(root, 21, CosmeticCategory.Outfit, "outfit2", "outfitDiablito", "bloqueadoOutfit3");
+        }
+
+        private void RegisterCategoryVisuals(
+            CosmeticCategory category,
+            string defaultPreviewClass,
+            IReadOnlyDictionary<int, string> itemVisualMap
+        )
+        {
+            _defaultPreviewClassByCategory[category] = defaultPreviewClass;
+
+            var classPool = new HashSet<string> { defaultPreviewClass };
+
+            foreach (var pair in itemVisualMap)
+            {
+                _visualClassByItemId[pair.Key] = pair.Value;
+                classPool.Add(pair.Value);
+            }
+
+            _categoryVisualClassPool[category] = classPool.ToList();
         }
 
         private void AddBinding(
             VisualElement root,
             int itemId,
             CosmeticCategory category,
+            string visualClassName,
             string itemElementName,
             string lockElementName,
             string unlockedElementName = null
@@ -647,12 +787,14 @@ namespace Somnia.Inventory
 
             var binding = new CosmeticUiBinding
             {
-                itemId = itemId,
+                originalItemId = itemId,
+                displayedItemId = itemId,
                 category = category,
+                visualClassName = visualClassName,
                 itemElementName = itemElementName,
                 lockElementName = lockElementName,
                 unlockedElementName = unlockedElementName,
-                itemButton = button,
+                button = button,
                 lockOverlay = lockOverlay,
                 unlockedVisual = unlockedVisual
             };
@@ -661,7 +803,13 @@ namespace Somnia.Inventory
 
             EventCallback<ClickEvent> handler = evt =>
             {
-                _ = HandleItemPressedAsync(itemId);
+                int displayedItemId = binding.displayedItemId;
+                if (_displayedItemByButton.TryGetValue(button, out var displayedByButton))
+                {
+                    displayedItemId = displayedByButton;
+                }
+
+                _ = HandleItemPressedAsync(displayedItemId);
             };
 
             _itemButtonHandlers[button] = handler;
@@ -691,6 +839,7 @@ namespace Somnia.Inventory
             }
 
             _itemButtonHandlers.Clear();
+            _displayedItemByButton.Clear();
         }
 
         private static void RegisterButtonCallback(Button button, EventCallback<ClickEvent> callback)

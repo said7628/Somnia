@@ -390,6 +390,90 @@
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/boy%20scout%20233x233.png?fileID=2800000&guid=62989f371143f1f4a801427b30a04edb&type=3#boy scout 233x233");
 }
 
+.inv-color-blanco {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/blanco%20163x163.png?fileID=7751551136012658776&guid=4d955961874bd944bb53da0ab6b88ffd&type=3#blanco 163x163_0");
+}
+
+.inv-color-naranja {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/naranja%20163x163.png?fileID=2800000&guid=d9ff9fd64ba653b4c93f91c284eb54ef&type=3#naranja 163x163");
+}
+
+.inv-color-morado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/morado%20163x163.png?fileID=2800000&guid=a3c268c594dca7a4a9a3b92f95a29268&type=3#morado 163x163");
+}
+
+.inv-color-amarillo {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/amarillon%20163x163.png?fileID=2800000&guid=afeb4ca3490d4534d9aab3b23a58f0ec&type=3#amarillon 163x163");
+}
+
+.inv-color-rojo {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/rojo%20163x163.png?fileID=2800000&guid=a33dc27d246d4fd439c7ff8f35584bdf&type=3#rojo 163x163");
+}
+
+.inv-color-turquesa {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/turquesa%20163x163.png?fileID=2800000&guid=bf6eea15c1fc7dc41b4ce31104ac01be&type=3#turquesa 163x163");
+}
+
+.inv-color-verde {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/verde%20163x163.png?fileID=2800000&guid=b460f5ca02d084f40b6390a559741fca&type=3#verde 163x163");
+}
+
+.inv-color-rosa {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/rosita%20163x163.png?fileID=2800000&guid=17db0c0f64993c341bc3093e5fbf999c&type=3#rosita 163x163");
+}
+
+.inv-color-azul {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/azul%20163x163.png?fileID=2800000&guid=024f97f8583e2024398eedd79e48bc76&type=3#azul 163x163");
+}
+
+.inv-color-negro {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/negro%20163x163.png?fileID=2800000&guid=de213e597cc5dc7478409620a57739b8&type=3#negro 163x163");
+}
+
+.inv-ojos-default {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/base%20163x163.png?fileID=2800000&guid=c4d413ee2b09a1e49acc14367477ff2a&type=3#base 163x163");
+}
+
+.inv-ojos-rombo {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/rombo%20163x163.png?fileID=2800000&guid=6c58ba95f6120d542ba16bc93da7fb66&type=3#rombo 163x163");
+}
+
+.inv-ojos-cansado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/cansado%20163x163.png?fileID=2800000&guid=9d8201639fa55804ba70528df4e5c5b7&type=3#cansado 163x163");
+}
+
+.inv-ojos-estrella {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/estrellas%20163x163.png?fileID=2800000&guid=1eb39f6b73f9f7b4eaa2d1a27d7ae83d&type=3#estrellas 163x163");
+}
+
+.inv-ojos-happy {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/happy%20163x163.png?fileID=2800000&guid=a8ecce58b17d39a4fbc1413f1664f897&type=3#happy 163x163");
+}
+
+.inv-ojos-pirata {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/pirata%20163x163.png?fileID=2800000&guid=56db6b8324b9d2142ac794f6f5e3ca18&type=3#pirata 163x163");
+}
+
+.inv-ojos-emputado {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/emputado%20163x163.png?fileID=2800000&guid=287f9fd5104ff6248a7e5772ef85fe42&type=3#emputado 163x163");
+}
+
+.inv-outfit-default {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/boy%20scout%20233x233.png?fileID=2800000&guid=62989f371143f1f4a801427b30a04edb&type=3#boy scout 233x233");
+}
+
+.inv-outfit-rana {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/rana%20233x233.png?fileID=2800000&guid=06717278279c74c4ca27051920c9b18d&type=3#rana 233x233");
+}
+
+.inv-outfit-diablito {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/diablo%20233x233.png?fileID=2800000&guid=9de713ac143cfa9449ab78be5476a618&type=3#diablo 233x233");
+}
+
+.inv-outfit-engrane {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/engrane%20233x233.png?fileID=2800000&guid=70a633274c3c9f740901abdb334ff12f&type=3#engrane 233x233");
+}
+
 .inventory-equipped {
     border-left-color: rgb(90, 228, 149);
     border-right-color: rgb(90, 228, 149);
