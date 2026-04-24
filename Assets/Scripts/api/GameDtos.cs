@@ -80,6 +80,7 @@ namespace Somnia.UnityClient
         public int edad_jugador;
         public EquipamientoDto equipamiento;
         public InventarioItemDto[] inventario_cosmeticos;
+        public InventoryNewSummaryDto inventory_new_summary;
         public ProgresoDto[] progreso;
         public ProgresoDto[] progress;
         public int[] niveles_completados;
@@ -102,6 +103,21 @@ namespace Somnia.UnityClient
         public string nombre;
         public string tipo;
         public string descripcion;
+        public int nuevo;
+
+        public bool isNew => nuevo == 1;
+    }
+
+    [Serializable]
+    public class InventoryNewSummaryDto
+    {
+        public int color;
+        public int ojos;
+        public int outfit;
+
+        public bool hasNewColor => color == 1;
+        public bool hasNewOjos => ojos == 1;
+        public bool hasNewOutfit => outfit == 1;
     }
 
     [Serializable]

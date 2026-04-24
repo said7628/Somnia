@@ -40,6 +40,7 @@ namespace Somnia.Inventory
         public string sourceType;
         public bool owned;
         public bool equipped;
+        public bool isNew;
         public bool existsInBackendInventory;
         public bool isDefaultFallback;
     }
@@ -51,13 +52,21 @@ namespace Somnia.Inventory
         public int partidaId;
         public IReadOnlyList<CosmeticInventoryItemViewModel> items;
         public Dictionary<CosmeticCategory, int> equippedByCategory;
+        public Dictionary<CosmeticCategory, bool> hasNewByCategory;
 
-        public CosmeticInventorySnapshot(int slotNumber, int partidaId, IReadOnlyList<CosmeticInventoryItemViewModel> items, Dictionary<CosmeticCategory, int> equippedByCategory)
+        public CosmeticInventorySnapshot(
+            int slotNumber,
+            int partidaId,
+            IReadOnlyList<CosmeticInventoryItemViewModel> items,
+            Dictionary<CosmeticCategory, int> equippedByCategory,
+            Dictionary<CosmeticCategory, bool> hasNewByCategory
+        )
         {
             this.slotNumber = slotNumber;
             this.partidaId = partidaId;
             this.items = items;
             this.equippedByCategory = equippedByCategory;
+            this.hasNewByCategory = hasNewByCategory;
         }
     }
 

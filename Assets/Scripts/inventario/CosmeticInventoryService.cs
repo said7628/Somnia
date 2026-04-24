@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Somnia.Economy.DTOs;
 using Somnia.Economy.Interfaces;
+using Somnia.UnityClient;
 using UnityEngine;
 
 namespace Somnia.Inventory
@@ -68,8 +69,9 @@ namespace Somnia.Inventory
             }
 
             var catalogItems = await LoadCatalogUniverseAsync(slotNumber, ct);
-            var rawInventory = slotDetailResult.data.inventario_cosmeticos?.Select(x => x.id_item).ToHashSet()
-                               ?? new HashSet<int>();
+            var backendInventory = slotDetailResult.data.inventario_cosmeticos ?? Array.Empty<InventarioItemDto>();
+            var rawInventory = backendInventory.Select(x => x.id_item).ToHashSet();
+            var isNewByItemId = backendInventory.ToDictionary(x => x.id_item, x => x.isNew);
 
             var normalizedOwned = NormalizeOwned(rawInventory);
             var equippedByCategory = NormalizeEquipped(equippedTask.Result?.data, normalizedOwned);
@@ -82,6 +84,7 @@ namespace Somnia.Inventory
                     category = ParseCategory(item.tipo),
                     sourceType = item.tipo,
                     owned = normalizedOwned.Contains(item.id),
+                    isNew = isNewByItemId.TryGetValue(item.id, out var isNew) && isNew,
                     existsInBackendInventory = rawInventory.Contains(item.id),
                     equipped = false,
                     isDefaultFallback = false
@@ -104,6 +107,7 @@ namespace Somnia.Inventory
                         category = category,
                         sourceType = category.ToString().ToLowerInvariant(),
                         owned = true,
+                        isNew = false,
                         existsInBackendInventory = rawInventory.Contains(fallbackId),
                         equipped = false,
                         isDefaultFallback = true
@@ -116,7 +120,15 @@ namespace Somnia.Inventory
                 item.equipped = equippedByCategory.TryGetValue(item.category, out var equippedId) && equippedId == item.itemId;
             }
 
-            return new CosmeticInventorySnapshot(slotNumber, slotDetailResult.data.slot.id_partida, mapped, equippedByCategory);
+            var hasNewByCategory = BuildNewSummary(slotDetailResult.data.inventory_new_summary, mapped);
+
+            return new CosmeticInventorySnapshot(
+                slotNumber,
+                slotDetailResult.data.slot.id_partida,
+                mapped,
+                equippedByCategory,
+                hasNewByCategory
+            );
         }
 
         public async Task<ApiResponse<EquippedItemsData>> EquipAsync(int slotNumber, CosmeticInventorySnapshot currentSnapshot, CosmeticCategory category, int itemId, CancellationToken ct = default)
@@ -242,6 +254,29 @@ namespace Somnia.Inventory
                 [CosmeticCategory.Color] = colorId,
                 [CosmeticCategory.Ojos] = ojosId,
                 [CosmeticCategory.Outfit] = outfitId
+            };
+        }
+
+        private static Dictionary<CosmeticCategory, bool> BuildNewSummary(
+            InventoryNewSummaryDto backendSummary,
+            IReadOnlyList<CosmeticInventoryItemViewModel> items
+        )
+        {
+            if (backendSummary != null)
+            {
+                return new Dictionary<CosmeticCategory, bool>
+                {
+                    [CosmeticCategory.Color] = backendSummary.hasNewColor,
+                    [CosmeticCategory.Ojos] = backendSummary.hasNewOjos,
+                    [CosmeticCategory.Outfit] = backendSummary.hasNewOutfit
+                };
+            }
+
+            return new Dictionary<CosmeticCategory, bool>
+            {
+                [CosmeticCategory.Color] = items.Any(i => i.category == CosmeticCategory.Color && i.isNew),
+                [CosmeticCategory.Ojos] = items.Any(i => i.category == CosmeticCategory.Ojos && i.isNew),
+                [CosmeticCategory.Outfit] = items.Any(i => i.category == CosmeticCategory.Outfit && i.isNew)
             };
         }
 

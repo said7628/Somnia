@@ -29,6 +29,9 @@ namespace Somnia.Inventory
         private Button _tabColor;
         private Button _tabOjos;
         private Button _tabOutfit;
+        private VisualElement _newColorIndicator;
+        private VisualElement _newOjosIndicator;
+        private VisualElement _newOutfitIndicator;
         private Button _configButton;
         private Button _homeButton;
         private Button _closeButton;
@@ -64,10 +67,10 @@ namespace Somnia.Inventory
             public string visualClassName;
             public string itemElementName;
             public string lockElementName;
-            public string unlockedElementName;
+            public string newElementName;
             public Button button;
             public VisualElement lockOverlay;
-            public VisualElement unlockedVisual;
+            public VisualElement newIndicator;
         }
 
         private void OnEnable()
@@ -117,6 +120,9 @@ namespace Somnia.Inventory
             _tabColor = root.Q<Button>("botoncara");
             _tabOjos = root.Q<Button>("botonojos");
             _tabOutfit = root.Q<Button>("botonoutfit");
+            _newColorIndicator = root.Q<VisualElement>("nuevoCara");
+            _newOjosIndicator = root.Q<VisualElement>("nuevoOjos");
+            _newOutfitIndicator = root.Q<VisualElement>("nuevoOutfit");
 
             _configButton = root.Q<Button>("botonconf");
             _homeButton = root.Q<Button>("botonHome");
@@ -245,6 +251,7 @@ namespace Somnia.Inventory
 
                 SetLoading(false, $"Partida #{_snapshot.partidaId} | Slot {slot}");
                 RenderCurrentCategory();
+                UpdateCategoryNewIndicators();
             }
             catch (Exception ex)
             {
@@ -308,6 +315,7 @@ namespace Somnia.Inventory
 
                 ApplyLockState(binding, owned);
                 ApplyItemVisual(binding, displayedItemId);
+                ApplyNewState(binding, displayedItem?.isNew ?? false);
 
                 if (binding.button != null)
                 {
@@ -411,15 +419,64 @@ namespace Somnia.Inventory
                 addedClasses = AddLockClassForCategory(binding.lockOverlay, binding.category);
             }
 
-            if (binding.unlockedVisual != null)
-            {
-                binding.unlockedVisual.style.display = owned ? DisplayStyle.Flex : DisplayStyle.None;
-                binding.unlockedVisual.style.visibility = owned ? Visibility.Visible : Visibility.Hidden;
-            }
-
             Debug.Log(
                 $"[Inventory][LockState] originalItemId={binding.originalItemId} displayedItemId={binding.displayedItemId} owned={owned} button={binding.itemElementName} lockOverlay={binding.lockElementName} display={binding.lockOverlay.style.display.value} visibility={binding.lockOverlay.style.visibility.value} removedClasses={removedClasses} addedClasses={addedClasses}"
             );
+        }
+
+        private void ApplyNewState(CosmeticUiBinding binding, bool itemNuevo)
+        {
+            if (binding?.newIndicator == null)
+            {
+                return;
+            }
+
+            binding.newIndicator.pickingMode = PickingMode.Ignore;
+            if (!binding.newIndicator.ClassListContains("nuevoInventario"))
+            {
+                binding.newIndicator.AddToClassList("nuevoInventario");
+            }
+
+            if (itemNuevo)
+            {
+                binding.newIndicator.style.display = DisplayStyle.Flex;
+                binding.newIndicator.style.visibility = Visibility.Visible;
+            }
+            else
+            {
+                binding.newIndicator.style.display = DisplayStyle.None;
+                binding.newIndicator.style.visibility = Visibility.Hidden;
+            }
+        }
+
+        private void UpdateCategoryNewIndicators()
+        {
+            ApplyCategoryNewState(_newColorIndicator, HasNewForCategory(CosmeticCategory.Color));
+            ApplyCategoryNewState(_newOjosIndicator, HasNewForCategory(CosmeticCategory.Ojos));
+            ApplyCategoryNewState(_newOutfitIndicator, HasNewForCategory(CosmeticCategory.Outfit));
+        }
+
+        private bool HasNewForCategory(CosmeticCategory category)
+        {
+            if (_snapshot?.hasNewByCategory != null &&
+                _snapshot.hasNewByCategory.TryGetValue(category, out bool summaryValue))
+            {
+                return summaryValue;
+            }
+
+            return _snapshot?.items?.Any(i => i.category == category && i.isNew) == true;
+        }
+
+        private static void ApplyCategoryNewState(VisualElement indicator, bool hasNew)
+        {
+            if (indicator == null)
+            {
+                return;
+            }
+
+            indicator.pickingMode = PickingMode.Ignore;
+            indicator.style.display = hasNew ? DisplayStyle.Flex : DisplayStyle.None;
+            indicator.style.visibility = hasNew ? Visibility.Visible : Visibility.Hidden;
         }
 
         private static string RemoveLockClasses(VisualElement lockOverlay)
@@ -595,8 +652,21 @@ namespace Somnia.Inventory
                         && equippedId == vm.itemId;
                 }
 
+                var equippedItem = _snapshot.items.FirstOrDefault(vm => vm.itemId == item.itemId && vm.category == item.category);
+                if (equippedItem != null)
+                {
+                    equippedItem.isNew = false;
+                }
+
+                if (_snapshot.hasNewByCategory != null)
+                {
+                    _snapshot.hasNewByCategory[item.category] =
+                        _snapshot.items.Any(vm => vm.category == item.category && vm.isNew);
+                }
+
                 SetStatus($"Equipado: {item.name}");
                 RenderCurrentCategory();
+                UpdateCategoryNewIndicators();
             }
             catch (Exception ex)
             {
@@ -701,25 +771,25 @@ namespace Somnia.Inventory
             );
 
             AddBinding(root, 2, CosmeticCategory.Color, "cara1", "skinNaranja", "bloqueado1", "naranjaNuevo1");
-            AddBinding(root, 3, CosmeticCategory.Color, "cara2", "skinMorado", "bloqueado2");
-            AddBinding(root, 4, CosmeticCategory.Color, "cara3", "skinAmarillo", "bloqueado3");
-            AddBinding(root, 5, CosmeticCategory.Color, "cara4", "skinRojo", "bloqueado4");
-            AddBinding(root, 6, CosmeticCategory.Color, "cara5", "skinTurquesa", "bloqueado5");
-            AddBinding(root, 7, CosmeticCategory.Color, "cara6", "skinVerde", "bloqueado6");
-            AddBinding(root, 8, CosmeticCategory.Color, "cara7", "skinRosa", "bloqueado7");
-            AddBinding(root, 9, CosmeticCategory.Color, "cara8", "skinAzul", "bloqueado8");
-            AddBinding(root, 10, CosmeticCategory.Color, "cara9", "skinNegro", "bloqueado9");
+            AddBinding(root, 3, CosmeticCategory.Color, "cara2", "skinMorado", "bloqueado2", "moradoNuevo2");
+            AddBinding(root, 4, CosmeticCategory.Color, "cara3", "skinAmarillo", "bloqueado3", "amarilloNuevo3");
+            AddBinding(root, 5, CosmeticCategory.Color, "cara4", "skinRojo", "bloqueado4", "rojoNuevo4");
+            AddBinding(root, 6, CosmeticCategory.Color, "cara5", "skinTurquesa", "bloqueado5", "turquesaNuevo5");
+            AddBinding(root, 7, CosmeticCategory.Color, "cara6", "skinVerde", "bloqueado6", "verdeNuevo6");
+            AddBinding(root, 8, CosmeticCategory.Color, "cara7", "skinRosa", "bloqueado7", "rosaNuevo7");
+            AddBinding(root, 9, CosmeticCategory.Color, "cara8", "skinAzul", "bloqueado8", "azulNuevo8");
+            AddBinding(root, 10, CosmeticCategory.Color, "cara9", "skinNegro", "bloqueado9", "negroNuevo9");
 
-            AddBinding(root, 12, CosmeticCategory.Ojos, "ojos1", "ojosRombo", "bloqueadoojos1");
-            AddBinding(root, 13, CosmeticCategory.Ojos, "ojos2", "ojosCansado", "bloqueadoojos2");
-            AddBinding(root, 14, CosmeticCategory.Ojos, "ojos3", "ojosEstrella", "bloqueadoojos3");
-            AddBinding(root, 15, CosmeticCategory.Ojos, "ojos4", "ojosHappy", "bloqueadoojos4");
-            AddBinding(root, 16, CosmeticCategory.Ojos, "ojos5", "ojosPirata", "bloqueadoojos5");
-            AddBinding(root, 17, CosmeticCategory.Ojos, "ojos6", "ojosEmputado", "bloqueadoojos6");
+            AddBinding(root, 12, CosmeticCategory.Ojos, "ojos1", "ojosRombo", "bloqueadoojos1", "romboNuevo1");
+            AddBinding(root, 13, CosmeticCategory.Ojos, "ojos2", "ojosCansado", "bloqueadoojos2", "cansadosNuevo2");
+            AddBinding(root, 14, CosmeticCategory.Ojos, "ojos3", "ojosEstrella", "bloqueadoojos3", "estrellaNuevo3");
+            AddBinding(root, 15, CosmeticCategory.Ojos, "ojos4", "ojosHappy", "bloqueadoojos4", "happyNuevo4");
+            AddBinding(root, 16, CosmeticCategory.Ojos, "ojos5", "ojosPirata", "bloqueadoojos5", "pirataNuevo5");
+            AddBinding(root, 17, CosmeticCategory.Ojos, "ojos6", "ojosEmputado", "bloqueadoojos6", "emputadoNuevo6");
 
-            AddBinding(root, 19, CosmeticCategory.Outfit, "outfit3", "outfitEngrane", "bloqueadoOutfit1");
-            AddBinding(root, 20, CosmeticCategory.Outfit, "outfit1", "outfitRana", "bloqueadoOutfit2");
-            AddBinding(root, 21, CosmeticCategory.Outfit, "outfit2", "outfitDiablito", "bloqueadoOutfit3");
+            AddBinding(root, 19, CosmeticCategory.Outfit, "outfit3", "outfitEngrane", "bloqueadoOutfit1", "engraneNuevo1");
+            AddBinding(root, 20, CosmeticCategory.Outfit, "outfit1", "outfitRana", "bloqueadoOutfit2", "ranaNuevo2");
+            AddBinding(root, 21, CosmeticCategory.Outfit, "outfit2", "outfitDiablito", "bloqueadoOutfit3", "diablitoNuevo3");
         }
 
         private void RegisterCategoryVisuals(
@@ -748,7 +818,7 @@ namespace Somnia.Inventory
             string visualClassName,
             string itemElementName,
             string lockElementName,
-            string unlockedElementName = null
+            string newElementName = null
         )
         {
             var button = root.Q<Button>(itemElementName);
@@ -774,14 +844,14 @@ namespace Somnia.Inventory
                 lockOverlay.pickingMode = PickingMode.Ignore;
             }
 
-            var unlockedVisual = string.IsNullOrWhiteSpace(unlockedElementName)
+            var newIndicator = string.IsNullOrWhiteSpace(newElementName)
                 ? null
-                : root.Q<VisualElement>(unlockedElementName);
+                : root.Q<VisualElement>(newElementName);
 
-            if (!string.IsNullOrWhiteSpace(unlockedElementName) && unlockedVisual == null)
+            if (!string.IsNullOrWhiteSpace(newElementName) && newIndicator == null)
             {
                 Debug.LogWarning(
-                    $"[Inventory] No se encontró visual desbloqueado para item {itemId}: {unlockedElementName}"
+                    $"[Inventory] No se encontró indicador de nuevo para item {itemId}: {newElementName}"
                 );
             }
 
@@ -793,10 +863,10 @@ namespace Somnia.Inventory
                 visualClassName = visualClassName,
                 itemElementName = itemElementName,
                 lockElementName = lockElementName,
-                unlockedElementName = unlockedElementName,
+                newElementName = newElementName,
                 button = button,
                 lockOverlay = lockOverlay,
-                unlockedVisual = unlockedVisual
+                newIndicator = newIndicator
             };
 
             _uiBindings[itemId] = binding;
