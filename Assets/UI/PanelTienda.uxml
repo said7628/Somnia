@@ -12,7 +12,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="ContenedorMonedas" style="flex-grow: 1; flex-direction: row; align-items: center; position: absolute; top: 100px; left: 150px;">
             <ui:VisualElement name="Monedas" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Textyping/Score/exito/yatzi%20moneda%2056x98.png?fileID=2800000&amp;guid=6625f4c37cc08c74abcef476d10db3ed&amp;type=3#yatzi moneda 56x98&quot;); background-color: rgba(76, 76, 76, 0); width: 90px; height: 90px;"/>
-            <ui:Label text="00" name="MonedasJugador" style="font-size: 42px; color: rgb(255, 255, 255);"/>
+            <ui:Label text="EtiquetaMonedas" name="EtiquetaMonedas" style="font-size: 42px; color: rgb(255, 255, 255);"/>
         </ui:VisualElement>
         <ui:Button text="" name="BotonRegresa" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Plataforma/UIUX/Menus%20por%20isla/taches%20del%20nivel/proximo%20148x148.png?fileID=2800000&amp;guid=707d3f0cbd71c114da4d43fc80e30c55&amp;type=3#proximo 148x148&quot;); background-color: rgba(55, 55, 55, 0); position: absolute; top: 100px; height: 70px; width: 70px; left: auto; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); right: 180px;"/>
     </ui:VisualElement>

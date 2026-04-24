@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 1567299532}
   - component: {fileID: 1567299534}
   - component: {fileID: 1567299535}
+  - component: {fileID: 1567299536}
   m_Layer: 5
   m_Name: TiendaUI
   m_TagString: Untagged
@@ -424,6 +425,19 @@ MonoBehaviour:
   imgOjosActivo: {fileID: 2834352651998629639, guid: 0eb5bfe79c8d3914ba0e6dc165cb61a2, type: 3}
   imgColorActivo: {fileID: 1770499137549744020, guid: e18d5daa1412c5c4ca5da31e42b235fc, type: 3}
   imgRopaActivo: {fileID: 6939055083934534698, guid: 65952156c44bd354e8682e34431ee446, type: 3}
+--- !u!114 &1567299536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567299531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95abc8ca228a4c4f929e33c1a9a9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SistemaTienda
+  monedasJugador: 500
 --- !u!1 &1785088075
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,20 +23,22 @@ public class ControladorTienda : MonoBehaviour
 
     // --- VARIABLES PRIVADAS (El cerebro del UI) ---
     private UIDocument tiendaUI;
-    
-    // ¡Ojo aquí! Las variables en C# deben empezar con minúscula (btn en vez de Btn)
     private Button btnOjos;
     private Button btnColor;
     private Button btnRopa;
     private VisualElement contenedorOpciones;
+    
+    // Referencia al otro script para poder comprar
+    private SistemaTienda sistemaCompra;
 
     void OnEnable()
     {
         // 1. Conectamos con el documento UI de tu escena
         tiendaUI = GetComponent<UIDocument>();
+        sistemaCompra = GetComponent<SistemaTienda>(); // Buscamos el banco en el mismo objeto
         var root = tiendaUI.rootVisualElement;
 
-        // 2. Buscamos los botones usando el nombre EXACTO de tu UI Builder (Con mayúscula adentro)
+        // 2. Buscamos los botones usando el nombre EXACTO de tu UI Builder
         btnOjos = root.Q<Button>("BtnOjos");
         btnColor = root.Q<Button>("BtnColor");
         btnRopa = root.Q<Button>("BtnRopa");
@@ -64,7 +66,6 @@ public class ControladorTienda : MonoBehaviour
 
     private void ResetearBotones()
     {
-        // Regresa todos los botones a su imagen normal para que no haya dos prendidos a la vez
         if (imgOjosNormal != null) btnOjos.style.backgroundImage = new StyleBackground(imgOjosNormal);
         if (imgColorNormal != null) btnColor.style.backgroundImage = new StyleBackground(imgColorNormal);
         if (imgRopaNormal != null) btnRopa.style.backgroundImage = new StyleBackground(imgRopaNormal);
@@ -74,18 +75,15 @@ public class ControladorTienda : MonoBehaviour
 
     private void MostrarOpcionesOjos(ClickEvent evt)
     {
-        ResetearBotones(); // Apagamos todos primero
-        // Prendemos solo el botón de Ojos
+        ResetearBotones(); 
         if (imgOjosActivo != null) btnOjos.style.backgroundImage = new StyleBackground(imgOjosActivo);
-
-        contenedorOpciones.Clear(); // Limpiamos la ropa/colores viejos del centro
+        contenedorOpciones.Clear(); 
         
         if (islaActual.opcionesOjos != null)
         {
-            // Por cada ojo en tu lista de la base de datos, creamos un estandarte nuevo
             foreach (Sprite miSprite in islaActual.opcionesOjos)
             {
-                CrearPosterDinamico(miSprite, "150");
+                CrearPosterDinamico(miSprite, "150"); // Precio para la Isla 1
             }
         }
     }
@@ -94,7 +92,6 @@ public class ControladorTienda : MonoBehaviour
     {
         ResetearBotones(); 
         if (imgColorActivo != null) btnColor.style.backgroundImage = new StyleBackground(imgColorActivo);
-        
         contenedorOpciones.Clear();
         
         if (islaActual.opcionesColor != null)
@@ -110,7 +107,6 @@ public class ControladorTienda : MonoBehaviour
     {
         ResetearBotones(); 
         if (imgRopaActivo != null) btnRopa.style.backgroundImage = new StyleBackground(imgRopaActivo);
-        
         contenedorOpciones.Clear();
         
         if (islaActual.opcionesRopa != null)
@@ -133,6 +129,7 @@ public class ControladorTienda : MonoBehaviour
         VisualElement fondo = instancia.Q<VisualElement>("FondoEstandarte");
         Label etiquetaPrecio = instancia.Q<Label>("Precio");
         Button btnCompra = instancia.Q<Button>("BtnCompra");
+        VisualElement bannerVendido = instancia.Q<VisualElement>("SoldOut"); // El letrero
 
         // 3. Le asignamos la imagen correspondiente
         if (fondo != null && imagenEstandarte != null)
@@ -140,13 +137,21 @@ public class ControladorTienda : MonoBehaviour
             fondo.style.backgroundImage = new StyleBackground(imagenEstandarte);
         }
         
-        // 4. Le ponemos el precio
+        // 4. Le ponemos el precio visual
         if (etiquetaPrecio != null)
         {
             etiquetaPrecio.text = precioTexto;
         }
 
-        // Le damos un poco de espacio para que no estén pegados nariz con nariz
+        // --- CONEXIÓN DE COMPRA DINÁMICA ---
+        // Aquí le decimos al botón recién nacido qué hacer cuando le den clic
+        if (btnCompra != null && sistemaCompra != null)
+        {
+            int precioNumerico = int.Parse(precioTexto); // Convertimos el texto a número para la resta
+            btnCompra.clicked += () => sistemaCompra.IntentarCompra(precioNumerico, btnCompra, bannerVendido);
+        }
+
+        // Diseño
         instancia.style.marginRight = 15;
         instancia.style.marginLeft = 15;
 
@@ -154,7 +159,6 @@ public class ControladorTienda : MonoBehaviour
         contenedorOpciones.Add(instancia);
     }
 
-    // Limpiamos la memoria al salir para evitar bugs (Buenas prácticas)
     void OnDisable()
     {
         btnOjos.UnregisterCallback<ClickEvent>(MostrarOpcionesOjos);
