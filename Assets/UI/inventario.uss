@@ -266,6 +266,16 @@
     background-color: rgb(243, 222, 167);
 }
 
+.bloqueadoOjos {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/bloqueado%20163x163.png?fileID=2800000&guid=bd21816eaea16004da496e7204ff7904&type=3#bloqueado 163x163");
+    background-color: rgb(243, 222, 167);
+}
+
+.bloqueadoOutfit {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/bloqueado%20233x233.png?fileID=2800000&guid=a361489ea04c442429ebb5aa78fc59b0&type=3#bloqueado 233x233");
+    background-color: rgb(243, 222, 167);
+}
+
 .nuevodInventario {
     background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/Notificaciones/noti%2055x55.png?fileID=2800000&guid=9fb29212a1338904689bee3393b734ee&type=3#noti 55x55");
     width: 55px;
@@ -291,4 +301,192 @@
     justify-content: flex-start;
     align-items: flex-start;
     translate: 50px -50px;
+}
+
+.ojos1 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/rombos%20163x163.png?fileID=2800000&guid=65a9cdb0b419b4f4a9910a6c8a5b99ff&type=3#rombos 163x163");
+    width: 150px;
+    height: 160px;
+    margin-top: 20px;
+    background-size: 90% 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.ojos2 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/cansados%20163x163.png?fileID=2800000&guid=917626b5d1c5db1428c47fa8106474ec&type=3#cansados 163x163");
+}
+
+.ojos3 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/estrella%20163x163.png?fileID=2800000&guid=0db1477fbef63bf41b0449dff9a73548&type=3#estrella 163x163");
+}
+
+.ojos4 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/happy%20163x163.png?fileID=2800000&guid=e5f16536d40225c4c83abb34181f9029&type=3#happy 163x163");
+}
+
+.ojos5 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/pirata%20163x163.png?fileID=2800000&guid=74c45198f15cccb4db04827ded4ca552&type=3#pirata 163x163");
+}
+
+.ojos6 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/emputado%20163x163.png?fileID=2800000&guid=b2d0f891ad6fdb641b9f639a64e5abb6&type=3#emputado 163x163");
+}
+
+.ojos2,
+.ojos3,
+.ojos4,
+.ojos5,
+.ojos6 {
+    width: 150px;
+    height: 160px;
+    margin-top: 20px;
+    background-size: 90% 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.outfit1,
+.outfit2,
+.outfit3 {
+    width: 220px;
+    height: 220px;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-size: 90% 100%;
+}
+
+.outfit1 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/rana%20233x233.png?fileID=2800000&guid=06717278279c74c4ca27051920c9b18d&type=3#rana 233x233");
+}
+
+.outfit2 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/diablo%20233x233.png?fileID=2800000&guid=9de713ac143cfa9449ab78be5476a618&type=3#diablo 233x233");
+}
+
+.outfit3 {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/engrane%20233x233.png?fileID=2800000&guid=70a633274c3c9f740901abdb334ff12f&type=3#engrane 233x233");
+}
+
+.default-color-preview {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/color/blanco%20163x163.png?fileID=7751551136012658776&guid=4d955961874bd944bb53da0ab6b88ffd&type=3#blanco 163x163_0");
+}
+
+.default-ojos-preview {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/cara/base%20163x163.png?fileID=2800000&guid=c4d413ee2b09a1e49acc14367477ff2a&type=3#base 163x163");
+}
+
+.default-outfit-preview {
+    background-image: url("project://database/Assets/Imagenes%20Somnia/HUD/Inventario/outfit/boy%20scout%20233x233.png?fileID=2800000&guid=62989f371143f1f4a801427b30a04edb&type=3#boy scout 233x233");
+}
+
+.inventory-equipped {
+    border-left-color: rgb(90, 228, 149);
+    border-right-color: rgb(90, 228, 149);
+    border-top-color: rgb(90, 228, 149);
+    border-bottom-color: rgb(90, 228, 149);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
+.inventoryStatusLabel {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 18px;
+    width: 520px;
+    margin-left: 60px;
+    margin-bottom: 8px;
+}
+
+.inventoryLoadingOverlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(2, 9, 19, 0.75);
+    display: none;
+}
+
+.inventoryLoadingText {
+    color: white;
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.inventory-tab-active {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    opacity: 1;
+}
+
+.inventory-item-card {
+    width: 155px;
+    min-height: 172px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    margin-left: 6px;
+    margin-right: 6px;
+    background-color: rgba(13, 20, 30, 0.72);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(50, 92, 130);
+    border-right-color: rgb(50, 92, 130);
+    border-top-color: rgb(50, 92, 130);
+    border-bottom-color: rgb(50, 92, 130);
+    border-radius: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.inventory-item-card.locked {
+    opacity: 0.42;
+}
+
+.inventory-item-card.equipped {
+    border-left-color: rgb(90, 228, 149);
+    border-right-color: rgb(90, 228, 149);
+    border-top-color: rgb(90, 228, 149);
+    border-bottom-color: rgb(90, 228, 149);
+}
+
+.inventory-item-icon {
+    width: 100%;
+    height: 84px;
+    margin-bottom: 6px;
+    background-color: rgba(255, 255, 255, 0.08);
+    -unity-background-scale-mode: scale-to-fit;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.inventory-item-name {
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+    -unity-font-style: bold;
+    unity-text-align: middle-center;
+}
+
+.inventory-item-state {
+    margin-top: 4px;
+    color: rgb(207, 224, 245);
+    font-size: 11px;
+    unity-text-align: middle-center;
 }

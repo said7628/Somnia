@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IslandLevelManager
   levels:
   - dbLevelId: 1
-    sceneName: '"TextTyping"'
+    sceneName: '"Inventario"'
     levelRoot: {fileID: 1499707361}
     blockedVisual: {fileID: 0}
     unlockedVisual: {fileID: 0}
@@ -1666,7 +1666,7 @@ SpriteRenderer:
   m_Size: {x: 5.2, y: 5.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &481686758
 Transform:
@@ -2730,8 +2730,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 59ce6ccf1ef3ec34bb02871525373d57, type: 2}
-  m_sharedMaterial: {fileID: 1432872219395422882, guid: 59ce6ccf1ef3ec34bb02871525373d57, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
