@@ -40,6 +40,7 @@ namespace Somnia.Inventory
         public string sourceType;
         public bool owned;
         public bool equipped;
+        public bool existsInBackendInventory;
         public bool isDefaultFallback;
     }
 

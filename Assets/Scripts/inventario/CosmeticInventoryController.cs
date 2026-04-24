@@ -16,7 +16,7 @@ namespace Somnia.Inventory
     public class CosmeticInventoryController : MonoBehaviour
     {
         [Header("Backend")]
-        [SerializeField] private int[] catalogIslandIds = { 1, 2, 3 };
+        [SerializeField] private int[] catalogIslandIds = { 1, 2 };
         [SerializeField] private CosmeticInventoryDefaults defaults = new();
 
         [Header("Visual")]
@@ -58,19 +58,38 @@ namespace Somnia.Inventory
             public CosmeticCategory category;
             public string itemElementName;
             public string lockElementName;
+            public string unlockedElementName;
             public Button itemButton;
             public VisualElement lockOverlay;
+            public VisualElement unlockedVisual;
         }
 
         private void OnEnable()
         {
             _document = GetComponent<UIDocument>();
-            _activeCategory = initialCategory;
+            _activeCategory = ResolveInitialCategory();
 
             BindUi();
             InitializeService();
 
             _ = LoadAsync();
+        }
+
+        private CosmeticCategory ResolveInitialCategory()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+
+            if (string.Equals(sceneName, "InventarioOjos", StringComparison.OrdinalIgnoreCase))
+            {
+                return CosmeticCategory.Ojos;
+            }
+
+            if (string.Equals(sceneName, "InventarioOutfit", StringComparison.OrdinalIgnoreCase))
+            {
+                return CosmeticCategory.Outfit;
+            }
+
+            return initialCategory;
         }
 
         private void OnDisable()
@@ -164,7 +183,25 @@ namespace Somnia.Inventory
                 );
             }
 
+            catalogIslandIds = NormalizeCatalogIslandIds(catalogIslandIds);
             _inventoryService = new CosmeticInventoryService(gameDataService, defaults, catalogIslandIds);
+        }
+
+        private static int[] NormalizeCatalogIslandIds(int[] input)
+        {
+            var normalized = (input ?? Array.Empty<int>())
+                .Where(id => id == 1 || id == 2)
+                .Distinct()
+                .OrderBy(id => id)
+                .ToArray();
+
+            if (normalized.Length == 0)
+            {
+                normalized = new[] { 1, 2 };
+            }
+
+            Debug.Log($"[Inventory] catalogIslandIds normalizado => {string.Join(",", normalized)}");
+            return normalized;
         }
 
         private async Task LoadAsync()
@@ -245,17 +282,20 @@ namespace Somnia.Inventory
                     continue;
                 }
 
-                if (binding.lockOverlay != null)
-                {
-                    binding.lockOverlay.style.display = item.owned ? DisplayStyle.None : DisplayStyle.Flex;
-                    binding.lockOverlay.pickingMode = PickingMode.Ignore;
-                }
+                ApplyLockState(binding, item.owned);
 
                 if (binding.itemButton != null)
                 {
-                    binding.itemButton.SetEnabled(item.owned);
+                    binding.itemButton.SetEnabled(true);
                     binding.itemButton.EnableInClassList(EquippedClass, item.equipped);
                 }
+
+                string lockDisplay = binding.lockOverlay?.style.display.value.ToString() ?? "none";
+                string lockVisibility = binding.lockOverlay?.style.visibility.value.ToString() ?? "none";
+                string lockStateLabel = item.owned ? "hidden" : "visible";
+                Debug.Log(
+                    $"[Inventory] item={item.itemId} owned={item.owned} equipped={item.equipped} button={binding.itemElementName} lock={binding.lockElementName} lockDisplay={lockDisplay} lockVisibility={lockVisibility} inBackend={item.existsInBackendInventory} -> {lockStateLabel}"
+                );
             }
 
             if (_defaultPreview != null)
@@ -283,6 +323,89 @@ namespace Somnia.Inventory
                 {
                     _defaultPreview.AddToClassList("default-outfit-preview");
                 }
+            }
+        }
+
+        private void ApplyLockState(CosmeticUiBinding binding, bool owned)
+        {
+            if (binding == null || binding.lockOverlay == null)
+            {
+                return;
+            }
+
+            binding.lockOverlay.pickingMode = PickingMode.Ignore;
+
+            string removedClasses = string.Empty;
+            string addedClasses = string.Empty;
+
+            if (owned)
+            {
+                binding.lockOverlay.style.display = DisplayStyle.None;
+                binding.lockOverlay.style.visibility = Visibility.Hidden;
+
+                removedClasses = RemoveLockClasses(binding.lockOverlay);
+            }
+            else
+            {
+                binding.lockOverlay.style.display = DisplayStyle.Flex;
+                binding.lockOverlay.style.visibility = Visibility.Visible;
+
+                addedClasses = AddLockClassForCategory(binding.lockOverlay, binding.category);
+            }
+
+            if (binding.unlockedVisual != null)
+            {
+                binding.unlockedVisual.style.display = owned ? DisplayStyle.Flex : DisplayStyle.None;
+                binding.unlockedVisual.style.visibility = owned ? Visibility.Visible : Visibility.Hidden;
+            }
+
+            Debug.Log(
+                $"[Inventory][LockState] itemId={binding.itemId} owned={owned} button={binding.itemElementName} lockOverlay={binding.lockElementName} display={binding.lockOverlay.style.display.value} visibility={binding.lockOverlay.style.visibility.value} removedClasses={removedClasses} addedClasses={addedClasses}"
+            );
+        }
+
+        private static string RemoveLockClasses(VisualElement lockOverlay)
+        {
+            List<string> removed = new();
+
+            if (lockOverlay.ClassListContains("bloqueado"))
+            {
+                lockOverlay.RemoveFromClassList("bloqueado");
+                removed.Add("bloqueado");
+            }
+
+            if (lockOverlay.ClassListContains("bloqueadoOjos"))
+            {
+                lockOverlay.RemoveFromClassList("bloqueadoOjos");
+                removed.Add("bloqueadoOjos");
+            }
+
+            if (lockOverlay.ClassListContains("bloqueadoOutfit"))
+            {
+                lockOverlay.RemoveFromClassList("bloqueadoOutfit");
+                removed.Add("bloqueadoOutfit");
+            }
+
+            return removed.Count == 0 ? "none" : string.Join(",", removed);
+        }
+
+        private static string AddLockClassForCategory(VisualElement lockOverlay, CosmeticCategory category)
+        {
+            RemoveLockClasses(lockOverlay);
+
+            switch (category)
+            {
+                case CosmeticCategory.Color:
+                    lockOverlay.AddToClassList("bloqueado");
+                    return "bloqueado";
+                case CosmeticCategory.Ojos:
+                    lockOverlay.AddToClassList("bloqueadoOjos");
+                    return "bloqueadoOjos";
+                case CosmeticCategory.Outfit:
+                    lockOverlay.AddToClassList("bloqueadoOutfit");
+                    return "bloqueadoOutfit";
+                default:
+                    return "none";
             }
         }
 
@@ -457,7 +580,7 @@ namespace Somnia.Inventory
             _uiBindings.Clear();
             _itemButtonHandlers.Clear();
 
-            AddBinding(root, 2, CosmeticCategory.Color, "skinNaranja", "bloqueado1");
+            AddBinding(root, 2, CosmeticCategory.Color, "skinNaranja", "bloqueado1", "naranjaNuevo1");
             AddBinding(root, 3, CosmeticCategory.Color, "skinMorado", "bloqueado2");
             AddBinding(root, 4, CosmeticCategory.Color, "skinAmarillo", "bloqueado3");
             AddBinding(root, 5, CosmeticCategory.Color, "skinRojo", "bloqueado4");
@@ -484,7 +607,8 @@ namespace Somnia.Inventory
             int itemId,
             CosmeticCategory category,
             string itemElementName,
-            string lockElementName
+            string lockElementName,
+            string unlockedElementName = null
         )
         {
             var button = root.Q<Button>(itemElementName);
@@ -510,14 +634,27 @@ namespace Somnia.Inventory
                 lockOverlay.pickingMode = PickingMode.Ignore;
             }
 
+            var unlockedVisual = string.IsNullOrWhiteSpace(unlockedElementName)
+                ? null
+                : root.Q<VisualElement>(unlockedElementName);
+
+            if (!string.IsNullOrWhiteSpace(unlockedElementName) && unlockedVisual == null)
+            {
+                Debug.LogWarning(
+                    $"[Inventory] No se encontró visual desbloqueado para item {itemId}: {unlockedElementName}"
+                );
+            }
+
             var binding = new CosmeticUiBinding
             {
                 itemId = itemId,
                 category = category,
                 itemElementName = itemElementName,
                 lockElementName = lockElementName,
+                unlockedElementName = unlockedElementName,
                 itemButton = button,
-                lockOverlay = lockOverlay
+                lockOverlay = lockOverlay,
+                unlockedVisual = unlockedVisual
             };
 
             _uiBindings[itemId] = binding;

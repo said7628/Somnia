@@ -11,6 +11,38 @@ namespace Somnia.Inventory
 {
     public sealed class CosmeticInventoryService
     {
+        private sealed class CatalogSeed
+        {
+            public int id;
+            public string nombre;
+            public string tipo;
+        }
+
+        private static readonly CatalogSeed[] LocalCatalogFallback =
+        {
+            new() { id = 1, nombre = "blanco", tipo = "color" },
+            new() { id = 2, nombre = "naranja", tipo = "color" },
+            new() { id = 3, nombre = "morado", tipo = "color" },
+            new() { id = 4, nombre = "amarillo", tipo = "color" },
+            new() { id = 5, nombre = "rojo", tipo = "color" },
+            new() { id = 6, nombre = "turquesa", tipo = "color" },
+            new() { id = 7, nombre = "verde", tipo = "color" },
+            new() { id = 8, nombre = "rosa", tipo = "color" },
+            new() { id = 9, nombre = "azul", tipo = "color" },
+            new() { id = 10, nombre = "negro", tipo = "color" },
+            new() { id = 11, nombre = "ovalos", tipo = "ojos" },
+            new() { id = 12, nombre = "rombos", tipo = "ojos" },
+            new() { id = 13, nombre = "cansado", tipo = "ojos" },
+            new() { id = 14, nombre = "estrella", tipo = "ojos" },
+            new() { id = 15, nombre = "happy", tipo = "ojos" },
+            new() { id = 16, nombre = "pirata", tipo = "ojos" },
+            new() { id = 17, nombre = "emputado", tipo = "ojos" },
+            new() { id = 18, nombre = "boy scout", tipo = "outfit" },
+            new() { id = 19, nombre = "engrane", tipo = "outfit" },
+            new() { id = 20, nombre = "rana", tipo = "outfit" },
+            new() { id = 21, nombre = "diablito", tipo = "outfit" }
+        };
+
         private readonly IGameDataService _gameDataService;
         private readonly CosmeticInventoryDefaults _defaults;
         private readonly IReadOnlyList<int> _catalogIslandIds;
@@ -25,10 +57,9 @@ namespace Somnia.Inventory
         public async Task<CosmeticInventorySnapshot> LoadSnapshotAsync(int slotNumber, CancellationToken ct = default)
         {
             var slotDetailTask = _gameDataService.GetSlotDetailAsync(slotNumber, ct);
-            var inventoryTask = _gameDataService.GetInventoryAsync(slotNumber, ct);
             var equippedTask = _gameDataService.GetEquippedItemsAsync(slotNumber, ct);
 
-            await Task.WhenAll(slotDetailTask, inventoryTask, equippedTask);
+            await Task.WhenAll(slotDetailTask, equippedTask);
 
             var slotDetailResult = await slotDetailTask;
             if (!slotDetailResult.success || slotDetailResult.data?.slot == null)
@@ -37,9 +68,8 @@ namespace Somnia.Inventory
             }
 
             var catalogItems = await LoadCatalogUniverseAsync(slotNumber, ct);
-            var rawInventory = inventoryTask.Result.success
-                ? inventoryTask.Result.data?.Select(x => x.id_item).ToHashSet() ?? new HashSet<int>()
-                : new HashSet<int>();
+            var rawInventory = slotDetailResult.data.inventario_cosmeticos?.Select(x => x.id_item).ToHashSet()
+                               ?? new HashSet<int>();
 
             var normalizedOwned = NormalizeOwned(rawInventory);
             var equippedByCategory = NormalizeEquipped(equippedTask.Result?.data, normalizedOwned);
@@ -52,6 +82,7 @@ namespace Somnia.Inventory
                     category = ParseCategory(item.tipo),
                     sourceType = item.tipo,
                     owned = normalizedOwned.Contains(item.id),
+                    existsInBackendInventory = rawInventory.Contains(item.id),
                     equipped = false,
                     isDefaultFallback = false
                 })
@@ -73,6 +104,7 @@ namespace Somnia.Inventory
                         category = category,
                         sourceType = category.ToString().ToLowerInvariant(),
                         owned = true,
+                        existsInBackendInventory = rawInventory.Contains(fallbackId),
                         equipped = false,
                         isDefaultFallback = true
                     });
@@ -126,7 +158,16 @@ namespace Somnia.Inventory
 
         private async Task<List<ShopItemViewData>> LoadCatalogUniverseAsync(int slotNumber, CancellationToken ct)
         {
-            var all = new Dictionary<int, ShopItemViewData>();
+            var all = LocalCatalogFallback.ToDictionary(
+                item => item.id,
+                item => new ShopItemViewData
+                {
+                    id = item.id,
+                    nombre = item.nombre,
+                    tipo = item.tipo
+                }
+            );
+
             foreach (var islandId in _catalogIslandIds)
             {
                 var result = await _gameDataService.GetShopItemsAsync(islandId, slotNumber, ct);
@@ -143,7 +184,19 @@ namespace Somnia.Inventory
                         continue;
                     }
 
-                    all[item.id] = item;
+                    if (all.TryGetValue(item.id, out var existing))
+                    {
+                        existing.nombre = string.IsNullOrWhiteSpace(item.nombre) ? existing.nombre : item.nombre;
+                        existing.tipo = string.IsNullOrWhiteSpace(item.tipo) ? existing.tipo : item.tipo;
+                        existing.costo = item.costo;
+                        existing.descripcion = item.descripcion;
+                        existing.id_tienda = item.id_tienda;
+                        existing.id_tienda_item = item.id_tienda_item;
+                    }
+                    else
+                    {
+                        all[item.id] = item;
+                    }
                 }
             }
 
@@ -154,15 +207,24 @@ namespace Somnia.Inventory
         {
             backendOwned ??= new HashSet<int>();
 
-            if (backendOwned.Count == 0)
+            EnsureDefaultOwnedAsFallback(backendOwned, _defaults.defaultColorItemId, "color");
+            EnsureDefaultOwnedAsFallback(backendOwned, _defaults.defaultOjosItemId, "ojos");
+            EnsureDefaultOwnedAsFallback(backendOwned, _defaults.defaultOutfitItemId, "outfit");
+
+            return backendOwned;
+        }
+
+        private static void EnsureDefaultOwnedAsFallback(HashSet<int> owned, int defaultItemId, string categoryLabel)
+        {
+            if (owned.Contains(defaultItemId))
             {
-                Debug.LogWarning("[Inventory] inventario_cosmeticos vacío. Se aplican defaults SOLO como fallback visual local.");
+                return;
             }
 
-            backendOwned.Add(_defaults.defaultColorItemId);
-            backendOwned.Add(_defaults.defaultOjosItemId);
-            backendOwned.Add(_defaults.defaultOutfitItemId);
-            return backendOwned;
+            Debug.LogWarning(
+                $"[Inventory] backend inventario_cosmeticos no incluye default de {categoryLabel} (id={defaultItemId}). Se agrega fallback local de seguridad."
+            );
+            owned.Add(defaultItemId);
         }
 
         private Dictionary<CosmeticCategory, int> NormalizeEquipped(EquippedItemsData backendEquipped, HashSet<int> owned)
