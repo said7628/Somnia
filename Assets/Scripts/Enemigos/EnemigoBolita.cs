@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class EnemigoPelotaMmmm : MonoBehaviour
+public class EnemigoBolita : MonoBehaviour
 {
     [Header("Movimiento")]
     [SerializeField] private float velocidadHorizontal = 3f;
-    [SerializeField] private float alturaRebote = 1.2f;
+    [SerializeField] private float alturaRebote = 1f;
     [SerializeField] private float frecuenciaRebote = 5f;
 
     [Header("Limites")]
@@ -25,21 +25,34 @@ public class EnemigoPelotaMmmm : MonoBehaviour
 
     private void Update()
     {
-        MoverEnFormaDeM();
+        tiempo += Time.deltaTime;
+
+        MoverHorizontalmente();
+        MoverVerticalmente();
         RevisarLimites();
         RotarPelota();
     }
 
-    private void MoverEnFormaDeM()
+    private void MoverHorizontalmente()
     {
-        tiempo += Time.deltaTime;
-
         float nuevaX = transform.position.x + direccion * velocidadHorizontal * Time.deltaTime;
 
-        float rebote = Mathf.Abs(Mathf.Sin(tiempo * frecuenciaRebote)) * alturaRebote;
-        float nuevaY = posicionYBase + rebote;
+        transform.position = new Vector3(
+            nuevaX,
+            transform.position.y,
+            transform.position.z
+        );
+    }
 
-        transform.position = new Vector3(nuevaX, nuevaY, transform.position.z);
+    private void MoverVerticalmente()
+    {
+        float rebote = Mathf.Abs(Mathf.Sin(tiempo * frecuenciaRebote)) * alturaRebote;
+
+        transform.position = new Vector3(
+            transform.position.x,
+            posicionYBase + rebote,
+            transform.position.z
+        );
     }
 
     private void RevisarLimites()

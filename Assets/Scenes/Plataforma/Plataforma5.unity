@@ -2393,7 +2393,7 @@ PrefabInstance:
       objectReference: {fileID: 546708769}
     - target: {fileID: 1308448236494975017, guid: df8745b4bde94a249aabcb7b2d3a255f, type: 3}
       propertyPath: m_Name
-      value: EnemigoBolita
+      value: EnemigoPelotaMmmm
       objectReference: {fileID: 0}
     - target: {fileID: 1710404211966273442, guid: df8745b4bde94a249aabcb7b2d3a255f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2401,7 +2401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1710404211966273442, guid: df8745b4bde94a249aabcb7b2d3a255f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.107
+      value: -2.142
       objectReference: {fileID: 0}
     - target: {fileID: 1710404211966273442, guid: df8745b4bde94a249aabcb7b2d3a255f, type: 3}
       propertyPath: m_LocalPosition.z

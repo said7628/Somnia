@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308448236494975017}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.78, y: -2.107, z: 0}
   m_LocalScale: {x: 0.27522, y: 0.27522, z: 0.27522}
   m_ConstrainProportionsScale: 0
@@ -132,4 +132,4 @@ MonoBehaviour:
   frecuenciaRebote: 3
   limiteIzquierdo: {fileID: 0}
   limiteDerecho: {fileID: 0}
-  velocidadRotacion: 90
+  velocidadRotacion: 0
