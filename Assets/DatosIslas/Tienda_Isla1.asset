@@ -19,7 +19,10 @@ MonoBehaviour:
   opcionesOjos:
   - {fileID: -6746720259170762094, guid: f929e149898cfb34a80b83ec0855c758, type: 3}
   - {fileID: 4224106898562449350, guid: 360e3f53d7f046641a8c9bd81c7e5997, type: 3}
+  - {fileID: 6293885544738163888, guid: 49dec59ccc6b592438571a1ac008abc5, type: 3}
   opcionesColor:
   - {fileID: -4150471675066324412, guid: 104a1d7ed2233b54e8fab60dff0e18d9, type: 3}
   - {fileID: 6977937172876042345, guid: 26a4971ea9d41f04a93469b0284ae8f5, type: 3}
   - {fileID: -9047660251269830892, guid: 81638704c69862a4b9849f321ec040df, type: 3}
+  - {fileID: -5385536641072663933, guid: 755663513cf6031488ad5ab20b9e0c89, type: 3}
+  - {fileID: -3441245182132240607, guid: d12e74f875eebbd4f982ce82f7ece276, type: 3}

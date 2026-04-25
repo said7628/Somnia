@@ -16,10 +16,13 @@ MonoBehaviour:
   claseEstiloUSS: 
   opcionesRopa:
   - {fileID: 4328426257919030988, guid: 0e11e47b730cd104792db7ef252bdf1f, type: 3}
+  - {fileID: 8166348619950179222, guid: 40e2b3fd844d4954bb2d0c2a18d99301, type: 3}
   opcionesOjos:
   - {fileID: 4654765103665112487, guid: 955775393cc9f604dae3d98c20bff98f, type: 3}
   - {fileID: -4309726992133470705, guid: 0bff2cd298f75394e81a53cd6f0e91c6, type: 3}
+  - {fileID: 3694174313855253020, guid: ccd1e58dbb823cd4b9dee96f7c21f00a, type: 3}
   opcionesColor:
   - {fileID: 8320025121885212575, guid: 4c8cb3776a05b394497141097265e35b, type: 3}
-  - {fileID: -5385536641072663933, guid: 755663513cf6031488ad5ab20b9e0c89, type: 3}
+  - {fileID: -4212577124255999245, guid: f448e8b9d4c0458498c46ab6e6270e4a, type: 3}
   - {fileID: 6047062998020310423, guid: b0cff8233cf735e4a8b32f089f0f120a, type: 3}
+  - {fileID: -275907096933420958, guid: 0507901514e36754b826be67950e11b1, type: 3}
