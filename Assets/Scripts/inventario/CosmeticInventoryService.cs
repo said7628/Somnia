@@ -71,7 +71,7 @@ namespace Somnia.Inventory
             var catalogItems = await LoadCatalogUniverseAsync(slotNumber, ct);
             var backendInventory = slotDetailResult.data.inventario_cosmeticos ?? Array.Empty<InventarioItemDto>();
             var rawInventory = backendInventory.Select(x => x.id_item).ToHashSet();
-            var isNewByItemId = backendInventory.ToDictionary(x => x.id_item, x => x.isNew);
+            var isNewByItemId = BuildIsNewByItemId(backendInventory);
 
             var normalizedOwned = NormalizeOwned(rawInventory);
             var equippedByCategory = NormalizeEquipped(equippedTask.Result?.data, normalizedOwned);
@@ -120,7 +120,7 @@ namespace Somnia.Inventory
                 item.equipped = equippedByCategory.TryGetValue(item.category, out var equippedId) && equippedId == item.itemId;
             }
 
-            var hasNewByCategory = BuildNewSummary(slotDetailResult.data.inventory_new_summary, mapped);
+            var hasNewByCategory = BuildNewSummary(slotDetailResult.data, mapped);
 
             return new CosmeticInventorySnapshot(
                 slotNumber,
@@ -257,27 +257,58 @@ namespace Somnia.Inventory
             };
         }
 
+        private static Dictionary<int, bool> BuildIsNewByItemId(IReadOnlyList<InventarioItemDto> backendInventory)
+        {
+            var result = new Dictionary<int, bool>();
+            if (backendInventory == null)
+            {
+                return result;
+            }
+
+            foreach (var item in backendInventory)
+            {
+                if (item == null || item.id_item <= 0)
+                {
+                    continue;
+                }
+
+                bool isNew = item.IsNew;
+                result[item.id_item] = isNew;
+                Debug.Log($"[ItemNewParsed] item={item.id_item} tipo={item.tipo} nuevo={isNew}");
+            }
+
+            return result;
+        }
+
         private static Dictionary<CosmeticCategory, bool> BuildNewSummary(
-            InventoryNewSummaryDto backendSummary,
+            SlotDetailResponse slotDetail,
             IReadOnlyList<CosmeticInventoryItemViewModel> items
         )
         {
-            if (backendSummary != null)
-            {
-                return new Dictionary<CosmeticCategory, bool>
-                {
-                    [CosmeticCategory.Color] = backendSummary.hasNewColor,
-                    [CosmeticCategory.Ojos] = backendSummary.hasNewOjos,
-                    [CosmeticCategory.Outfit] = backendSummary.hasNewOutfit
-                };
-            }
+            var backendSummary = slotDetail?.inventory_new_summary ?? slotDetail?.inventoryNewSummary;
+            bool fromBackendColor = backendSummary?.hasNewColor ?? false;
+            bool fromBackendOjos = backendSummary?.hasNewOjos ?? false;
+            bool fromBackendOutfit = backendSummary?.hasNewOutfit ?? false;
 
-            return new Dictionary<CosmeticCategory, bool>
+            Debug.Log($"[NewSummaryParsed] fromBackend color={fromBackendColor} ojos={fromBackendOjos} outfit={fromBackendOutfit}");
+
+            bool fromItemsColor = items.Any(i => i.category == CosmeticCategory.Color && i.isNew);
+            bool fromItemsOjos = items.Any(i => i.category == CosmeticCategory.Ojos && i.isNew);
+            bool fromItemsOutfit = items.Any(i => i.category == CosmeticCategory.Outfit && i.isNew);
+
+            bool finalColor = backendSummary != null ? fromBackendColor || fromItemsColor : fromItemsColor;
+            bool finalOjos = backendSummary != null ? fromBackendOjos || fromItemsOjos : fromItemsOjos;
+            bool finalOutfit = backendSummary != null ? fromBackendOutfit || fromItemsOutfit : fromItemsOutfit;
+
+            var summary = new Dictionary<CosmeticCategory, bool>
             {
-                [CosmeticCategory.Color] = items.Any(i => i.category == CosmeticCategory.Color && i.isNew),
-                [CosmeticCategory.Ojos] = items.Any(i => i.category == CosmeticCategory.Ojos && i.isNew),
-                [CosmeticCategory.Outfit] = items.Any(i => i.category == CosmeticCategory.Outfit && i.isNew)
+                [CosmeticCategory.Color] = finalColor,
+                [CosmeticCategory.Ojos] = finalOjos,
+                [CosmeticCategory.Outfit] = finalOutfit
             };
+
+            Debug.Log($"[NewSummaryFinal] color={finalColor} ojos={finalOjos} outfit={finalOutfit}");
+            return summary;
         }
 
         public static CosmeticCategory ParseCategory(string tipo)

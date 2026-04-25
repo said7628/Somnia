@@ -15,7 +15,7 @@ namespace Somnia.Economy.Services.ApiClients
         private readonly string _baseUrl;
         private readonly IPlayerSessionProvider _session;
 
-
+      
         private const bool EnableHttpDebugLogs = true;
 
         public GameDataApiClient(string baseUrl, IPlayerSessionProvider session)
@@ -232,6 +232,7 @@ namespace Somnia.Economy.Services.ApiClients
                     return ApiResponse<SlotDetailResponse>.Fail("invalid_payload", "No fue posible cargar detalle de slot");
                 }
 
+                SlotDetailResponseNormalizer.Normalize(payload, body);
                 return ApiResponse<SlotDetailResponse>.Ok(payload);
             }
             catch (Exception ex)

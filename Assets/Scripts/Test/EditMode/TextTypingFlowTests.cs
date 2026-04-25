@@ -2,10 +2,10 @@ using NUnit.Framework;
 
 public class TextTypingFlowTests
 {
-    [TestCase(7, 200)]
-    [TestCase(10, 200)]
-    [TestCase(11, 500)]
-    [TestCase(30, 500)]
+    [TestCase(7, 1000)]
+    [TestCase(10, 1000)]
+    [TestCase(11, 1000)]
+    [TestCase(30, 1700)]
     public void PlayerRules_MinimumScore_ByAge(int age, int expected)
     {
         // Arrange / Act

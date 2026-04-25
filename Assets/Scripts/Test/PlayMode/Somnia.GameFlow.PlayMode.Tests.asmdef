@@ -1,6 +1,6 @@
 {
-  "name": "Somnia.GameFlow.Tests",
-  "rootNamespace": "Somnia.GameFlow.Tests",
+  "name": "Somnia.GameFlow.PlayMode.Tests",
+  "rootNamespace": "Somnia.GameFlow.Tests.PlayMode",
   "references": [
     "Assembly-CSharp",
     "Unity.TextMeshPro"
@@ -8,9 +8,7 @@
   "optionalUnityReferences": [
     "TestAssemblies"
   ],
-  "includePlatforms": [
-    "Editor"
-  ],
+  "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
