@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LimiteIzquierdo
   - LimiteDerecho
+  - Jugador
   layers:
   - Default
   - TransparentFX
