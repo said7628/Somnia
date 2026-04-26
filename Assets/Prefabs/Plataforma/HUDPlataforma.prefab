@@ -169,7 +169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6169772245932349068
 RectTransform:
   m_ObjectHideFlags: 0
@@ -791,6 +791,7 @@ GameObject:
   - component: {fileID: 4911700644403437089}
   - component: {fileID: 8171674779637068476}
   - component: {fileID: 2740316053631243353}
+  - component: {fileID: 5568132054248835515}
   m_Layer: 5
   m_Name: Vidas
   m_TagString: Untagged
@@ -878,3 +879,23 @@ MonoBehaviour:
   - {fileID: 2845162444255664354}
   - {fileID: 6482553153191974749}
   vidasMaximas: 3
+--- !u!114 &5568132054248835515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9061954475061780389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4493788be3065a947abd8a75ec60ba2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VidasUI
+  vidasVacias:
+  - {fileID: 6458400333987700152}
+  - {fileID: 6608660406727165074}
+  - {fileID: 3849470180391152049}
+  vidasLlenas:
+  - {fileID: 6125293589224792294}
+  - {fileID: 2845162444255664354}
+  - {fileID: 6482553153191974749}

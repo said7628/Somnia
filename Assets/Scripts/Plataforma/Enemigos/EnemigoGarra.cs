@@ -15,6 +15,9 @@ public class EnemigoGarraCiclica : MonoBehaviour
     [Header("Colliders de daño")]
     [SerializeField] private Collider2D[] collidersDano;
 
+    [Header("Daño")]
+    [SerializeField] private int dano = 1;
+
     [Header("Tiempos")]
     [SerializeField] private float tiempoOculta = 2f;
     [SerializeField] private float duracionSalir = 0.5f;
@@ -40,8 +43,8 @@ public class EnemigoGarraCiclica : MonoBehaviour
             yield return new WaitForSeconds(tiempoOculta);
 
             animador.Play(animacionSalir);
-            puedeHacerDano = false;
-            ApagarCollidersDano();
+            puedeHacerDano = true;
+            EncenderCollidersDano();
 
             yield return new WaitForSeconds(duracionSalir);
 
@@ -51,10 +54,8 @@ public class EnemigoGarraCiclica : MonoBehaviour
 
             yield return new WaitForSeconds(tiempoAfuera);
 
-            puedeHacerDano = false;
-            ApagarCollidersDano();
-
             animador.Play(animacionGuardar);
+            EncenderCollidersDano();
 
             yield return new WaitForSeconds(duracionGuardar);
         }
@@ -78,21 +79,25 @@ public class EnemigoGarraCiclica : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otro)
     {
-        ProbarContactoConJugador(otro);
+        HacerDanoAlJugador(otro);
     }
 
     private void OnTriggerStay2D(Collider2D otro)
     {
-        ProbarContactoConJugador(otro);
+        HacerDanoAlJugador(otro);
     }
 
-    private void ProbarContactoConJugador(Collider2D otro)
+    private void HacerDanoAlJugador(Collider2D otro)
     {
         if (puedeHacerDano && otro.CompareTag("Jugador"))
         {
-            Debug.Log("La garra tocaría al jugador");
+            VidaPersonaje vidaPersonaje = otro.GetComponentInParent<VidaPersonaje>();
 
-            puedeHacerDano = false;
+            if (vidaPersonaje != null)
+            {
+                vidaPersonaje.RecibirDano(dano);
+                puedeHacerDano = false;
+            }
         }
     }
 }

@@ -443,10 +443,11 @@ MonoBehaviour:
   - {fileID: 7654583396783792456}
   - {fileID: 4008813792747641989}
   - {fileID: 6438321329327804171}
-  tiempoOculta: 2
-  duracionSalir: 0.5
-  tiempoAfuera: 2
-  duracionGuardar: 0.5
+  dano: 1
+  tiempoOculta: 3
+  duracionSalir: 1.8
+  tiempoAfuera: 3
+  duracionGuardar: 1.8
 --- !u!1 &8774160838257253253
 GameObject:
   m_ObjectHideFlags: 0

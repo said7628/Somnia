@@ -14,6 +14,9 @@ public class EnemigoBolita : MonoBehaviour
     [Header("Rotacion visual")]
     [SerializeField] private float velocidadRotacion = 360f;
 
+    [Header("Daño")]
+    [SerializeField] private int dano = 1;
+
     private int direccion = 1;
     private float posicionYBase;
     private float tiempo;
@@ -27,30 +30,21 @@ public class EnemigoBolita : MonoBehaviour
     {
         tiempo += Time.deltaTime;
 
-        MoverHorizontalmente();
-        MoverVerticalmente();
+        MoverBolita();
         RevisarLimites();
         RotarPelota();
     }
 
-    private void MoverHorizontalmente()
+    private void MoverBolita()
     {
         float nuevaX = transform.position.x + direccion * velocidadHorizontal * Time.deltaTime;
 
+        float rebote = Mathf.Abs(Mathf.Sin(tiempo * frecuenciaRebote)) * alturaRebote;
+        float nuevaY = posicionYBase + rebote;
+
         transform.position = new Vector3(
             nuevaX,
-            transform.position.y,
-            transform.position.z
-        );
-    }
-
-    private void MoverVerticalmente()
-    {
-        float rebote = Mathf.Abs(Mathf.Sin(tiempo * frecuenciaRebote)) * alturaRebote;
-
-        transform.position = new Vector3(
-            transform.position.x,
-            posicionYBase + rebote,
+            nuevaY,
             transform.position.z
         );
     }
@@ -71,5 +65,34 @@ public class EnemigoBolita : MonoBehaviour
     private void RotarPelota()
     {
         transform.Rotate(0f, 0f, -direccion * velocidadRotacion * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D otro)
+    {
+        RevisarDanoJugador(otro);
+    }
+
+    private void OnTriggerStay2D(Collider2D otro)
+    {
+        RevisarDanoJugador(otro);
+    }
+
+    private void RevisarDanoJugador(Collider2D otro)
+    {
+        if (otro.CompareTag("Jugador"))
+        {
+            VidaPersonaje vidaPersonaje = otro.GetComponentInParent<VidaPersonaje>();
+
+            if (vidaPersonaje == null)
+            {
+                vidaPersonaje = otro.GetComponentInChildren<VidaPersonaje>();
+            }
+
+            if (vidaPersonaje != null)
+            {
+                vidaPersonaje.RecibirDano(dano);
+                Debug.Log("La bolita hizo daño al jugador");
+            }
+        }
     }
 }
