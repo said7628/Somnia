@@ -6513,8 +6513,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 975439256619329646, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_Size.x
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 975439256619329646, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7304823214592444108, guid: a26d43254b424984ba7b8ce9f753ed2a, type: 3}
+    - target: {fileID: 975439256619329646, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_SortingOrder
       value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 975439256619329646, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3465637373478349693, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_Name
@@ -6564,6 +6576,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6325747039382417349, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4500002
@@ -6597,8 +6613,16 @@ PrefabInstance:
       value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1501212575, guid: f3410f95bc01d834fbce34b11a87ab7e, type: 3}
+    - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_SortingOrder
       value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
