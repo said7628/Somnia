@@ -6512,13 +6512,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 975439256619329646, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 102
+      objectReference: {fileID: 0}
     - target: {fileID: 3465637373478349693, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4968437064139669500, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_SortingOrder
-      value: 102
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 5403319574689198235, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6560,9 +6564,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4500002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4500002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506876353125013287, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6548270899061724224, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_Size.x
+      value: 5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: m_Size.y
+      value: 5.2
+      objectReference: {fileID: 0}
     - target: {fileID: 9189937604837952783, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: m_SortingOrder
-      value: 101
+      value: 103
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
