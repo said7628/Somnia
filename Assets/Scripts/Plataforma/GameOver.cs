@@ -6,9 +6,9 @@ public class GameOver : MonoBehaviour
     [Header("Escenas")]
     [SerializeField] private string escenaMenu = "Pantalla_principal";
 
-    private void Start()
+    private void OnEnable()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
     }
 
     public void Reintentar()

@@ -7,23 +7,31 @@ public class VidaPersonaje : MonoBehaviour
     [SerializeField] private int vidasMaximas = 3;
     [SerializeField] private int vidasActuales = 3;
 
-    [Header("UI")]
+    [Header("UI de vidas")]
     [SerializeField] private VidasUI vidasUI;
+
+    [Header("Game Over")]
+    [SerializeField] private GameObject canvasGameOver;
 
     [Header("Invulnerabilidad")]
     [SerializeField] private float tiempoInvulnerable = 1f;
 
     private bool estaInvulnerable;
+    private bool juegoTerminado;
 
     private void Start()
     {
+        Time.timeScale = 1f;
+
         vidasActuales = vidasMaximas;
         vidasUI.ActualizarVidas(vidasActuales);
+
+        canvasGameOver.SetActive(false);
     }
 
     public void RecibirDano(int cantidadDano)
     {
-        if (estaInvulnerable)
+        if (estaInvulnerable || juegoTerminado)
         {
             return;
         }
@@ -58,7 +66,12 @@ public class VidaPersonaje : MonoBehaviour
 
     private void Morir()
     {
-        Debug.Log("El personaje se quedó sin vidas");
-        gameObject.SetActive(false);
+        juegoTerminado = true;
+
+        canvasGameOver.SetActive(true);
+
+        Time.timeScale = 0f;
+
+        Debug.Log("Game Over");
     }
 }
