@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf8f1e970b164241945a0101f2d8b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoGarra
-  animador: {fileID: 0}
+  animador: {fileID: 5345241274102987521}
   animacionOculta: Oculto
   animacionSalir: GarraEnemigoSalir
   animacionAfuera: Afuera
