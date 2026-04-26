@@ -22,6 +22,7 @@ namespace Somnia.Inventory
         [Header("Visual")]
         [SerializeField] private string homeSceneName = "Pantalla_Principal";
         [SerializeField] private CosmeticCategory initialCategory = CosmeticCategory.Color;
+        [SerializeField] private PlayerCustomizationManager playerCustomizationManager;
 
         private UIDocument _document;
         private Label _statusLabel;
@@ -273,6 +274,8 @@ namespace Somnia.Inventory
                 Debug.Log(
                     $"[Inventory] Snapshot cargado. slot={_snapshot.slotNumber} partida={_snapshot.partidaId} items={_snapshot.items.Count}"
                 );
+
+                ApplyPlayerCustomizationFromSnapshot();
 
                 Debug.Log(
                     $"[Inventory] IDs poseídos: {string.Join(",", _snapshot.items.Where(x => x.owned).Select(x => x.itemId).OrderBy(x => x))}"
@@ -973,6 +976,7 @@ namespace Somnia.Inventory
                 }
 
                 SetStatus($"Equipado: {item.name}");
+                ApplyPlayerCustomizationFromSnapshot();
                 RenderCurrentCategory();
                 UpdateSideNewIndicators();
             }
@@ -1022,6 +1026,38 @@ namespace Somnia.Inventory
             }
 
             return _snapshot.items.FirstOrDefault(i => i.itemId == itemId && i.category == category);
+        }
+
+        private void ApplyPlayerCustomizationFromSnapshot()
+        {
+            if (_snapshot?.equippedByCategory == null)
+            {
+                return;
+            }
+
+            var manager = ResolvePlayerCustomizationManager();
+            if (manager == null)
+            {
+                Debug.LogWarning("[PlayerCustomization] Manager no encontrado");
+                return;
+            }
+
+            int colorId = GetEquippedIdForCategory(CosmeticCategory.Color);
+            int eyesId = GetEquippedIdForCategory(CosmeticCategory.Ojos);
+            int outfitId = GetEquippedIdForCategory(CosmeticCategory.Outfit);
+
+            manager.ApplyEquipment(colorId, eyesId, outfitId);
+        }
+
+        private PlayerCustomizationManager ResolvePlayerCustomizationManager()
+        {
+            if (playerCustomizationManager != null)
+            {
+                return playerCustomizationManager;
+            }
+
+            playerCustomizationManager = FindObjectOfType<PlayerCustomizationManager>();
+            return playerCustomizationManager;
         }
 
         private void BuildBindings(VisualElement root)
