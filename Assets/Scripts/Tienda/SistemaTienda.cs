@@ -18,6 +18,7 @@ public class SistemaTienda : MonoBehaviour
 
     public ShopResponseDto CurrentShop { get; private set; }
     public int CurrentYatzis => CurrentShop?.yatzis ?? 0;
+    public int CurrentIslandId { get; private set; }
 
     private string BuildUrl(string endpoint) => $"{apiBaseUrl.TrimEnd('/')}{endpoint}";
 
@@ -28,16 +29,18 @@ public class SistemaTienda : MonoBehaviour
         _cts = null;
     }
 
-    public async Task<ShopResponseDto> LoadShopAsync(int slotNumber)
+    public async Task<ShopResponseDto> LoadShopAsync(int slotNumber, int islandId = 0)
     {
         _cts?.Cancel();
         _cts?.Dispose();
         _cts = new CancellationTokenSource();
 
-        var endpoint = $"/game/slots/{slotNumber}/shop";
+        CurrentIslandId = Mathf.Max(0, islandId);
+        string query = CurrentIslandId > 0 ? $"?islandId={CurrentIslandId}" : string.Empty;
+        var endpoint = $"/game/slots/{slotNumber}/shop{query}";
         var url = BuildUrl(endpoint);
 
-        Debug.Log($"[Tienda] Cargando tienda real. slot={slotNumber} url={url}");
+        Debug.Log($"[Tienda] Cargando tienda real. slot={slotNumber} currentIslandId={CurrentIslandId} url={url}");
 
         try
         {
@@ -51,6 +54,7 @@ public class SistemaTienda : MonoBehaviour
             }
 
             response.items ??= new List<ShopItemDto>();
+            FiltrarItemsPorIsla(response);
             CurrentShop = response;
 
             Debug.Log($"[Tienda] Slot detectado={slotNumber} id_partida={response.id_partida} yatzis_iniciales={response.yatzis} items_cargados={response.items.Count}");
@@ -133,6 +137,50 @@ public class SistemaTienda : MonoBehaviour
         }
 
         return filtered;
+    }
+
+    private void FiltrarItemsPorIsla(ShopResponseDto response)
+    {
+        if (response?.items == null || response.items.Count == 0 || CurrentIslandId <= 0)
+        {
+            return;
+        }
+
+        int before = response.items.Count;
+        bool hasIslandField = false;
+        for (int i = 0; i < response.items.Count; i++)
+        {
+            if (response.items[i].id_isla > 0)
+            {
+                hasIslandField = true;
+                break;
+            }
+        }
+
+        List<ShopItemDto> filtered = new();
+        for (int i = 0; i < response.items.Count; i++)
+        {
+            var item = response.items[i];
+            if (hasIslandField)
+            {
+                if (item.id_isla == CurrentIslandId)
+                {
+                    filtered.Add(item);
+                }
+
+                continue;
+            }
+
+            // Fallback temporal si backend no incluye id_isla por item.
+            if (item.id_tienda == CurrentIslandId)
+            {
+                filtered.Add(item);
+            }
+        }
+
+        response.items = filtered;
+        Debug.Log($"[Shop] currentIslandId={CurrentIslandId}");
+        Debug.Log($"[Shop] items before filter={before} after filter={response.items.Count}");
     }
 
     private void ApplyPurchaseResult(BuyShopItemResultDto result)

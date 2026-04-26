@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using Somnia.UnityClient;
 
 public class Navegacion_Isla1 : MonoBehaviour
 {
@@ -106,8 +107,35 @@ public class Navegacion_Isla1 : MonoBehaviour
 
     private void IrATienda()
     {
-        Memoria_Islas.islaDeDondeVengo = SceneManager.GetActiveScene().name;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        Memoria_Islas.islaDeDondeVengo = currentSceneName;
+
+        int currentIslandId = ResolverIslaDesdeEscena(currentSceneName);
+        GameSessionManager.Instance?.SetCurrentIslandId(currentIslandId);
+        Debug.Log($"[Shop] currentIslandId={currentIslandId}");
+
         SceneManager.LoadScene("Tienda");
+    }
+
+    private static int ResolverIslaDesdeEscena(string sceneName)
+    {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return 1;
+        }
+
+        string normalized = sceneName.Trim().ToLowerInvariant();
+        if (normalized.Contains("isla 3") || normalized.Contains("isla3") || normalized.Contains("ciudad"))
+        {
+            return 3;
+        }
+
+        if (normalized.Contains("isla 2") || normalized.Contains("isla2") || normalized.Contains("nieve"))
+        {
+            return 2;
+        }
+
+        return 1;
     }
 
     private void IrAInventario()

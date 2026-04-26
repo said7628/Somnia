@@ -16,6 +16,7 @@ namespace Somnia.Tienda
     {
         public int id_tienda_item;
         public int id_tienda;
+        public int id_isla;
         public int id_item;
         public string nombre;
         public string tipo;

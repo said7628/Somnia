@@ -11,6 +11,7 @@ namespace Somnia.UnityClient
         public string RefreshToken { get; private set; }
         public int PlayerAge { get; private set; }
         public int CurrentSlotNumber { get; private set; } = 1;
+        public int CurrentIslandId { get; private set; } = 1;
 
         private void Awake()
         {
@@ -43,6 +44,14 @@ namespace Somnia.UnityClient
             if (slotNumber > 0)
             {
                 CurrentSlotNumber = slotNumber;
+            }
+        }
+
+        public void SetCurrentIslandId(int islandId)
+        {
+            if (islandId > 0)
+            {
+                CurrentIslandId = islandId;
             }
         }
 
