@@ -418,43 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorTienda
   plantillaItemTienda: {fileID: 9197481963319205126, guid: 712f72107adddf443b4398b7ab659d6a, type: 3}
-  spritesPorItem:
-  - idItem: 2
-    sprite: {fileID: -4150471675066324412, guid: 104a1d7ed2233b54e8fab60dff0e18d9, type: 3}
-  - idItem: 3
-    sprite: {fileID: 6977937172876042345, guid: 26a4971ea9d41f04a93469b0284ae8f5, type: 3}
-  - idItem: 4
-    sprite: {fileID: -9047660251269830892, guid: 81638704c69862a4b9849f321ec040df, type: 3}
-  - idItem: 12
-    sprite: {fileID: -6746720259170762094, guid: f929e149898cfb34a80b83ec0855c758, type: 3}
-  - idItem: 13
-    sprite: {fileID: 4224106898562449350, guid: 360e3f53d7f046641a8c9bd81c7e5997, type: 3}
-  - idItem: 19
-    sprite: {fileID: 8887136391367709469, guid: 7793173358da6594c96ed25c72577ff9, type: 3}
-  - idItem: 8
-    sprite: {fileID: -3441245182132240607, guid: d12e74f875eebbd4f982ce82f7ece276, type: 3}
-  - idItem: 9
-    sprite: {fileID: -5385536641072663933, guid: 755663513cf6031488ad5ab20b9e0c89, type: 3}
-  - idItem: 16
-    sprite: {fileID: 6293885544738163888, guid: 49dec59ccc6b592438571a1ac008abc5, type: 3}
-  - idItem: 5
-    sprite: {fileID: 8320025121885212575, guid: 4c8cb3776a05b394497141097265e35b, type: 3}
-  - idItem: 6
-    sprite: {fileID: -4212577124255999245, guid: f448e8b9d4c0458498c46ab6e6270e4a, type: 3}
-  - idItem: 7
-    sprite: {fileID: 6047062998020310423, guid: b0cff8233cf735e4a8b32f089f0f120a, type: 3}
-  - idItem: 14
-    sprite: {fileID: 4654765103665112487, guid: 955775393cc9f604dae3d98c20bff98f, type: 3}
-  - idItem: 15
-    sprite: {fileID: -4309726992133470705, guid: 0bff2cd298f75394e81a53cd6f0e91c6, type: 3}
-  - idItem: 20
-    sprite: {fileID: 4328426257919030988, guid: 0e11e47b730cd104792db7ef252bdf1f, type: 3}
-  - idItem: 10
-    sprite: {fileID: -275907096933420958, guid: 0507901514e36754b826be67950e11b1, type: 3}
-  - idItem: 17
-    sprite: {fileID: 3694174313855253020, guid: ccd1e58dbb823cd4b9dee96f7c21f00a, type: 3}
-  - idItem: 21
-    sprite: {fileID: 8166348619950179222, guid: 40e2b3fd844d4954bb2d0c2a18d99301, type: 3}
+  spritesPorItem: []
   imgOjosNormal: {fileID: 4154433000688897841, guid: 2b4ddb2b8b13f7847957de1f586fadc2, type: 3}
   imgColorNormal: {fileID: -4974335594040434568, guid: 46af73b4029e7eb4cbe8eb4396075bee, type: 3}
   imgRopaNormal: {fileID: -6704923256494017336, guid: 7e20aeb0aa3bae34f8644501024f5c62, type: 3}
