@@ -193,7 +193,7 @@ public class ControladorTienda : MonoBehaviour
     private void ConfigurarTarjeta(TemplateContainer instancia, ShopItemDto item)
     {
         var fondo = instancia.Q<VisualElement>("FondoEstandarte");
-        var etiquetaPrecio = instancia.Q<Label>("Precio");
+        var etiquetaPrecio = instancia.Q<Label>("Precio") ?? fondo?.Q<Label>("Precio");
         var btnCompra = instancia.Q<Button>("BtnCompra");
         var soldOut = instancia.Q<VisualElement>("SoldOut");
 
@@ -218,12 +218,29 @@ public class ControladorTienda : MonoBehaviour
         if (etiquetaPrecio != null)
         {
             etiquetaPrecio.text = item.costo.ToString();
+            etiquetaPrecio.style.display = DisplayStyle.Flex;
+            etiquetaPrecio.style.visibility = Visibility.Visible;
+            etiquetaPrecio.style.position = Position.Absolute;
+            etiquetaPrecio.style.bottom = 12;
+            etiquetaPrecio.style.left = 50;
+            etiquetaPrecio.style.unityTextAlign = TextAnchor.MiddleLeft;
+            etiquetaPrecio.style.color = Color.white;
+            etiquetaPrecio.style.unityFontStyleAndWeight = FontStyle.Bold;
+            etiquetaPrecio.style.fontSize = 28;
+            etiquetaPrecio.BringToFront();
+
+            Debug.Log($"[ShopPrice] id_item={item.id_item} precio={item.costo} labelFound=True broughtToFront=True");
+        }
+        else
+        {
+            Debug.LogWarning($"[ShopPrice] id_item={item.id_item} precio={item.costo} labelFound=False broughtToFront=False");
         }
 
         bool isSoldOut = item.IsSoldOut;
         if (soldOut != null)
         {
             soldOut.style.display = isSoldOut ? DisplayStyle.Flex : DisplayStyle.None;
+            soldOut.BringToFront();
         }
 
         if (btnCompra != null)
