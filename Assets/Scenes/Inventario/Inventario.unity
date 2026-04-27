@@ -580,6 +580,18 @@ PrefabInstance:
       value: Player Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: eyesByItemId.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: colorByItemId.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: outfitByItemId.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
       propertyPath: eyesVisualByItem.Array.size
       value: 2
       objectReference: {fileID: 0}

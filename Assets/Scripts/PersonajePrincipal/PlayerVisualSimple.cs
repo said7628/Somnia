@@ -1,13 +1,28 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVisualSimple : MonoBehaviour
 {
     [System.Serializable]
-    private class PlayerCosmeticSpriteEntry
+    public class PlayerColorSpriteEntry
     {
         public int idItem;
-        public Sprite visual;
-        public Sprite visualWhite;
+        public Sprite faceSprite;
+    }
+
+    [System.Serializable]
+    public class PlayerEyesSpriteEntry
+    {
+        public int idItem;
+        public Sprite eyesSprite;
+        public Sprite eyesWhiteSprite;
+    }
+
+    [System.Serializable]
+    public class PlayerOutfitSpriteEntry
+    {
+        public int idItem;
+        public Sprite outfitSprite;
     }
 
     [Header("Renderers")]
@@ -15,18 +30,28 @@ public class PlayerVisualSimple : MonoBehaviour
     [SerializeField] private SpriteRenderer eyesRenderer;
     [SerializeField] private SpriteRenderer outfitRenderer;
 
-    [Header("Sprites")]
-    [SerializeField] private Sprite[] faceSprites;
-    [SerializeField] private Sprite[] eyesSprites;
-    [SerializeField] private Sprite[] eyesWhiteSprites;
-    [SerializeField] private Sprite[] outfitSprites;
-    [Header("Mapeo explícito por id_item (opcional, recomendado)")]
-    [SerializeField] private PlayerCosmeticSpriteEntry[] eyesVisualByItem;
-    [SerializeField] private PlayerCosmeticSpriteEntry[] outfitVisualByItem;
+    [Header("Color By Item Id")]
+    [SerializeField] private PlayerColorSpriteEntry[] colorByItemId;
+
+    [Header("Eyes By Item Id")]
+    [SerializeField] private PlayerEyesSpriteEntry[] eyesByItemId;
+
+    [Header("Outfit By Item Id")]
+    [SerializeField] private PlayerOutfitSpriteEntry[] outfitByItemId;
+
+    private readonly Dictionary<int, PlayerColorSpriteEntry> colorMap = new();
+    private readonly Dictionary<int, PlayerEyesSpriteEntry> eyesMap = new();
+    private readonly Dictionary<int, PlayerOutfitSpriteEntry> outfitMap = new();
 
     private PlayerCustomizationManager data;
+    private int currentColorItemId = 1;
 
-    void Start()
+    private void Awake()
+    {
+        BuildMaps();
+    }
+
+    private void Start()
     {
         data = FindObjectOfType<PlayerCustomizationManager>();
         ApplyCustomization();
@@ -36,110 +61,130 @@ public class PlayerVisualSimple : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError("No se encontró PlayerCustomizationManager");
+            data = FindObjectOfType<PlayerCustomizationManager>();
+        }
+
+        if (data == null)
+        {
+            Debug.LogError("[PlayerVisualSimple] ERROR missing PlayerCustomizationManager");
             return;
         }
 
-        // Protección de índices
-        if (data.selectedFaceColor >= faceSprites.Length ||
-            data.selectedOutfit >= outfitSprites.Length ||
-            data.selectedEyes >= eyesSprites.Length)
+        ApplyColorByItemId(data.selectedFaceColorItemId);
+        ApplyEyesByItemId(data.selectedEyesItemId);
+        ApplyOutfitByItemId(data.selectedOutfitItemId);
+    }
+
+    public void ApplyColorByItemId(int colorId)
+    {
+        bool found = colorMap.TryGetValue(colorId, out PlayerColorSpriteEntry entry) && entry.faceSprite != null;
+        string spriteName = found ? entry.faceSprite.name : "null";
+
+        Debug.Log($"[PlayerVisualSimple] ApplyColor id={colorId} found={found} sprite={spriteName}");
+
+        if (!found)
         {
-            Debug.LogError("Índice fuera de rango en PlayerVisualSimple");
+            Debug.LogError($"[PlayerVisualSimple] ERROR missing color mapping id={colorId}");
             return;
         }
 
-        // FACE
-        faceRenderer.sprite = faceSprites[data.selectedFaceColor];
-
-        // OUTFIT
-        Sprite resolvedOutfit = ResolveOutfitSprite();
-        outfitRenderer.sprite = resolvedOutfit != null ? resolvedOutfit : outfitSprites[data.selectedOutfit];
-
-        // EYES
-        if (data.selectedFaceColor == 9) // color negro
-        {
-            Sprite resolvedEyesWhite = ResolveEyesSprite(true);
-            if (resolvedEyesWhite != null)
-            {
-                eyesRenderer.sprite = resolvedEyesWhite;
-            }
-            else if (data.selectedEyes < eyesWhiteSprites.Length)
-            {
-                eyesRenderer.sprite = eyesWhiteSprites[data.selectedEyes];
-            }
-        }
-        else
-        {
-            Sprite resolvedEyes = ResolveEyesSprite(false);
-            eyesRenderer.sprite = resolvedEyes != null ? resolvedEyes : eyesSprites[data.selectedEyes];
-        }
-
-        Debug.Log("Customización aplicada (modo simple)");
+        currentColorItemId = colorId;
+        faceRenderer.sprite = entry.faceSprite;
     }
 
-    private Sprite ResolveOutfitSprite()
+    public void ApplyEyesByItemId(int eyesId)
     {
-        int outfitId = data.selectedOutfitItemId;
-        if (TryGetEntry(outfitVisualByItem, outfitId, out PlayerCosmeticSpriteEntry entry) && entry.visual != null)
+        bool found = eyesMap.TryGetValue(eyesId, out PlayerEyesSpriteEntry entry);
+        if (!found)
         {
-            Debug.Log($"[PlayerCustomization] Outfit id={outfitId} -> {ResolveItemName(outfitId)} visual={entry.visual.name}");
-            return entry.visual;
+            Debug.Log($"[PlayerVisualSimple] ApplyEyes id={eyesId} found=False eyes=null");
+            Debug.LogError($"[PlayerVisualSimple] ERROR missing eyes mapping id={eyesId}");
+            return;
         }
 
-        return null;
-    }
+        bool useWhite = currentColorItemId == 10;
+        Sprite sprite = useWhite
+            ? (entry.eyesWhiteSprite != null ? entry.eyesWhiteSprite : entry.eyesSprite)
+            : entry.eyesSprite;
+        bool hasSprite = sprite != null;
+        string spriteName = hasSprite ? sprite.name : "null";
 
-    private Sprite ResolveEyesSprite(bool useWhite)
-    {
-        int eyesId = data.selectedEyesItemId;
-        if (TryGetEntry(eyesVisualByItem, eyesId, out PlayerCosmeticSpriteEntry entry))
+        Debug.Log($"[PlayerVisualSimple] ApplyEyes id={eyesId} found={hasSprite} eyes={spriteName}");
+
+        if (!hasSprite)
         {
-            Sprite sprite = useWhite ? (entry.visualWhite != null ? entry.visualWhite : entry.visual) : entry.visual;
-            if (sprite != null)
-            {
-                Debug.Log($"[PlayerCustomization] Eyes id={eyesId} -> {ResolveItemName(eyesId)} visual={sprite.name}");
-                return sprite;
-            }
+            Debug.LogError($"[PlayerVisualSimple] ERROR missing eyes mapping id={eyesId}");
+            return;
         }
 
-        return null;
+        eyesRenderer.sprite = sprite;
     }
 
-    private static bool TryGetEntry(PlayerCosmeticSpriteEntry[] entries, int idItem, out PlayerCosmeticSpriteEntry entry)
+    public void ApplyOutfitByItemId(int outfitId)
     {
-        if (entries != null)
+        bool found = outfitMap.TryGetValue(outfitId, out PlayerOutfitSpriteEntry entry) && entry.outfitSprite != null;
+        string spriteName = found ? entry.outfitSprite.name : "null";
+
+        Debug.Log($"[PlayerVisualSimple] ApplyOutfit id={outfitId} found={found} sprite={spriteName}");
+
+        if (!found)
         {
-            for (int i = 0; i < entries.Length; i++)
+            Debug.LogError($"[PlayerVisualSimple] ERROR missing outfit mapping id={outfitId}");
+            return;
+        }
+
+        outfitRenderer.sprite = entry.outfitSprite;
+    }
+
+    private void BuildMaps()
+    {
+        colorMap.Clear();
+        eyesMap.Clear();
+        outfitMap.Clear();
+
+        if (colorByItemId != null)
+        {
+            foreach (PlayerColorSpriteEntry entry in colorByItemId)
             {
-                if (entries[i] != null && entries[i].idItem == idItem)
+                if (entry == null)
                 {
-                    entry = entries[i];
-                    return true;
+                    continue;
                 }
+
+                colorMap[entry.idItem] = entry;
+                string spriteName = entry.faceSprite != null ? entry.faceSprite.name : "null";
+                Debug.Log($"[PlayerVisualSimple] Color map id={entry.idItem} sprite={spriteName}");
             }
         }
 
-        entry = null;
-        return false;
-    }
-
-    private static string ResolveItemName(int itemId)
-    {
-        return itemId switch
+        if (eyesByItemId != null)
         {
-            11 => "ovalos",
-            12 => "rombos",
-            13 => "cansado",
-            14 => "estrella",
-            15 => "happy",
-            16 => "pirata",
-            17 => "emputado",
-            18 => "boy scout/base",
-            19 => "engrane",
-            20 => "rana",
-            21 => "diablito",
-            _ => "unknown"
-        };
+            foreach (PlayerEyesSpriteEntry entry in eyesByItemId)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                eyesMap[entry.idItem] = entry;
+                string eyesName = entry.eyesSprite != null ? entry.eyesSprite.name : "null";
+                Debug.Log($"[PlayerVisualSimple] Eyes map id={entry.idItem} eyes={eyesName}");
+            }
+        }
+
+        if (outfitByItemId != null)
+        {
+            foreach (PlayerOutfitSpriteEntry entry in outfitByItemId)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                outfitMap[entry.idItem] = entry;
+                string spriteName = entry.outfitSprite != null ? entry.outfitSprite.name : "null";
+                Debug.Log($"[PlayerVisualSimple] Outfit map id={entry.idItem} sprite={spriteName}");
+            }
+        }
     }
 }

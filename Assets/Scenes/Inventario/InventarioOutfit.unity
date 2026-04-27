@@ -275,7 +275,8 @@ MonoBehaviour:
     defaultOjosItemId: 11
     defaultOutfitItemId: 18
   homeSceneName: Pantalla_Principal
-  initialCategory: 0
+  initialCategory: 2
+  playerCustomizationManager: {fileID: 0}
 --- !u!1 &1054420798
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class PlayerCustomizationManager : MonoBehaviour
     public int selectedFaceColor = 0;
     public int selectedEyes = 0;
     public int selectedOutfit = 0;
+    public int selectedFaceColorItemId = 1;
     public int selectedEyesItemId = 11;
     public int selectedOutfitItemId = 18;
     [SerializeField] private bool usarValoresDelInspector = true;
@@ -150,8 +151,9 @@ public class PlayerCustomizationManager : MonoBehaviour
 
     public void ApplyColor(int idItem)
     {
+        selectedFaceColorItemId = ResolveItemIdOrDefault(idItem, ColorIndexByItemId, DefaultColorItemId);
         selectedFaceColor = ResolveIndex(idItem, ColorIndexByItemId, DefaultColorItemId);
-        Debug.Log($"[PlayerCustomization] Color applied id={idItem} name={ResolveItemName(idItem)}");
+        Debug.Log($"[PlayerCustomization] Color applied id={selectedFaceColorItemId} name={ResolveItemName(selectedFaceColorItemId)} visualIndex={selectedFaceColor}");
     }
 
     public void ApplyEyes(int idItem)
@@ -210,7 +212,9 @@ public class PlayerCustomizationManager : MonoBehaviour
         PlayerVisualSimple simplePlayer = FindObjectOfType<PlayerVisualSimple>();
         if (simplePlayer != null)
         {
-            simplePlayer.ApplyCustomization();
+            simplePlayer.ApplyColorByItemId(selectedFaceColorItemId);
+            simplePlayer.ApplyEyesByItemId(selectedEyesItemId);
+            simplePlayer.ApplyOutfitByItemId(selectedOutfitItemId);
         }
     }
 }

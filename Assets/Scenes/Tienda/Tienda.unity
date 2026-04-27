@@ -419,10 +419,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorTienda
   plantillaItemTienda: {fileID: 9197481963319205126, guid: 712f72107adddf443b4398b7ab659d6a, type: 3}
   spritesPorItem:
-  - idItem: 2
-    sprite: {fileID: -4150471675066324412, guid: 104a1d7ed2233b54e8fab60dff0e18d9, type: 3}
   - idItem: 3
     sprite: {fileID: 6977937172876042345, guid: 26a4971ea9d41f04a93469b0284ae8f5, type: 3}
+  - idItem: 2
+    sprite: {fileID: -4150471675066324412, guid: 104a1d7ed2233b54e8fab60dff0e18d9, type: 3}
   - idItem: 4
     sprite: {fileID: -9047660251269830892, guid: 81638704c69862a4b9849f321ec040df, type: 3}
   - idItem: 12
