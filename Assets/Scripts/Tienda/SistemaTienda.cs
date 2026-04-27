@@ -171,7 +171,6 @@ public class SistemaTienda : MonoBehaviour
                 continue;
             }
 
-            // Fallback temporal si backend no incluye id_isla por item.
             if (item.id_tienda == CurrentIslandId)
             {
                 filtered.Add(item);

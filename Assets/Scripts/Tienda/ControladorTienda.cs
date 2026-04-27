@@ -40,6 +40,7 @@ public class ControladorTienda : MonoBehaviour
     private Button btnColor;
     private Button btnRopa;
     private VisualElement contenedorOpciones;
+    private VisualElement _raizPanel;
     private Label _etiquetaMonedas;
 
     private SistemaTienda sistemaCompra;
@@ -106,11 +107,18 @@ public class ControladorTienda : MonoBehaviour
     private void BindUi()
     {
         var root = tiendaUI.rootVisualElement;
+        _raizPanel = root;
 
+        var botonesTienda = root.Q<VisualElement>("BotonesTienda");
         btnOjos = root.Q<Button>("BtnOjos");
         btnColor = root.Q<Button>("BtnColor");
         btnRopa = root.Q<Button>("BtnRopa");
         contenedorOpciones = root.Q<VisualElement>("ContenedorOpciones");
+
+        Debug.Log($"[TiendaUI][Refs] BotonesTienda exists={(botonesTienda != null)} classes={GetClassList(botonesTienda)}");
+        Debug.Log($"[TiendaUI][Refs] BtnOjos exists={(btnOjos != null)} classes={GetClassList(btnOjos)}");
+        Debug.Log($"[TiendaUI][Refs] BtnColor exists={(btnColor != null)} classes={GetClassList(btnColor)}");
+        Debug.Log($"[TiendaUI][Refs] BtnRopa exists={(btnRopa != null)} classes={GetClassList(btnRopa)}");
         _etiquetaMonedas = root.Q<Label>("EtiquetaMonedas");
         Debug.Log($"[TiendaUI] EtiquetaMonedas found={(_etiquetaMonedas != null)}");
         _onOjos = _ => CambiarCategoria(ShopCategory.Ojos);
@@ -122,6 +130,7 @@ public class ControladorTienda : MonoBehaviour
         btnRopa?.RegisterCallback(_onRopa);
 
         ResetearBotones();
+        LogRuntimeUiSources(root);
     }
 
     private async Task InicializarTiendaAsync()
@@ -168,6 +177,10 @@ public class ControladorTienda : MonoBehaviour
         ResetearBotones();
         AplicarBotonActivo(categoria);
 
+        bool esColor = categoria == ShopCategory.Color;
+        _raizPanel?.EnableInClassList("categoria-colores", esColor);
+        contenedorOpciones?.EnableInClassList("contenedor-colores", esColor);
+        Debug.Log($"[TiendaUI][USS] categoria={categoria} rootClasses={GetClassList(_raizPanel)} contenedorClasses={GetClassList(contenedorOpciones)}");
         RenderCategoria(categoria);
     }
 
@@ -185,20 +198,24 @@ public class ControladorTienda : MonoBehaviour
         {
             var item = items[i];
             var instancia = plantillaItemTienda.Instantiate();
-            ConfigurarTarjeta(instancia, item);
+            ConfigurarTarjeta(instancia, item, categoria);
             contenedorOpciones.Add(instancia);
         }
     }
 
-    private void ConfigurarTarjeta(TemplateContainer instancia, ShopItemDto item)
+    private void ConfigurarTarjeta(TemplateContainer instancia, ShopItemDto item, ShopCategory categoria)
     {
         var fondo = instancia.Q<VisualElement>("FondoEstandarte");
         var etiquetaPrecio = instancia.Q<Label>("Precio") ?? fondo?.Q<Label>("Precio");
+        var filaPrecio = instancia.Q<VisualElement>("FilaPrecio") ?? fondo?.Q<VisualElement>("FilaPrecio");
         var btnCompra = instancia.Q<Button>("BtnCompra");
         var soldOut = instancia.Q<VisualElement>("SoldOut");
 
-        // El fondo mantiene el estandarte de la plantilla.
-        // El cosmético visible se pinta sobre BtnCompra (o fondo como fallback).
+        bool esColor = categoria == ShopCategory.Color;
+        instancia.EnableInClassList("item-color", esColor);
+        fondo?.EnableInClassList("item-color", esColor);
+
+        // El cosmético visible se pinta solo sobre BtnCompra para evitar doble estandarte.
         var contenedorSpriteItem = (VisualElement)btnCompra ?? fondo;
         Sprite sprite = ResolveSpriteForItem(item);
         if (contenedorSpriteItem != null && sprite != null)
@@ -215,44 +232,79 @@ public class ControladorTienda : MonoBehaviour
             Debug.LogWarning($"[ShopCard] id_item={item.id_item} nombre={item.nombre} sprite=null appliedTo={targetName}. Ejecuta Auto-asignar sprites de tienda en el inspector.");
         }
 
+        bool isSoldOut = item.IsSoldOut;
+
         if (etiquetaPrecio != null)
         {
             etiquetaPrecio.text = item.costo.ToString();
-            etiquetaPrecio.style.display = DisplayStyle.Flex;
-            etiquetaPrecio.style.visibility = Visibility.Visible;
-            etiquetaPrecio.style.position = Position.Absolute;
-            etiquetaPrecio.style.bottom = 12;
-            etiquetaPrecio.style.left = 50;
-            etiquetaPrecio.style.unityTextAlign = TextAnchor.MiddleLeft;
-            etiquetaPrecio.style.color = Color.white;
-            etiquetaPrecio.style.unityFontStyleAndWeight = FontStyle.Bold;
-            etiquetaPrecio.style.fontSize = 28;
-            etiquetaPrecio.BringToFront();
 
-            Debug.Log($"[ShopPrice] id_item={item.id_item} precio={item.costo} labelFound=True broughtToFront=True");
+            // 3-digit prices keep the original readable size.
+            // 4-digit prices use a smaller size to avoid overflow.
+            etiquetaPrecio.style.fontSize = item.costo >= 1000 ? 20 : 24;
+
+            etiquetaPrecio.style.display = isSoldOut ? DisplayStyle.None : DisplayStyle.Flex;
+            etiquetaPrecio.style.visibility = Visibility.Visible;
+
+            Debug.Log($"[ShopPrice] id_item={item.id_item} precio={item.costo} labelFound=True");
         }
         else
         {
             Debug.LogWarning($"[ShopPrice] id_item={item.id_item} precio={item.costo} labelFound=False broughtToFront=False");
         }
 
-        bool isSoldOut = item.IsSoldOut;
         if (soldOut != null)
         {
             soldOut.style.display = isSoldOut ? DisplayStyle.Flex : DisplayStyle.None;
             soldOut.BringToFront();
         }
 
-        if (btnCompra != null)
+        if (filaPrecio != null)
         {
-            btnCompra.clicked += () => _ = IntentarCompraAsync(item, soldOut);
+            // Mantener la fila en layout para conservar el mismo tamaño de banner en todos los estados.
+            filaPrecio.style.display = DisplayStyle.Flex;
+            filaPrecio.style.visibility = Visibility.Visible;
         }
 
-        instancia.style.marginLeft = 15;
-        instancia.style.marginRight = 15;
+        if (btnCompra != null)
+        {
+            btnCompra.clicked += () => _ = IntentarCompraAsync(item, soldOut, filaPrecio);
+        }
+
+        Debug.Log($"[TiendaUI][USS] item={item.id_item} categoria={categoria} templateClasses={GetClassList(instancia)} fondoClasses={GetClassList(fondo)}");
+
     }
 
-    private async Task IntentarCompraAsync(ShopItemDto item, VisualElement soldOut)
+    private void LogRuntimeUiSources(VisualElement root)
+    {
+        string panelUxml = tiendaUI?.visualTreeAsset != null ? tiendaUI.visualTreeAsset.name : "null";
+        string itemTemplate = plantillaItemTienda != null ? plantillaItemTienda.name : "null";
+        Debug.Log($"[TiendaUI][Source] panelUXML={panelUxml} itemTemplate={itemTemplate}");
+
+        if (root == null)
+        {
+            return;
+        }
+
+        int sheetCount = root.styleSheets.count;
+        for (int i = 0; i < sheetCount; i++)
+        {
+            var styleSheet = root.styleSheets[i];
+            string sheetName = styleSheet != null ? styleSheet.name : "null";
+            Debug.Log($"[TiendaUI][Source] styleSheet[{i}]={sheetName}");
+        }
+    }
+
+    private static string GetClassList(VisualElement element)
+    {
+        if (element == null)
+        {
+            return "null";
+        }
+
+        return string.Join(",", element.GetClasses());
+    }
+
+    private async Task IntentarCompraAsync(ShopItemDto item, VisualElement soldOut, VisualElement filaPrecio)
     {
         if (item == null)
         {
@@ -289,6 +341,19 @@ public class ControladorTienda : MonoBehaviour
             if (soldOut != null)
             {
                 soldOut.style.display = DisplayStyle.Flex;
+            }
+
+            if (filaPrecio != null)
+            {
+                // Oculta únicamente la UI del precio, sin colapsar su espacio.
+                filaPrecio.style.display = DisplayStyle.Flex;
+                filaPrecio.style.visibility = Visibility.Visible;
+
+                var precioLabel = filaPrecio.Q<Label>("Precio");
+                if (precioLabel != null)
+                {
+                    precioLabel.style.display = DisplayStyle.None;
+                }
             }
 
             UpdateCurrencyLabel(response.data.yatzis);

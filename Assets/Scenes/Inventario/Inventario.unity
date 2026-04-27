@@ -514,6 +514,7 @@ MonoBehaviour:
     defaultOutfitItemId: 18
   homeSceneName: Pantalla_Principal
   initialCategory: 0
+  playerCustomizationManager: {fileID: 0}
 --- !u!1001 &1805302115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -577,6 +578,18 @@ PrefabInstance:
     - target: {fileID: 5494284744301341686, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
       propertyPath: m_Name
       value: Player Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: eyesVisualByItem.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: outfitVisualByItem.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775865904824316394, guid: f6eea148bd910ae42a13bc8572d226d8, type: 3}
+      propertyPath: eyesVisualByItem.Array.data[0].idItem
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,8 +1,165 @@
 :root {
 }
 
-.contenedor-botones {
-    position: absolute;
-    top: 210px;
-    right: 450px;
+.tienda-root {
+    flex-grow: 1;
+    flex-direction: row;
 }
+
+.tienda-character-side {
+    flex-grow: 1;
+}
+
+.tienda-shop-side {
+    width: 50%;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 250px;
+    padding-bottom: 32px;
+    position: relative;
+}
+
+.contenedor-botones {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 22px;
+    position: relative;
+}
+
+#BotonesTienda {
+    align-self: flex-start;
+    margin-left: 24px;
+    translate: 0 0;
+}
+
+.tienda-tab-btn {
+    width: 110px;
+    height: 110px;
+    background-color: rgba(149, 149, 149, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+}
+
+.tienda-items-layout {
+    width: 640px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 24px;
+    position: relative;
+}
+
+.tienda-items-layout-color {
+    top: -18px;
+}
+
+.tienda-item-card {
+    width: 170px;
+    height: 280px;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    padding: 8px 10px 14px 10px;
+    position: relative;
+}
+
+.tienda-item-card.item-color {
+    /* Increase/decrease this value to move COLOR items up/down. */
+    top: -28px;
+}
+
+/* Solo los ítems de color se elevan más para ajustar su anclaje visual */
+.color-item-offset {
+    position: relative;
+    top: -16px;
+}
+
+.tienda-item-button {
+    flex-grow: 1;
+    background-color: rgba(65, 105, 225, 0);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    -unity-background-scale-mode: scale-to-fit;
+    margin-bottom: 10px;
+}
+
+.tienda-item-soldout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.tienda-item-price-row {
+    height: 42px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+    overflow: visible;
+    top: -32px;
+}
+
+.tienda-item-price-label {
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    unity-text-align: middle-center;
+    position: relative;
+    /* Increase/decrease this value to move price left/right. */
+    left: 10px;
+    /* Increase/decrease this value to move price up/down. */
+    top: -16px;
+}
+
+.tienda-currency {
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 100px;
+    left: 150px;
+}
+
+.tienda-currency-icon {
+    width: 90px;
+    height: 90px;
+    background-image: url("project://database/Assets/Imagenes%20Somnia/Textyping/Score/exito/yatzi%20moneda%2056x98.png?fileID=2800000&guid=6625f4c37cc08c74abcef476d10db3ed&type=3#yatzi moneda 56x98");
+    background-color: rgba(76, 76, 76, 0);
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.tienda-currency-label {
+    font-size: 42px;
+    color: rgb(255, 255, 255);
+}
+
+.tienda-back-btn {
+    position: absolute;
+    top: 100px;
+    right: 180px;
+    width: 70px;
+    height: 70px;
+    background-color: rgba(55, 55, 55, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+}
+
+
