@@ -1,29 +1,53 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
-    [System.Serializable]
-    public class PlayerColorClipEntry
+    public enum Direction
+    {
+        Down = 0,
+        Up = 1,
+        Right = 2,
+        Left = 3
+    }
+
+    [Serializable]
+    public class ColorAnimatorByItemId
     {
         public int idItem;
+        public RuntimeAnimatorController controller;
+
+        [Header("Legacy fallback")]
         public AnimationClip faceClip;
     }
 
-    [System.Serializable]
-    public class PlayerEyesClipEntry
+    [Serializable]
+    public class EyesAnimatorByItemId
     {
         public int idItem;
+        public RuntimeAnimatorController eyesController;
+        public RuntimeAnimatorController eyesWhiteController;
+
+        [Header("Legacy fallback")]
         public AnimationClip eyesClip;
         public AnimationClip eyesWhiteClip;
     }
 
-    [System.Serializable]
-    public class PlayerOutfitClipEntry
+    [Serializable]
+    public class OutfitAnimatorByItemId
     {
         public int idItem;
+        public RuntimeAnimatorController controller;
+
+        [Header("Legacy fallback")]
         public AnimationClip outfitClip;
     }
+
+    private const string ParamIsMoving = "IsMoving";
+    private const string ParamMoveX = "MoveX";
+    private const string ParamMoveY = "MoveY";
+    private const string ParamDirection = "Direction";
 
     [Header("Animators")]
     [SerializeField] private Animator faceAnimator;
@@ -39,25 +63,28 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] private AnimationClip[] eyesClips;
     [SerializeField] private AnimationClip[] eyesWhiteClips;
 
-    [Header("Color Clips By Item Id")]
-    [SerializeField] private PlayerColorClipEntry[] colorClipsByItemId;
+    [Header("Color Animators By Item Id")]
+    [SerializeField] private ColorAnimatorByItemId[] colorClipsByItemId;
 
-    [Header("Eyes Clips By Item Id")]
-    [SerializeField] private PlayerEyesClipEntry[] eyesClipsByItemId;
+    [Header("Eyes Animators By Item Id")]
+    [SerializeField] private EyesAnimatorByItemId[] eyesClipsByItemId;
 
-    [Header("Outfit Clips By Item Id")]
-    [SerializeField] private PlayerOutfitClipEntry[] outfitClipsByItemId;
+    [Header("Outfit Animators By Item Id")]
+    [SerializeField] private OutfitAnimatorByItemId[] outfitClipsByItemId;
 
-    private readonly Dictionary<int, PlayerColorClipEntry> colorMap = new();
-    private readonly Dictionary<int, PlayerEyesClipEntry> eyesMap = new();
-    private readonly Dictionary<int, PlayerOutfitClipEntry> outfitMap = new();
+    private readonly Dictionary<int, ColorAnimatorByItemId> colorMap = new();
+    private readonly Dictionary<int, EyesAnimatorByItemId> eyesMap = new();
+    private readonly Dictionary<int, OutfitAnimatorByItemId> outfitMap = new();
 
     private PlayerCustomizationManager data;
-    private int currentColorItemId = 1;
+    private int selectedColorItemId = 1;
+    private int selectedEyesItemId = 11;
+    private int selectedOutfitItemId = 18;
 
     private void Awake()
     {
         BuildMaps();
+        EnsureEyesLayering();
     }
 
     private void Start()
@@ -79,74 +106,333 @@ public class PlayerVisual : MonoBehaviour
             return;
         }
 
-        ApplyColorByItemId(data.selectedFaceColorItemId);
-        ApplyEyesByItemId(data.selectedEyesItemId);
-        ApplyOutfitByItemId(data.selectedOutfitItemId);
+        ApplyEquipment(data.selectedFaceColorItemId, data.selectedEyesItemId, data.selectedOutfitItemId);
+    }
+
+    public void ApplyEquipment(int colorId, int eyesId, int outfitId)
+    {
+        selectedColorItemId = colorId;
+        selectedEyesItemId = eyesId;
+        selectedOutfitItemId = outfitId;
+
+        Debug.Log($"[PlayerVisual] Equipped color={selectedColorItemId} eyes={selectedEyesItemId} outfit={selectedOutfitItemId}");
+
+        ApplyColorByItemId(colorId);
+        ApplyEyesByItemId(eyesId);
+        ApplyOutfitByItemId(outfitId);
+
+        SetMovementState(false, Vector2.down);
     }
 
     public void ApplyColorByItemId(int colorId)
     {
-        bool found = colorMap.TryGetValue(colorId, out PlayerColorClipEntry entry) && entry.faceClip != null;
-        AnimationClip clip = found ? entry.faceClip : ResolveLegacyColorClip();
-        string clipName = clip != null ? clip.name : "null";
+        selectedColorItemId = colorId;
+        bool appliedController = false;
 
-        Debug.Log($"[PlayerVisual] ApplyColor id={colorId} found={found} clip={clipName}");
-
-        if (clip == null)
+        if (colorMap.TryGetValue(colorId, out ColorAnimatorByItemId entry) && entry != null)
         {
-            Debug.LogError($"[PlayerVisual] ERROR missing color clip mapping id={colorId}");
-            return;
+            if (entry.controller != null && faceAnimator != null)
+            {
+                faceAnimator.runtimeAnimatorController = entry.controller;
+                Debug.Log($"[PlayerVisual] Applied color controller for id={colorId} controller={entry.controller.name}");
+                appliedController = true;
+            }
+            else
+            {
+                Debug.LogError($"[PlayerVisual] ERROR missing color controller mapping id={colorId}");
+            }
+
+            if (!appliedController && entry.faceClip != null)
+            {
+                PlayLegacyClip(faceAnimator, entry.faceClip);
+            }
+        }
+        else
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing color controller mapping id={colorId}");
         }
 
-        currentColorItemId = colorId;
-        faceAnimator.Play(clip.name, 0, 0f);
+        if (!appliedController)
+        {
+            AnimationClip legacyClip = ResolveLegacyColorClip();
+            if (legacyClip != null)
+            {
+                PlayLegacyClip(faceAnimator, legacyClip);
+            }
+        }
     }
 
     public void ApplyEyesByItemId(int eyesId)
     {
-        bool found = eyesMap.TryGetValue(eyesId, out PlayerEyesClipEntry entry);
-        AnimationClip normalClip = found ? entry.eyesClip : ResolveLegacyEyesClip();
-        AnimationClip whiteClip = found
-            ? (entry.eyesWhiteClip != null ? entry.eyesWhiteClip : entry.eyesClip)
-            : ResolveLegacyEyesWhiteClip();
+        selectedEyesItemId = eyesId;
+        bool appliedEyesController = false;
+        bool appliedEyesWhiteController = false;
 
-        string normalName = normalClip != null ? normalClip.name : "null";
-        string whiteName = whiteClip != null ? whiteClip.name : "null";
-        Debug.Log($"[PlayerVisual] ApplyEyes id={eyesId} found={found} eyes={normalName} white={whiteName}");
-
-        if (normalClip == null)
+        if (eyesMap.TryGetValue(eyesId, out EyesAnimatorByItemId entry) && entry != null)
         {
-            Debug.LogError($"[PlayerVisual] ERROR missing eyes clip mapping id={eyesId}");
-            return;
+            if (entry.eyesController != null && eyesNormalAnimator != null)
+            {
+                eyesNormalAnimator.runtimeAnimatorController = entry.eyesController;
+                Debug.Log($"[PlayerVisual] Applied eyes controller for id={eyesId} controller={entry.eyesController.name}");
+                appliedEyesController = true;
+            }
+            else
+            {
+                Debug.LogError($"[PlayerVisual] ERROR missing eyes controller mapping id={eyesId}");
+            }
+
+            if (entry.eyesWhiteController != null && eyesWhiteAnimator != null)
+            {
+                eyesWhiteAnimator.runtimeAnimatorController = entry.eyesWhiteController;
+                Debug.Log($"[PlayerVisual] Applied eyesWhite controller for id={eyesId} controller={entry.eyesWhiteController.name}");
+                appliedEyesWhiteController = true;
+            }
+            else
+            {
+                Debug.LogError($"[PlayerVisual] ERROR missing eyesWhite controller mapping id={eyesId}");
+            }
+
+            if (!appliedEyesController && entry.eyesClip != null)
+            {
+                PlayLegacyClip(eyesNormalAnimator, entry.eyesClip);
+            }
+
+            if (!appliedEyesWhiteController)
+            {
+                AnimationClip whiteFallback = entry.eyesWhiteClip != null ? entry.eyesWhiteClip : entry.eyesClip;
+                if (whiteFallback != null)
+                {
+                    PlayLegacyClip(eyesWhiteAnimator, whiteFallback);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing eyes controller mapping id={eyesId}");
+            Debug.LogError($"[PlayerVisual] ERROR missing eyesWhite controller mapping id={eyesId}");
         }
 
-        eyesNormalAnimator.Play(normalClip.name, 0, 0f);
-
-        if (eyesWhiteAnimator != null && whiteClip != null)
+        if (!appliedEyesController)
         {
-            eyesWhiteAnimator.Play(whiteClip.name, 0, 0f);
+            AnimationClip legacyEyes = ResolveLegacyEyesClip();
+            if (legacyEyes != null)
+            {
+                PlayLegacyClip(eyesNormalAnimator, legacyEyes);
+            }
         }
-        else if (currentColorItemId == 10)
+
+        if (!appliedEyesWhiteController)
         {
-            Debug.LogError($"[PlayerVisual] ERROR missing eyes clip mapping id={eyesId}");
+            AnimationClip legacyEyesWhite = ResolveLegacyEyesWhiteClip();
+            if (legacyEyesWhite != null)
+            {
+                PlayLegacyClip(eyesWhiteAnimator, legacyEyesWhite);
+            }
         }
     }
 
     public void ApplyOutfitByItemId(int outfitId)
     {
-        bool found = outfitMap.TryGetValue(outfitId, out PlayerOutfitClipEntry entry) && entry.outfitClip != null;
-        AnimationClip clip = found ? entry.outfitClip : ResolveLegacyOutfitClip();
-        string clipName = clip != null ? clip.name : "null";
+        selectedOutfitItemId = outfitId;
+        bool appliedController = false;
 
-        Debug.Log($"[PlayerVisual] ApplyOutfit id={outfitId} found={found} clip={clipName}");
-
-        if (clip == null)
+        if (outfitMap.TryGetValue(outfitId, out OutfitAnimatorByItemId entry) && entry != null)
         {
-            Debug.LogError($"[PlayerVisual] ERROR missing outfit clip mapping id={outfitId}");
+            if (entry.controller != null && outfitAnimator != null)
+            {
+                outfitAnimator.runtimeAnimatorController = entry.controller;
+                Debug.Log($"[PlayerVisual] Applied outfit controller for id={outfitId} controller={entry.controller.name}");
+                appliedController = true;
+            }
+            else
+            {
+                Debug.LogError($"[PlayerVisual] ERROR missing outfit controller mapping id={outfitId}");
+            }
+
+            if (!appliedController && entry.outfitClip != null)
+            {
+                PlayLegacyClip(outfitAnimator, entry.outfitClip);
+            }
+        }
+        else
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing outfit controller mapping id={outfitId}");
+        }
+
+        if (!appliedController)
+        {
+            AnimationClip legacyClip = ResolveLegacyOutfitClip();
+            if (legacyClip != null)
+            {
+                PlayLegacyClip(outfitAnimator, legacyClip);
+            }
+        }
+    }
+
+    public void SetMovementState(bool isMoving, Vector2 input)
+    {
+        Vector2 dominantInput = CalculateDominantInput(input, isMoving);
+        Direction direction = ResolveDirection(dominantInput);
+
+        ApplyAnimatorMovement(faceAnimator, isMoving, dominantInput, direction);
+        ApplyAnimatorMovement(outfitAnimator, isMoving, dominantInput, direction);
+        ApplyAnimatorMovement(eyesNormalAnimator, isMoving, dominantInput, direction);
+        ApplyAnimatorMovement(eyesWhiteAnimator, isMoving, dominantInput, direction);
+
+        Debug.Log($"[PlayerVisual] Movement params IsMoving={isMoving} MoveX={dominantInput.x} MoveY={dominantInput.y} Direction={(int)direction} color={selectedColorItemId} eyes={selectedEyesItemId} outfit={selectedOutfitItemId}");
+    }
+
+    public void SetMovementState(bool isMoving, Direction direction)
+    {
+        SetMovementState(isMoving, DirectionToVector(direction));
+    }
+
+    public void ForceIdle(Direction direction)
+    {
+        SetMovementState(false, DirectionToVector(direction));
+    }
+
+    private static Vector2 CalculateDominantInput(Vector2 input, bool isMoving)
+    {
+        if (!isMoving || input.sqrMagnitude <= 0.0001f)
+        {
+            return new Vector2(0f, -1f);
+        }
+
+        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
+        {
+            return new Vector2(Mathf.Sign(input.x), 0f);
+        }
+
+        if (Mathf.Abs(input.y) > 0f)
+        {
+            return new Vector2(0f, Mathf.Sign(input.y));
+        }
+
+        return new Vector2(0f, -1f);
+    }
+
+    private static Direction ResolveDirection(Vector2 dominantInput)
+    {
+        if (dominantInput.y > 0.1f)
+        {
+            return Direction.Up;
+        }
+
+        if (dominantInput.x > 0.1f)
+        {
+            return Direction.Right;
+        }
+
+        if (dominantInput.x < -0.1f)
+        {
+            return Direction.Left;
+        }
+
+        return Direction.Down;
+    }
+
+    private static Vector2 DirectionToVector(Direction direction)
+    {
+        return direction switch
+        {
+            Direction.Up => Vector2.up,
+            Direction.Right => Vector2.right,
+            Direction.Left => Vector2.left,
+            _ => Vector2.down
+        };
+    }
+
+    private static void ApplyAnimatorMovement(Animator animator, bool isMoving, Vector2 dominantInput, Direction direction)
+    {
+        if (animator == null)
+        {
             return;
         }
 
-        outfitAnimator.Play(clip.name, 0, 0f);
+        SetBoolIfExists(animator, ParamIsMoving, isMoving);
+        SetFloatIfExists(animator, ParamMoveX, dominantInput.x);
+        SetFloatIfExists(animator, ParamMoveY, dominantInput.y);
+        SetIntIfExists(animator, ParamDirection, (int)direction);
+    }
+
+    private static void SetBoolIfExists(Animator animator, string name, bool value)
+    {
+        if (HasParameter(animator, name, AnimatorControllerParameterType.Bool))
+        {
+            animator.SetBool(name, value);
+        }
+    }
+
+    private static void SetFloatIfExists(Animator animator, string name, float value)
+    {
+        if (HasParameter(animator, name, AnimatorControllerParameterType.Float))
+        {
+            animator.SetFloat(name, value);
+        }
+    }
+
+    private static void SetIntIfExists(Animator animator, string name, int value)
+    {
+        if (HasParameter(animator, name, AnimatorControllerParameterType.Int))
+        {
+            animator.SetInteger(name, value);
+        }
+    }
+
+    private static bool HasParameter(Animator animator, string name, AnimatorControllerParameterType type)
+    {
+        if (animator == null)
+        {
+            return false;
+        }
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.type == type && parameter.name == name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void PlayLegacyClip(Animator animator, AnimationClip clip)
+    {
+        if (animator == null || clip == null)
+        {
+            return;
+        }
+
+        animator.Play(clip.name, 0, 0f);
+    }
+
+    private void EnsureEyesLayering()
+    {
+        if (eyesWhiteAnimator == null || eyesNormalAnimator == null)
+        {
+            return;
+        }
+
+        SpriteRenderer eyesWhiteRenderer = eyesWhiteAnimator.GetComponent<SpriteRenderer>();
+        SpriteRenderer eyesRenderer = eyesNormalAnimator.GetComponent<SpriteRenderer>();
+        if (eyesWhiteRenderer == null || eyesRenderer == null)
+        {
+            return;
+        }
+
+        if (eyesWhiteRenderer.sortingLayerID != eyesRenderer.sortingLayerID)
+        {
+            eyesWhiteRenderer.sortingLayerID = eyesRenderer.sortingLayerID;
+        }
+
+        if (eyesWhiteRenderer.sortingOrder >= eyesRenderer.sortingOrder)
+        {
+            eyesWhiteRenderer.sortingOrder = eyesRenderer.sortingOrder - 1;
+        }
+
+        Debug.Log("[PlayerVisual] EyesWhite below Eyes");
     }
 
     private void BuildMaps()
@@ -157,7 +443,7 @@ public class PlayerVisual : MonoBehaviour
 
         if (colorClipsByItemId != null)
         {
-            foreach (PlayerColorClipEntry entry in colorClipsByItemId)
+            foreach (ColorAnimatorByItemId entry in colorClipsByItemId)
             {
                 if (entry == null)
                 {
@@ -170,7 +456,7 @@ public class PlayerVisual : MonoBehaviour
 
         if (eyesClipsByItemId != null)
         {
-            foreach (PlayerEyesClipEntry entry in eyesClipsByItemId)
+            foreach (EyesAnimatorByItemId entry in eyesClipsByItemId)
             {
                 if (entry == null)
                 {
@@ -183,7 +469,7 @@ public class PlayerVisual : MonoBehaviour
 
         if (outfitClipsByItemId != null)
         {
-            foreach (PlayerOutfitClipEntry entry in outfitClipsByItemId)
+            foreach (OutfitAnimatorByItemId entry in outfitClipsByItemId)
             {
                 if (entry == null)
                 {

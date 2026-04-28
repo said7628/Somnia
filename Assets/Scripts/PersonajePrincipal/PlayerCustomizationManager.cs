@@ -241,9 +241,7 @@ public class PlayerCustomizationManager : MonoBehaviour
 
         if (player != null)
         {
-            player.ApplyColorByItemId(selectedFaceColorItemId);
-            player.ApplyEyesByItemId(selectedEyesItemId);
-            player.ApplyOutfitByItemId(selectedOutfitItemId);
+            player.ApplyEquipment(selectedFaceColorItemId, selectedEyesItemId, selectedOutfitItemId);
         }
         else
         {

@@ -6677,6 +6677,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: dfdf45148e0cdcd418b41d1d259ea725, type: 2}
     - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: outfitClipsByItemId.Array.data[0].controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ddbe59d83cda92d4c83275a75fe925a1, type: 2}
+    - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: outfitClipsByItemId.Array.data[0].outfitClip
       value: 
       objectReference: {fileID: 7400000, guid: ed0e298f458879d41831dc207be04409, type: 2}
