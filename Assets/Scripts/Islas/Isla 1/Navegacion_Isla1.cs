@@ -140,6 +140,10 @@ public class Navegacion_Isla1 : MonoBehaviour
 
     private void IrAInventario()
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        GameSessionManager.Instance?.SetLastGameplaySceneName(currentSceneName);
+        Debug.Log($"[InventoryNav] Stored previous gameplay scene={currentSceneName}");
+
         SceneManager.LoadScene("Inventario");
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Somnia.UnityClient
 {
@@ -6,12 +7,15 @@ namespace Somnia.UnityClient
     {
         public static GameSessionManager Instance { get; private set; }
 
+        private static readonly string[] GameplayScenePrefixes = { "Isla" };
+
         public PlayerIdentity CurrentUser { get; private set; }
         public string AccessToken { get; private set; }
         public string RefreshToken { get; private set; }
         public int PlayerAge { get; private set; }
         public int CurrentSlotNumber { get; private set; } = 1;
         public int CurrentIslandId { get; private set; } = 1;
+        public string LastGameplaySceneName { get; private set; }
 
         private void Awake()
         {
@@ -23,6 +27,22 @@ namespace Somnia.UnityClient
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            TrackGameplayScene(SceneManager.GetActiveScene().name);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                SceneManager.sceneLoaded -= OnSceneLoaded;
+            }
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            TrackGameplayScene(scene.name);
         }
 
         public void SetSession(PlayerIdentity user, TokenBundle tokens)
@@ -53,6 +73,45 @@ namespace Somnia.UnityClient
             {
                 CurrentIslandId = islandId;
             }
+        }
+
+        public void SetLastGameplaySceneName(string sceneName)
+        {
+            if (string.IsNullOrWhiteSpace(sceneName))
+            {
+                return;
+            }
+
+            LastGameplaySceneName = sceneName;
+        }
+
+        private void TrackGameplayScene(string sceneName)
+        {
+            if (!IsGameplayScene(sceneName))
+            {
+                return;
+            }
+
+            LastGameplaySceneName = sceneName;
+            Debug.Log($"[InventoryNav] Stored previous gameplay scene={sceneName}");
+        }
+
+        private static bool IsGameplayScene(string sceneName)
+        {
+            if (string.IsNullOrWhiteSpace(sceneName))
+            {
+                return false;
+            }
+
+            foreach (string prefix in GameplayScenePrefixes)
+            {
+                if (sceneName.StartsWith(prefix, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void SetCurrentIslandSceneForSlot(int slotNumber, string islandSceneName)

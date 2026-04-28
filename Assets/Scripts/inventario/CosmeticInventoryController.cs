@@ -63,6 +63,15 @@ namespace Somnia.Inventory
 
         private const string EquippedClass = "inventory-equipped";
 
+
+        private static readonly HashSet<string> InventorySceneNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Inventario",
+            "InventarioOjos",
+            "InventarioOutfit",
+            "InventarioConfiguracion"
+        };
+
         private sealed class ScreenBindingDefinition
         {
             public int itemId;
@@ -161,7 +170,7 @@ namespace Somnia.Inventory
 
             _configButton = QueryFirst<Button>(root, "botonconf", "botonConf", "botonConfig");
             _homeButton = root.Q<Button>("botonHome");
-            _closeButton = root.Q<Button>("cerrar");
+            _closeButton = QueryFirst<Button>(root, "cerrar", "Cerrar");
 
             _onTabColor = evt =>
             {
@@ -190,7 +199,7 @@ namespace Somnia.Inventory
 
             _onClose = evt =>
             {
-                SceneManager.LoadScene(homeSceneName);
+                ReturnToPreviousGameplayScene();
             };
 
             _onDefaultPressed = evt =>
@@ -210,6 +219,29 @@ namespace Somnia.Inventory
 
             RegisterButtonCallback(_defaultPreview, _onDefaultPressed);
             Debug.Log($"[InventoryScreen] scene={sceneName} category={_activeCategory} root={_activeRootName}");
+        }
+
+
+        private void ReturnToPreviousGameplayScene()
+        {
+            string targetScene = GameSessionManager.Instance?.LastGameplaySceneName;
+
+            if (string.IsNullOrWhiteSpace(targetScene))
+            {
+                int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
+                targetScene = GameSessionManager.Instance?.GetCurrentIslandSceneForSlot(slot);
+            }
+
+            if (!string.IsNullOrWhiteSpace(targetScene) && !InventorySceneNames.Contains(targetScene))
+            {
+                Debug.Log($"[InventoryNav] Close pressed. Returning to={targetScene}");
+                SceneManager.LoadScene(targetScene);
+                return;
+            }
+
+            const string fallbackScene = "Pantalla_Principal";
+            Debug.LogWarning($"[InventoryNav] Close pressed but no previous scene found. Falling back to={fallbackScene}");
+            SceneManager.LoadScene(fallbackScene);
         }
 
         private void InitializeService()
