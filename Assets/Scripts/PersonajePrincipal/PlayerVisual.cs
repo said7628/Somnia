@@ -1,13 +1,28 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
     [System.Serializable]
-    private class PlayerCosmeticClipEntry
+    public class PlayerColorClipEntry
     {
         public int idItem;
-        public AnimationClip visual;
-        public AnimationClip visualWhite;
+        public AnimationClip faceClip;
+    }
+
+    [System.Serializable]
+    public class PlayerEyesClipEntry
+    {
+        public int idItem;
+        public AnimationClip eyesClip;
+        public AnimationClip eyesWhiteClip;
+    }
+
+    [System.Serializable]
+    public class PlayerOutfitClipEntry
+    {
+        public int idItem;
+        public AnimationClip outfitClip;
     }
 
     [Header("Animators")]
@@ -18,18 +33,34 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] private Animator eyesNormalAnimator;
     [SerializeField] private Animator eyesWhiteAnimator;
 
-    [Header("Animation Clips")]
+    [Header("Animation Clips (legacy fallback)")]
     [SerializeField] private AnimationClip[] faceClips;
     [SerializeField] private AnimationClip[] outfitClips;
     [SerializeField] private AnimationClip[] eyesClips;
     [SerializeField] private AnimationClip[] eyesWhiteClips;
-    [Header("Mapeo explícito por id_item (opcional, recomendado)")]
-    [SerializeField] private PlayerCosmeticClipEntry[] eyesVisualByItem;
-    [SerializeField] private PlayerCosmeticClipEntry[] outfitVisualByItem;
+
+    [Header("Color Clips By Item Id")]
+    [SerializeField] private PlayerColorClipEntry[] colorClipsByItemId;
+
+    [Header("Eyes Clips By Item Id")]
+    [SerializeField] private PlayerEyesClipEntry[] eyesClipsByItemId;
+
+    [Header("Outfit Clips By Item Id")]
+    [SerializeField] private PlayerOutfitClipEntry[] outfitClipsByItemId;
+
+    private readonly Dictionary<int, PlayerColorClipEntry> colorMap = new();
+    private readonly Dictionary<int, PlayerEyesClipEntry> eyesMap = new();
+    private readonly Dictionary<int, PlayerOutfitClipEntry> outfitMap = new();
 
     private PlayerCustomizationManager data;
+    private int currentColorItemId = 1;
 
-    void Start()
+    private void Awake()
+    {
+        BuildMaps();
+    }
+
+    private void Start()
     {
         data = FindObjectOfType<PlayerCustomizationManager>();
         ApplyCustomization();
@@ -39,142 +70,168 @@ public class PlayerVisual : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError("No se encontró PlayerCustomizationManager");
+            data = FindObjectOfType<PlayerCustomizationManager>();
+        }
+
+        if (data == null)
+        {
+            Debug.LogError("[PlayerVisual] ERROR missing PlayerCustomizationManager");
             return;
         }
 
-        // 🔒 PROTECCIÓN DE ÍNDICES
-        if (data.selectedFaceColor >= faceClips.Length ||
-            data.selectedOutfit >= outfitClips.Length ||
-            data.selectedEyes >= eyesClips.Length)
-        {
-            Debug.LogError("Índice fuera de rango en PlayerVisual");
-            return;
-        }
-
-        // FACE
-        faceAnimator.Play(faceClips[data.selectedFaceColor].name, 0, 0f);
-
-        // OUTFIT
-        AnimationClip resolvedOutfit = ResolveOutfitClip();
-        if (resolvedOutfit != null)
-        {
-            outfitAnimator.Play(resolvedOutfit.name, 0, 0f);
-        }
-        else
-        {
-            outfitAnimator.Play(outfitClips[data.selectedOutfit].name, 0, 0f);
-        }
-
-        // 🔥 EYES (SOLUCIÓN DEFINITIVA)
-
-        // Apagar ambos primero
-        if (eyesNormalAnimator != null)
-            eyesNormalAnimator.gameObject.SetActive(false);
-
-        if (eyesWhiteAnimator != null)
-            eyesWhiteAnimator.gameObject.SetActive(false);
-
-        // Activar el correcto
-        if (data.selectedFaceColor == 9) // 👈 color negro (índice 9)
-        {
-            if (data.selectedEyes < eyesWhiteClips.Length)
-            {
-                eyesWhiteAnimator.gameObject.SetActive(true);
-                AnimationClip resolvedEyesWhite = ResolveEyesClip(true);
-                if (resolvedEyesWhite != null)
-                {
-                    eyesWhiteAnimator.Play(resolvedEyesWhite.name, 0, 0f);
-                }
-                else
-                {
-                    eyesWhiteAnimator.Play(eyesWhiteClips[data.selectedEyes].name, 0, 0f);
-                }
-            }
-            else
-            {
-                Debug.LogError("Índice fuera de rango en eyesWhiteClips");
-            }
-        }
-        else
-        {
-            eyesNormalAnimator.gameObject.SetActive(true);
-            AnimationClip resolvedEyes = ResolveEyesClip(false);
-            if (resolvedEyes != null)
-            {
-                eyesNormalAnimator.Play(resolvedEyes.name, 0, 0f);
-            }
-            else
-            {
-                eyesNormalAnimator.Play(eyesClips[data.selectedEyes].name, 0, 0f);
-            }
-        }
-
-        Debug.Log("Customización aplicada correctamente");
+        ApplyColorByItemId(data.selectedFaceColorItemId);
+        ApplyEyesByItemId(data.selectedEyesItemId);
+        ApplyOutfitByItemId(data.selectedOutfitItemId);
     }
 
-    private AnimationClip ResolveOutfitClip()
+    public void ApplyColorByItemId(int colorId)
     {
-        int outfitId = data.selectedOutfitItemId;
-        if (TryGetEntry(outfitVisualByItem, outfitId, out PlayerCosmeticClipEntry entry) && entry.visual != null)
+        bool found = colorMap.TryGetValue(colorId, out PlayerColorClipEntry entry) && entry.faceClip != null;
+        AnimationClip clip = found ? entry.faceClip : ResolveLegacyColorClip();
+        string clipName = clip != null ? clip.name : "null";
+
+        Debug.Log($"[PlayerVisual] ApplyColor id={colorId} found={found} clip={clipName}");
+
+        if (clip == null)
         {
-            Debug.Log($"[PlayerCustomization] Outfit id={outfitId} -> {ResolveItemName(outfitId)} visual={entry.visual.name}");
-            return entry.visual;
+            Debug.LogError($"[PlayerVisual] ERROR missing color clip mapping id={colorId}");
+            return;
+        }
+
+        currentColorItemId = colorId;
+        faceAnimator.Play(clip.name, 0, 0f);
+    }
+
+    public void ApplyEyesByItemId(int eyesId)
+    {
+        bool found = eyesMap.TryGetValue(eyesId, out PlayerEyesClipEntry entry);
+        AnimationClip normalClip = found ? entry.eyesClip : ResolveLegacyEyesClip();
+        AnimationClip whiteClip = found
+            ? (entry.eyesWhiteClip != null ? entry.eyesWhiteClip : entry.eyesClip)
+            : ResolveLegacyEyesWhiteClip();
+
+        string normalName = normalClip != null ? normalClip.name : "null";
+        string whiteName = whiteClip != null ? whiteClip.name : "null";
+        Debug.Log($"[PlayerVisual] ApplyEyes id={eyesId} found={found} eyes={normalName} white={whiteName}");
+
+        if (normalClip == null)
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing eyes clip mapping id={eyesId}");
+            return;
+        }
+
+        eyesNormalAnimator.Play(normalClip.name, 0, 0f);
+
+        if (eyesWhiteAnimator != null && whiteClip != null)
+        {
+            eyesWhiteAnimator.Play(whiteClip.name, 0, 0f);
+        }
+        else if (currentColorItemId == 10)
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing eyes clip mapping id={eyesId}");
+        }
+    }
+
+    public void ApplyOutfitByItemId(int outfitId)
+    {
+        bool found = outfitMap.TryGetValue(outfitId, out PlayerOutfitClipEntry entry) && entry.outfitClip != null;
+        AnimationClip clip = found ? entry.outfitClip : ResolveLegacyOutfitClip();
+        string clipName = clip != null ? clip.name : "null";
+
+        Debug.Log($"[PlayerVisual] ApplyOutfit id={outfitId} found={found} clip={clipName}");
+
+        if (clip == null)
+        {
+            Debug.LogError($"[PlayerVisual] ERROR missing outfit clip mapping id={outfitId}");
+            return;
+        }
+
+        outfitAnimator.Play(clip.name, 0, 0f);
+    }
+
+    private void BuildMaps()
+    {
+        colorMap.Clear();
+        eyesMap.Clear();
+        outfitMap.Clear();
+
+        if (colorClipsByItemId != null)
+        {
+            foreach (PlayerColorClipEntry entry in colorClipsByItemId)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                colorMap[entry.idItem] = entry;
+            }
+        }
+
+        if (eyesClipsByItemId != null)
+        {
+            foreach (PlayerEyesClipEntry entry in eyesClipsByItemId)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                eyesMap[entry.idItem] = entry;
+            }
+        }
+
+        if (outfitClipsByItemId != null)
+        {
+            foreach (PlayerOutfitClipEntry entry in outfitClipsByItemId)
+            {
+                if (entry == null)
+                {
+                    continue;
+                }
+
+                outfitMap[entry.idItem] = entry;
+            }
+        }
+    }
+
+    private AnimationClip ResolveLegacyColorClip()
+    {
+        if (data != null && data.selectedFaceColor >= 0 && data.selectedFaceColor < faceClips.Length)
+        {
+            return faceClips[data.selectedFaceColor];
         }
 
         return null;
     }
 
-    private AnimationClip ResolveEyesClip(bool useWhite)
+    private AnimationClip ResolveLegacyEyesClip()
     {
-        int eyesId = data.selectedEyesItemId;
-        if (TryGetEntry(eyesVisualByItem, eyesId, out PlayerCosmeticClipEntry entry))
+        if (data != null && data.selectedEyes >= 0 && data.selectedEyes < eyesClips.Length)
         {
-            AnimationClip clip = useWhite ? (entry.visualWhite != null ? entry.visualWhite : entry.visual) : entry.visual;
-            if (clip != null)
-            {
-                Debug.Log($"[PlayerCustomization] Eyes id={eyesId} -> {ResolveItemName(eyesId)} visual={clip.name}");
-                return clip;
-            }
+            return eyesClips[data.selectedEyes];
         }
 
         return null;
     }
 
-    private static bool TryGetEntry(PlayerCosmeticClipEntry[] entries, int idItem, out PlayerCosmeticClipEntry entry)
+    private AnimationClip ResolveLegacyEyesWhiteClip()
     {
-        if (entries != null)
+        if (data != null && data.selectedEyes >= 0 && data.selectedEyes < eyesWhiteClips.Length)
         {
-            for (int i = 0; i < entries.Length; i++)
-            {
-                if (entries[i] != null && entries[i].idItem == idItem)
-                {
-                    entry = entries[i];
-                    return true;
-                }
-            }
+            return eyesWhiteClips[data.selectedEyes];
         }
 
-        entry = null;
-        return false;
+        return null;
     }
 
-    private static string ResolveItemName(int itemId)
+    private AnimationClip ResolveLegacyOutfitClip()
     {
-        return itemId switch
+        if (data != null && data.selectedOutfit >= 0 && data.selectedOutfit < outfitClips.Length)
         {
-            11 => "ovalos",
-            12 => "rombos",
-            13 => "cansado",
-            14 => "estrella",
-            15 => "happy",
-            16 => "pirata",
-            17 => "emputado",
-            18 => "boy scout/base",
-            19 => "engrane",
-            20 => "rana",
-            21 => "diablito",
-            _ => "unknown"
-        };
+            return outfitClips[data.selectedOutfit];
+        }
+
+        return null;
     }
 }

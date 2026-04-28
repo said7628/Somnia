@@ -1,5 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Somnia.Economy.Core;
+using Somnia.Economy.Interfaces;
+using Somnia.UnityClient;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCustomizationManager : MonoBehaviour
 {
@@ -18,20 +23,18 @@ public class PlayerCustomizationManager : MonoBehaviour
     private const int DefaultEyesItemId = 11;
     private const int DefaultOutfitItemId = 18;
 
-    // IDs de backend -> índice visual real (orden de clips/sprites en PlayerVisual/PlayerVisualSimple):
-    // 0 blanco, 1 amarillo, 2 azul, 3 morado, 4 naranja, 5 rojo, 6 rosa, 7 turquesa, 8 verde, 9 negro
     private static readonly Dictionary<int, int> ColorIndexByItemId = new()
     {
-        [1] = 0,  // blanco
-        [2] = 4,  // naranja
-        [3] = 3,  // morado
-        [4] = 1,  // amarillo
-        [5] = 5,  // rojo
-        [6] = 7,  // turquesa
-        [7] = 8,  // verde
-        [8] = 6,  // rosa
-        [9] = 2,  // azul
-        [10] = 9  // negro
+        [1] = 0,
+        [2] = 4,
+        [3] = 3,
+        [4] = 1,
+        [5] = 5,
+        [6] = 7,
+        [7] = 8,
+        [8] = 6,
+        [9] = 2,
+        [10] = 9
     };
 
     private static readonly Dictionary<int, int> EyesIndexByItemId = new()
@@ -53,33 +56,9 @@ public class PlayerCustomizationManager : MonoBehaviour
         [21] = 3
     };
 
-    private static readonly Dictionary<int, string> ItemNameById = new()
-    {
-        [1] = "blanco",
-        [2] = "naranja",
-        [3] = "morado",
-        [4] = "amarillo",
-        [5] = "rojo",
-        [6] = "turquesa",
-        [7] = "verde",
-        [8] = "rosa",
-        [9] = "azul",
-        [10] = "negro",
-        [11] = "ovalos/default",
-        [12] = "rombos",
-        [13] = "cansado",
-        [14] = "estrella",
-        [15] = "happy",
-        [16] = "pirata",
-        [17] = "emputado",
-        [18] = "boy scout/default",
-        [19] = "engrane",
-        [20] = "rana",
-        [21] = "diablito"
-    };
+    private IGameDataService gameDataService;
 
-
-    void Awake()
+    private void Awake()
     {
         Instance = this;
         if (usarValoresDelInspector)
@@ -91,7 +70,17 @@ public class PlayerCustomizationManager : MonoBehaviour
         LoadData();
     }
 
-    void LoadData()
+    private async void Start()
+    {
+        ApplyToPlayer();
+
+        if (SceneManager.GetActiveScene().name.StartsWith("Isla"))
+        {
+            await LoadGameplayEquipmentAsync();
+        }
+    }
+
+    private void LoadData()
     {
         if (PlayerPrefs.HasKey("HasCustomization"))
         {
@@ -113,7 +102,7 @@ public class PlayerCustomizationManager : MonoBehaviour
         PlayerPrefs.SetInt("HasCustomization", 1);
     }
 
-    void SetDefaults()
+    private void SetDefaults()
     {
         Debug.Log("Aplicando apariencia por defecto");
 
@@ -152,25 +141,79 @@ public class PlayerCustomizationManager : MonoBehaviour
     public void ApplyColor(int idItem)
     {
         selectedFaceColorItemId = ResolveItemIdOrDefault(idItem, ColorIndexByItemId, DefaultColorItemId);
-        selectedFaceColor = ResolveIndex(idItem, ColorIndexByItemId, DefaultColorItemId);
-        Debug.Log($"[PlayerCustomization] Color applied id={selectedFaceColorItemId} name={ResolveItemName(selectedFaceColorItemId)} visualIndex={selectedFaceColor}");
+        selectedFaceColor = ResolveIndexForLegacy(selectedFaceColorItemId, ColorIndexByItemId, DefaultColorItemId);
+        Debug.Log($"[PlayerCustomization] Color applied id={selectedFaceColorItemId} visualIndex={selectedFaceColor}");
     }
 
     public void ApplyEyes(int idItem)
     {
         selectedEyesItemId = ResolveItemIdOrDefault(idItem, EyesIndexByItemId, DefaultEyesItemId);
-        selectedEyes = ResolveIndex(idItem, EyesIndexByItemId, DefaultEyesItemId);
-        Debug.Log($"[PlayerCustomization] Eyes id={selectedEyesItemId} -> {ResolveItemName(selectedEyesItemId)} visualIndex={selectedEyes}");
+        selectedEyes = ResolveIndexForLegacy(selectedEyesItemId, EyesIndexByItemId, DefaultEyesItemId);
+        Debug.Log($"[PlayerCustomization] Eyes applied id={selectedEyesItemId} visualIndex={selectedEyes}");
     }
 
     public void ApplyOutfit(int idItem)
     {
         selectedOutfitItemId = ResolveItemIdOrDefault(idItem, OutfitIndexByItemId, DefaultOutfitItemId);
-        selectedOutfit = ResolveIndex(idItem, OutfitIndexByItemId, DefaultOutfitItemId);
-        Debug.Log($"[PlayerCustomization] Outfit id={selectedOutfitItemId} -> {ResolveItemName(selectedOutfitItemId)} visualIndex={selectedOutfit}");
+        selectedOutfit = ResolveIndexForLegacy(selectedOutfitItemId, OutfitIndexByItemId, DefaultOutfitItemId);
+        Debug.Log($"[PlayerCustomization] Outfit applied id={selectedOutfitItemId} visualIndex={selectedOutfit}");
     }
 
-    private static int ResolveIndex(int itemId, Dictionary<int, int> map, int defaultItemId)
+    private async Task LoadGameplayEquipmentAsync()
+    {
+        Debug.Log("[PlayerCustomization] Loading equipped cosmetics for gameplay");
+
+        bool resolved = await ResolveGameDataServiceAsync();
+        if (!resolved)
+        {
+            Debug.LogWarning("[PlayerCustomization] No se pudo resolver GameDataService. Se usan IDs actuales en memoria.");
+            ApplyToPlayer();
+            return;
+        }
+
+        int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
+        var response = await gameDataService.GetEquippedItemsAsync(slot);
+        if (!response.success || response.data == null)
+        {
+            Debug.LogWarning($"[PlayerCustomization] No se pudo cargar equipamiento desde backend (slot={slot}): {response.message}");
+            ApplyToPlayer();
+            return;
+        }
+
+        int colorId = response.data.id_item_color;
+        int eyesId = response.data.id_item_cara;
+        int outfitId = response.data.id_item_outfit;
+        Debug.Log($"[PlayerCustomization] Equipment from backend color={colorId} eyes={eyesId} outfit={outfitId}");
+
+        ApplyEquipment(colorId, eyesId, outfitId);
+    }
+
+    private async Task<bool> ResolveGameDataServiceAsync()
+    {
+        if (gameDataService != null)
+        {
+            return true;
+        }
+
+        EconomyModule module = EconomyModule.Instance ?? FindFirstObjectByType<EconomyModule>(FindObjectsInactive.Include);
+        if (module == null)
+        {
+            module = new GameObject("[EconomyModule]").AddComponent<EconomyModule>();
+        }
+
+        const float timeoutSeconds = 6f;
+        float elapsed = 0f;
+        while (module != null && module.GameDataService == null && elapsed < timeoutSeconds)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            await Task.Yield();
+        }
+
+        gameDataService = module?.GameDataService;
+        return gameDataService != null;
+    }
+
+    private static int ResolveIndexForLegacy(int itemId, Dictionary<int, int> map, int defaultItemId)
     {
         if (map.TryGetValue(itemId, out int index))
         {
@@ -188,21 +231,19 @@ public class PlayerCustomizationManager : MonoBehaviour
             return itemId;
         }
 
+        Debug.LogWarning($"[PlayerCustomization] itemId desconocido={itemId}, se usa default={defaultItemId}");
         return defaultItemId;
     }
 
-    private static string ResolveItemName(int itemId)
-    {
-        return ItemNameById.TryGetValue(itemId, out string itemName) ? itemName : "unknown";
-    }
-
-    void ApplyToPlayer()
+    private void ApplyToPlayer()
     {
         PlayerVisual player = FindObjectOfType<PlayerVisual>();
 
         if (player != null)
         {
-            player.ApplyCustomization();
+            player.ApplyColorByItemId(selectedFaceColorItemId);
+            player.ApplyEyesByItemId(selectedEyesItemId);
+            player.ApplyOutfitByItemId(selectedOutfitItemId);
         }
         else
         {
