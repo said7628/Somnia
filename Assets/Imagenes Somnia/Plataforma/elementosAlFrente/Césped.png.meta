@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: ca9daa6608e847e43be71d408f9fdc20
+guid: c5d571663a960824f9fa29ecb996dfea
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -2228838819492612393
-    second: ciudad 541x488_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -42,7 +39,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -96,40 +93,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ciudad 541x488_0
+      name: "C\xE9sped_0"
       rect:
         serializedVersion: 2
-        x: 44
-        y: 52
-        width: 466
-        height: 396
+        x: 0
+        y: 0
+        width: 800
+        height: 800
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7d6ba8e07e29111e0800000000000000
-      internalID: -2228838819492612393
+      spriteID: 52b7b7766377d9040b008b6cb8880ad1
+      internalID: -1516287340
       vertices: []
       indices: 
       edges: []
@@ -138,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c272d2404069f214ba3b37dd124981f9
     internalID: 0
     vertices: []
     indices: 
@@ -146,9 +130,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":800.0,"y":800.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      ciudad 541x488_0: -2228838819492612393
+      "C\xE9sped_0": -1516287340
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
