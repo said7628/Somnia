@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a0195811e9490a4469f8bc0a381c1c2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -256,7 +256,7 @@ MonoBehaviour:
     m_Flags: 0
   velocidadX: 7
   velocidadY: 7
-  fuerzaSalto: 10
+  fuerzaSalto: 20
   controlMode: 2
   detectorSuelo: {fileID: 594897731827558828}
   radioDetectorSuelo: 0.2
