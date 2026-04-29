@@ -35,6 +35,10 @@ public class SistemaDialogoCanvas : MonoBehaviour
         public string opcion3;
     }
 
+    [Header("Activación por cercanía")]
+    [SerializeField] private GameObject canvasDialogo;
+    [SerializeField] private string tagJugador = "Player";
+
     [Header("Objetos principales")]
     [SerializeField] private RectTransform jugador;
     [SerializeField] private RectTransform opaco;
@@ -70,9 +74,12 @@ public class SistemaDialogoCanvas : MonoBehaviour
     private Coroutine rutinaEscritura;
     private bool escribiendo = false;
     private bool esperandoRespuesta = false;
+    private bool dialogoActivo = false;
 
     private void Start()
     {
+        canvasDialogo.SetActive(false);
+
         opciones.SetActive(false);
         siguiente.gameObject.SetActive(true);
         dialogoText.text = "";
@@ -93,8 +100,39 @@ public class SistemaDialogoCanvas : MonoBehaviour
             audioEscritura.loop = true;
             audioEscritura.playOnAwake = false;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(tagJugador) && !dialogoActivo)
+        {
+            ActivarDialogo();
+        }
+    }
+
+    public void ActivarDialogo()
+    {
+        dialogoActivo = true;
+        indiceActual = 0;
+
+        canvasDialogo.SetActive(true);
+        PausarJuego();
+
+        opciones.SetActive(false);
+        siguiente.gameObject.SetActive(true);
+        dialogoText.text = "";
 
         MostrarLineaActual();
+    }
+
+    private void PausarJuego()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void ReanudarJuego()
+    {
+        Time.timeScale = 1f;
     }
 
     private void MostrarLineaActual()
@@ -135,7 +173,8 @@ public class SistemaDialogoCanvas : MonoBehaviour
         for (int i = 0; i < textoCompleto.Length; i++)
         {
             dialogoText.text += textoCompleto[i];
-            yield return new WaitForSeconds(velocidadEscritura);
+
+            yield return new WaitForSecondsRealtime(velocidadEscritura);
         }
 
         if (audioEscritura != null)
@@ -234,7 +273,7 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
     private IEnumerator AvanzarDespuesDeResponder()
     {
-        yield return new WaitForSeconds(pausaDespuesRespuesta);
+        yield return new WaitForSecondsRealtime(pausaDespuesRespuesta);
 
         indiceActual++;
         MostrarLineaActual();
@@ -267,6 +306,10 @@ public class SistemaDialogoCanvas : MonoBehaviour
         opciones.SetActive(false);
         siguiente.gameObject.SetActive(false);
 
-        gameObject.SetActive(false);
+        dialogoActivo = false;
+
+        ReanudarJuego();
+
+        canvasDialogo.SetActive(false);
     }
 }
