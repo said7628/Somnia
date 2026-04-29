@@ -14,6 +14,9 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip musicaMapa1;
     [SerializeField] private AudioClip musicaMapa2;
     [SerializeField] private AudioClip musicaMapa3;
+    [SerializeField] private AudioClip musicaPlataforma1y2;
+    [SerializeField] private AudioClip musicaPlataforma3y4;
+    [SerializeField] private AudioClip musicaPlataforma5;
 
     private AudioClip musicaActual;
 
@@ -93,6 +96,17 @@ public class MusicManager : MonoBehaviour
 
             case "Isla3":
                 return musicaMapa3;
+
+            case "Plataforma1":
+            case "Plataforma2":
+                return musicaPlataforma1y2;
+
+            case "Plataforma3":
+            case "Plataforma4":
+                return musicaPlataforma3y4;
+
+            case "Plataforma5":
+                return musicaPlataforma5;
 
             default:
                 return musicaMenu;
