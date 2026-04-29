@@ -144,7 +144,7 @@ public static class TextTypingProgressService
         return result;
     }
 
-    public static async Task<ScoreRewardResult> SaveScoreAndRewardAsync(int levelId, int score)
+    public static async Task<ScoreRewardResult> SaveProgressWithRewardAsync(int slot, int levelId, int score, bool passed, int totalYatzisEarned)
     {
         ScoreRewardResult result = new ScoreRewardResult
         {
@@ -157,74 +157,44 @@ public static class TextTypingProgressService
 
         if (levelId <= 0)
         {
-            result.Message = "id_nivel inválido.";
+            result.Message = "id_nivel invalido.";
             return result;
         }
 
-        string token = GameSessionManager.Instance != null ? GameSessionManager.Instance.AccessToken : null;
-        if (string.IsNullOrWhiteSpace(token))
+        GameDataService gameDataService = await ResolveGameDataServiceAsync();
+        if (gameDataService == null)
         {
-            result.Message = "No hay token de sesión para guardar score en backend.";
-            Debug.LogWarning($"[TextTypingProgress] {result.Message}");
+            result.Message = "GameDataService not available.";
             return result;
         }
 
-        ApiConfig runtimeConfig = ScriptableObject.CreateInstance<ApiConfig>();
-        string url = runtimeConfig.BuildUrl("/progress/score");
-
-        ScorePayload payload = new ScorePayload
+        ProgressData progress = new ProgressData
         {
             id_nivel = levelId,
-            score = Mathf.Max(0, score)
+            puntuacion_maxima = Mathf.Max(0, score),
+            completo = passed,
+            ultimo_intento = DateTime.UtcNow,
+            delta_yatzis = Mathf.Max(0, totalYatzisEarned),
+            reward_yatzis = Mathf.Max(0, totalYatzisEarned)
         };
 
-        string jsonPayload = JsonUtility.ToJson(payload);
+        Debug.Log($"[TextTypingProgress] Save payload includes delta_yatzis={progress.delta_yatzis} rewardYatzis={progress.reward_yatzis}");
 
         try
         {
-            using UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", $"Bearer {token}");
-            request.timeout = runtimeConfig.TimeoutSeconds;
-
-            Debug.Log($"[TextTypingProgress] POST {url} payload={jsonPayload}");
-
-            var operation = request.SendWebRequest();
-            while (!operation.isDone)
-            {
-                await Task.Yield();
-            }
-
-            string body = request.downloadHandler != null ? request.downloadHandler.text : "";
-            Debug.Log($"[TextTypingProgress] POST {url} -> {(int)request.responseCode} body={body}");
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                result.Message = $"HTTP {(int)request.responseCode}: {request.error}";
-                return result;
-            }
-
-            ScoreRewardEnvelope envelope = JsonUtility.FromJson<ScoreRewardEnvelope>(body);
-            if (envelope == null || !envelope.success || envelope.reward == null)
-            {
-                result.Message = "Respuesta inválida del endpoint /progress/score.";
-                return result;
-            }
-
-            result.Success = true;
-            result.AwardedYatzis = Mathf.Max(0, envelope.reward.yatzis_ganados);
-            result.TotalYatzis = Mathf.Max(0, envelope.reward.yatzis_total);
-            result.BackendMultiplier = envelope.reward.multiplicador;
-            result.Message = envelope.message;
+            int validSlot = Mathf.Max(1, slot);
+            var saveResponse = await gameDataService.SaveProgressEntryAsync(validSlot, progress);
+            result.Success = saveResponse != null && saveResponse.success;
+            result.AwardedYatzis = Mathf.Max(0, totalYatzisEarned);
+            result.TotalYatzis = saveResponse != null && saveResponse.data != null ? Mathf.Max(0, saveResponse.data.yatzis) : 0;
+            result.Message = saveResponse != null ? saveResponse.message : "null";
+            Debug.Log($"[TextTypingProgress] Save response success={result.Success} yatzis={result.TotalYatzis}");
             return result;
         }
         catch (Exception ex)
         {
             result.Message = ex.Message;
-            Debug.LogWarning($"[TextTypingProgress] SaveScoreAndReward exception: {ex.Message}");
+            Debug.LogError($"[TextTypingProgress][ERROR] Failed to save reward yatzis: {ex.Message}");
             return result;
         }
     }
@@ -249,26 +219,5 @@ public static class TextTypingProgressService
         return module != null ? module.GameDataService as GameDataService : null;
     }
 
-    [Serializable]
-    private class ScorePayload
-    {
-        public int id_nivel;
-        public int score;
-    }
 
-    [Serializable]
-    private class ScoreRewardEnvelope
-    {
-        public bool success;
-        public string message;
-        public ScoreRewardData reward;
-    }
-
-    [Serializable]
-    private class ScoreRewardData
-    {
-        public int yatzis_ganados;
-        public int yatzis_total;
-        public float multiplicador;
-    }
 }

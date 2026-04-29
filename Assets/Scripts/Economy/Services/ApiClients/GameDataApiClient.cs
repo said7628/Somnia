@@ -15,7 +15,7 @@ namespace Somnia.Economy.Services.ApiClients
         private readonly string _baseUrl;
         private readonly IPlayerSessionProvider _session;
 
-      
+
         private const bool EnableHttpDebugLogs = true;
 
         public GameDataApiClient(string baseUrl, IPlayerSessionProvider session)
@@ -106,7 +106,11 @@ namespace Somnia.Economy.Services.ApiClients
                 completo = progress.completo ? 1 : 0,
                 completed = progress.completo,
                 is_completed = progress.completo,
-                passed = progress.completo
+                passed = progress.completo,
+                delta_yatzis = Mathf.Max(0, progress.delta_yatzis),
+                deltaYatzis = Mathf.Max(0, progress.delta_yatzis),
+                reward_yatzis = Mathf.Max(0, progress.reward_yatzis),
+                rewardYatzis = Mathf.Max(0, progress.reward_yatzis)
             };
 
             string payloadJson = JsonUtility.ToJson(payload);
@@ -342,6 +346,10 @@ namespace Somnia.Economy.Services.ApiClients
             public bool completed;
             public bool is_completed;
             public bool passed;
+            public int delta_yatzis;
+            public int deltaYatzis;
+            public int reward_yatzis;
+            public int rewardYatzis;
         }
     }
 }

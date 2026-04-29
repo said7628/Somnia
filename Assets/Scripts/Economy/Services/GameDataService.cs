@@ -242,6 +242,9 @@ namespace Somnia.Economy.Services
             return ApiResponse<IReadOnlyList<ProgressData>>.Ok(entries, lastResponse?.message ?? "Progreso guardado.");
         }
 
+        public Task<ApiResponse<ProgressSaveResult>> SaveProgressEntryAsync(int slotNumber, ProgressData progress, CancellationToken ct = default)
+            => _gameDataApiClient.SaveProgressEntryAsync(slotNumber, progress, ct);
+
         private static EquippedItemsData MapEquipped(EquipamientoDto dto)
         {
             return new EquippedItemsData

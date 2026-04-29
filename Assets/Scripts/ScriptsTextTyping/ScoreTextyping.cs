@@ -14,7 +14,7 @@ public class ResultadoNivelUI : MonoBehaviour
     {
         if (scoreValue != null)
         {
-            scoreValue.text = TextTypingSession.AwardedYatzis.ToString();
+            scoreValue.text = TextTypingSession.CurrentScore.ToString();
         }
 
         if (minScoreValue != null)
@@ -35,8 +35,14 @@ public class ResultadoNivelUI : MonoBehaviour
 
         if (monedasValue != null)
         {
-            monedasValue.text = Mathf.Max(0, TextTypingSession.TotalYatzis).ToString();
+            monedasValue.text = Mathf.Max(0, TextTypingSession.AwardedYatzis).ToString();
         }
+        int islandId = TextTypingSession.ResolveIslandId();
+        Debug.Log($"[ScoreTextTyping] islandId={islandId} levelId={TextTypingSession.LastLevelId}");
+        Debug.Log($"[ScoreTextTyping] perfectBonus={Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}");
+        Debug.Log($"[ScoreTextTyping] totalYatzisEarned={Mathf.Max(0, TextTypingSession.AwardedYatzis)}");
+        Debug.Log($"[ScoreTextTyping] perfectValue text=+{Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}");
+        Debug.Log($"[ScoreTextTyping] monedasValue text={Mathf.Max(0, TextTypingSession.AwardedYatzis)}");
 
         Debug.Log($"[TextTypingWin] Earned yatzis: {TextTypingSession.AwardedYatzis}");
         Debug.Log($"[TextTypingWin] Perfect bonus: {TextTypingSession.PerfectBonusYatzis}");

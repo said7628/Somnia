@@ -123,6 +123,32 @@ public static class TextTypingSession
         return IsIslandOne() ? 50 : 55;
     }
 
+    public static int GetPerfectBonusForIsland(int islandId)
+    {
+        switch (islandId)
+        {
+            case 1: return 50;
+            case 2: return 55;
+            default: return 50;
+        }
+    }
+
+    public static int ResolveIslandId()
+    {
+        if (string.IsNullOrWhiteSpace(SourceIslandSceneName))
+        {
+            return 1;
+        }
+
+        string scene = SourceIslandSceneName.Trim();
+        if (scene.StartsWith("Isla2"))
+        {
+            return 2;
+        }
+
+        return 1;
+    }
+
     public static int GetIslandRewardCap()
     {
         return IsIslandOne() ? 200 : 220;

@@ -32,6 +32,7 @@ namespace Somnia.Economy.DTOs
         public int id_nivel;
         public int completo;
         public int puntuacion_maxima;
+        public int yatzis;
         public string ultima_actualizacion;
     }
 

@@ -123,6 +123,8 @@ namespace Somnia.Economy.DTOs
         public bool completo;
         public int puntuacion_maxima;
         public DateTime ultimo_intento;
+        public int delta_yatzis;
+        public int reward_yatzis;
     }
 
     [Serializable]

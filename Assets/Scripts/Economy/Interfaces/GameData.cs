@@ -34,5 +34,6 @@ namespace Somnia.Economy.Interfaces
         Task<ApiResponse<EquippedItemsData>> UpdateEquipmentAsync(int slotNumber, UpdateEquipmentRequest request, CancellationToken ct = default);
         Task<ApiResponse<IReadOnlyList<ProgressData>>> LoadProgressAsync(int slotNumber, CancellationToken ct = default);
         Task<ApiResponse<IReadOnlyList<ProgressData>>> SaveProgressAsync(int slotNumber, IReadOnlyList<ProgressData> progress, CancellationToken ct = default);
+        Task<ApiResponse<ProgressSaveResult>> SaveProgressEntryAsync(int slotNumber, ProgressData progress, CancellationToken ct = default);
     }
 }

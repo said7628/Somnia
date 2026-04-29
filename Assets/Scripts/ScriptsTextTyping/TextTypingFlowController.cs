@@ -110,18 +110,26 @@ public class TextTypingFlowController : MonoBehaviour
         int newBest = Mathf.Max(previousBest, scoreFinal);
         bool completedAfterSave = passed;
         bool isPerfectRun = scoreManager != null && scoreManager.GetMistakes() <= 0;
-        int perfectBonus = isPerfectRun ? TextTypingSession.GetIslandPerfectBonus() : 0;
+        int islandId = TextTypingSession.ResolveIslandId();
+        int baseYatzisEarned = passed ? Mathf.Max(0, TextTypingSession.CalculateAttemptRewardDisplay(false)) : 0;
+        int perfectBonus = (passed && isPerfectRun) ? TextTypingSession.GetPerfectBonusForIsland(islandId) : 0;
+        int totalYatzisEarned = Mathf.Max(0, baseYatzisEarned + perfectBonus);
         TextTypingSession.PerfectBonusYatzis = perfectBonus;
-        int localDisplayReward = passed ? TextTypingSession.CalculateAttemptRewardDisplay(isPerfectRun) : 0;
-        TextTypingSession.AwardedYatzis = localDisplayReward;
+        TextTypingSession.AwardedYatzis = totalYatzisEarned;
+        Debug.Log($"[TextTypingReward] finalScore={scoreFinal}");
+        Debug.Log($"[TextTypingReward] islandId={islandId} levelId={levelId} slot={Mathf.Max(1, GameSessionManager.Instance != null ? GameSessionManager.Instance.CurrentSlotNumber : 1)}");
+        Debug.Log($"[TextTypingReward] isPerfect={isPerfectRun}");
+        Debug.Log($"[TextTypingReward] perfectBonus={perfectBonus}");
+        Debug.Log($"[TextTypingReward] baseYatzis={baseYatzisEarned}");
+        Debug.Log($"[TextTypingReward] totalYatzisEarned={totalYatzisEarned}");
 
         Debug.Log($"[LevelValidation] score={scoreFinal} required={minimumScore} completed={passed}");
 
         if (saveProgressToBackend)
         {
             int slot = Mathf.Max(1, GameSessionManager.Instance != null ? GameSessionManager.Instance.CurrentSlotNumber : 1);
+            TextTypingProgressService.ScoreRewardResult scoreRewardResult = await TextTypingProgressService.SaveProgressWithRewardAsync(slot, levelId, scoreFinal, passed, totalYatzisEarned);
             TextTypingProgressService.SaveAttemptResult saveResult = await TextTypingProgressService.SaveAttemptAsync(levelId, scoreFinal, passed, slot);
-            TextTypingProgressService.ScoreRewardResult scoreRewardResult = await TextTypingProgressService.SaveScoreAndRewardAsync(levelId, scoreFinal);
 
             previousBest = saveResult.PreviousMaxScore;
             newBest = saveResult.NewMaxScore;
