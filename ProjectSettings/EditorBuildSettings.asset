@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mapa.unity
     guid: 251c690394fb87a4ea445530afd60ec6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Islas/Isla 1/Isla1.unity
     guid: 4414774ed1e03f443a7e81760c9c84dd
   - enabled: 1
