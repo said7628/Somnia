@@ -68,6 +68,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Plataforma/ScorePlataforma.unity
     guid: 8e149c16dcdb24c4dac8b14187976eca
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/Plataforma1.unity
+    guid: 744874a4f158e6c4c9fddcfe70b0d733
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b89a814b66ebcb840b5a8ba76d0a8848, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
