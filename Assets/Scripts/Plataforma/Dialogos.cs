@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SistemaDialogoCanvas : MonoBehaviour
 {
@@ -69,6 +70,9 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
     [Header("Diálogo")]
     [SerializeField] private LineaDialogo[] lineas;
+
+    [Header("Escena al terminar")]
+    [SerializeField] private string escenaAlTerminar;
 
     private int indiceActual = 0;
     private Coroutine rutinaEscritura;
@@ -207,10 +211,14 @@ public class SistemaDialogoCanvas : MonoBehaviour
     public void AlPresionarSiguiente()
     {
         if (indiceActual >= lineas.Length)
+        {
             return;
+        }
 
         if (esperandoRespuesta)
+        {
             return;
+        }
 
         if (escribiendo)
         {
@@ -251,7 +259,9 @@ public class SistemaDialogoCanvas : MonoBehaviour
     private void ElegirOpcion(int indiceElegido)
     {
         if (!esperandoRespuesta)
+        {
             return;
+        }
 
         LineaDialogo linea = lineas[indiceActual];
 
@@ -260,6 +270,7 @@ public class SistemaDialogoCanvas : MonoBehaviour
         if (!esCorrecta && audioError != null)
         {
             audioError.Play();
+            return;
         }
 
         string textoRellenado = linea.texto.Replace("______", linea.respuestaCorrecta);
@@ -311,5 +322,7 @@ public class SistemaDialogoCanvas : MonoBehaviour
         ReanudarJuego();
 
         canvasDialogo.SetActive(false);
+
+        SceneManager.LoadScene(escenaAlTerminar);
     }
 }

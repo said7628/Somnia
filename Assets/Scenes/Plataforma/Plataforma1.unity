@@ -2428,6 +2428,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1960092015581716475, guid: c9441ff2343ede540b2c90eba8e7630a, type: 3}
+      propertyPath: escenaAlTerminar
+      value: ScorePlataforma
+      objectReference: {fileID: 0}
     - target: {fileID: 2154141518111586214, guid: c9441ff2343ede540b2c90eba8e7630a, type: 3}
       propertyPath: m_Name
       value: Dialogos

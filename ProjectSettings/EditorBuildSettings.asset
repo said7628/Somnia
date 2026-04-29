@@ -65,6 +65,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Textyping/TextTyping5.unity
     guid: 59740cfcd6dbaf64a9b927b66e82c86a
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/ScorePlataforma.unity
+    guid: 8e149c16dcdb24c4dac8b14187976eca
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b89a814b66ebcb840b5a8ba76d0a8848, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
