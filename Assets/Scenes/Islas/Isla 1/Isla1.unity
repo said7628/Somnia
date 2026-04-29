@@ -7082,13 +7082,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: ed0e298f458879d41831dc207be04409, type: 2}
     - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: outfitClipsByItemId.Array.data[1].controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 17db259219db778419029b9eb06d0900, type: 2}
+    - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: outfitClipsByItemId.Array.data[1].outfitClip
       value: 
       objectReference: {fileID: 7400000, guid: a7d2050eb94623a479a1c8e9e3fa8161, type: 2}
     - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: outfitClipsByItemId.Array.data[2].controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 50066de1b224a5041b77eb974ac97f4a, type: 2}
+    - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: outfitClipsByItemId.Array.data[2].outfitClip
       value: 
       objectReference: {fileID: 7400000, guid: 3120a9181b2a7a74cbcb03ade41d9449, type: 2}
+    - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
+      propertyPath: outfitClipsByItemId.Array.data[3].controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d8a67029e6761fb4caad9fbcecd3b4ef, type: 2}
     - target: {fileID: 215674347425647820, guid: db0ffcd2f290fea44a1868f1558fd8b5, type: 3}
       propertyPath: outfitClipsByItemId.Array.data[3].outfitClip
       value: 
