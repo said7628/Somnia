@@ -83,7 +83,7 @@ public class PlayerCustomizationManager : MonoBehaviour
         ApplyToPlayer();
 
         string activeScene = SceneManager.GetActiveScene().name;
-        bool isGameplayScene = activeScene.StartsWith("Isla") || activeScene.StartsWith("TextTyping");
+        bool isGameplayScene = activeScene.StartsWith("Isla") || activeScene.StartsWith("TextTyping") || activeScene.StartsWith("Plataforma");
         if (isGameplayScene)
         {
             await LoadGameplayEquipmentAsync();
@@ -177,11 +177,18 @@ public class PlayerCustomizationManager : MonoBehaviour
         Debug.Log("[PlayerCustomization] Loading equipped cosmetics for gameplay");
 
         int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
-        bool isTextTyping = SceneManager.GetActiveScene().name.StartsWith("TextTyping");
+        string sceneName = SceneManager.GetActiveScene().name;
+        bool isTextTyping = sceneName.StartsWith("TextTyping");
+        bool isPlataforma1 = string.Equals(sceneName, "Plataforma1", System.StringComparison.Ordinal);
         if (isTextTyping)
         {
             Debug.Log($"[TextTypingEquipment] Current slot resolved={slot}");
             Debug.Log($"[TextTypingEquipment] Loading equipment for TextTyping slot={slot}");
+        }
+
+        if (isPlataforma1)
+        {
+            Debug.Log($"[Plataforma1Equipment] Current slot resolved={slot}");
         }
 
         if (TryApplySessionEquipmentForTextTyping(isTextTyping))
@@ -239,11 +246,21 @@ public class PlayerCustomizationManager : MonoBehaviour
             Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerCustomizationManager color={colorId} eyes={eyesId} outfit={outfitId}");
         }
 
+        if (isPlataforma1)
+        {
+            Debug.Log($"[Plataforma1Equipment] Backend equipment color={colorId} eyes={eyesId} outfit={outfitId}");
+        }
+
         ApplyEquipment(colorId, eyesId, outfitId);
 
         if (isTextTyping)
         {
             Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerVisual color={selectedFaceColorItemId} eyes={selectedEyesItemId} outfit={selectedOutfitItemId}");
+        }
+
+        if (isPlataforma1)
+        {
+            Debug.Log($"[Plataforma1Equipment] Applying equipment to PlayerVisual color={selectedFaceColorItemId} eyes={selectedEyesItemId} outfit={selectedOutfitItemId}");
         }
     }
 

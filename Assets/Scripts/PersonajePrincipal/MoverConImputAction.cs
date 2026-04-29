@@ -22,9 +22,11 @@ public class MoverConImputAction : MonoBehaviour
     [Header("Detección de suelo")]
     [SerializeField] private Transform detectorSuelo;
     [SerializeField] private float radioDetectorSuelo = 0.2f;
+    [SerializeField] private int maxJumps = 2;
 
     private Rigidbody2D rb;
     private PlayerVisual playerVisual;
+    private int jumpsRemaining;
 
     private void OnEnable()
     {
@@ -42,10 +44,12 @@ public class MoverConImputAction : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerVisual = GetComponent<PlayerVisual>();
+        jumpsRemaining = maxJumps;
 
         ApplyIdleVisual();
 
         Debug.Log($"[PlayerMovementMode] Mode set={controlMode}");
+        Debug.Log($"[PlatformerMovement] isGrounded=false jumpsRemaining={jumpsRemaining}");
     }
 
     private void Update()
@@ -108,6 +112,15 @@ public class MoverConImputAction : MonoBehaviour
 
     private void HandlePlatformer(Vector2 moveInput)
     {
+        bool isGrounded = EstaTocandoSuelo();
+        Debug.Log($"[PlatformerMovement] isGrounded={isGrounded} jumpsRemaining={jumpsRemaining}");
+
+        if (isGrounded && jumpsRemaining != maxJumps)
+        {
+            jumpsRemaining = maxJumps;
+            Debug.Log("[PlatformerMovement] Grounded, jumps reset");
+        }
+
         float horizontal = Mathf.Clamp(moveInput.x, -1f, 1f);
 
         rb.linearVelocity = new Vector2(
@@ -115,14 +128,12 @@ public class MoverConImputAction : MonoBehaviour
             rb.linearVelocity.y
         );
 
-        bool jumpPressed = accionSalto.WasPressedThisFrame();
+        bool jumpPressed = accionSalto.WasPressedThisFrame() || Keyboard.current?.spaceKey.wasPressedThisFrame == true;
+        Debug.Log($"[PlatformerMovement] jumpPressed={jumpPressed}");
 
-        if (jumpPressed && EstaTocandoSuelo())
+        if (jumpPressed)
         {
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                fuerzaSalto
-            );
+            TryJump();
         }
 
         bool isMovingHorizontally = Mathf.Abs(horizontal) > 0.01f;
@@ -137,8 +148,11 @@ public class MoverConImputAction : MonoBehaviour
     {
         if (detectorSuelo == null)
         {
+            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo missing");
             return false;
         }
+
+        Debug.Log($"[PlatformerMovement] detectorSuelo={detectorSuelo.name} position={detectorSuelo.position} radius={radioDetectorSuelo}");
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(
             detectorSuelo.position,
@@ -147,13 +161,69 @@ public class MoverConImputAction : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject != gameObject)
+            if (collider == null)
             {
-                return true;
+                continue;
             }
+
+            if (collider.attachedRigidbody != null && collider.attachedRigidbody.gameObject == gameObject)
+            {
+                continue;
+            }
+
+            if (collider.gameObject == gameObject)
+            {
+                continue;
+            }
+
+            return true;
         }
 
         return false;
+    }
+
+    private void TryJump()
+    {
+        if (rb == null)
+        {
+            Debug.Log("[PlatformerMovement][ERROR] Rigidbody2D missing");
+            return;
+        }
+
+        if (jumpsRemaining <= 0)
+        {
+            Debug.Log("[PlatformerMovement][WARN] Jump pressed but no jumps remaining");
+            return;
+        }
+
+        Vector2 velocity = rb.linearVelocity;
+        velocity.y = 0f;
+        rb.linearVelocity = velocity;
+
+        rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+        jumpsRemaining--;
+
+        Debug.Log($"[PlatformerMovement] Jump applied force={fuerzaSalto} jumpsRemaining={jumpsRemaining}");
+    }
+
+    private void Awake()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        if (rb == null)
+        {
+            Debug.Log("[PlatformerMovement][ERROR] Rigidbody2D missing");
+        }
+
+        if (detectorSuelo == null)
+        {
+            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo missing");
+        }
+
+        jumpsRemaining = maxJumps;
     }
 
     private void ApplyIdleVisual()

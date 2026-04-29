@@ -1840,7 +1840,6 @@ GameObject:
   - component: {fileID: 501208656}
   - component: {fileID: 501208655}
   - component: {fileID: 501208657}
-  - component: {fileID: 501208658}
   m_Layer: 0
   m_Name: EntryTienda
   m_TagString: Untagged
@@ -1969,21 +1968,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 10.769516, y: 9.021517}
   m_EdgeRadius: 0
---- !u!114 &501208658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501208654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620992b4346c79e4e961c26b0ceec754, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TiendaTrigger
-  playerTag: Player
-  tiendaSceneName: Tienda
-  verboseLogs: 1
 --- !u!1 &508227285
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,6 +5465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1189449732}
   - component: {fileID: 1189449733}
+  - component: {fileID: 1189449734}
   m_Layer: 0
   m_Name: TriggerTienda
   m_TagString: Untagged
@@ -5549,6 +5534,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 9.279055, y: 9.360781}
   m_EdgeRadius: 0
+--- !u!114 &1189449734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189449731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620992b4346c79e4e961c26b0ceec754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TiendaTrigger
+  playerTag: Player
+  tiendaSceneName: Tienda
+  verboseLogs: 1
 --- !u!1 &1283924810
 GameObject:
   m_ObjectHideFlags: 0
