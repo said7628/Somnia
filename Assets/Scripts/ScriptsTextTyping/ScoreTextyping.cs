@@ -15,6 +15,7 @@ public class ResultadoNivelUI : MonoBehaviour
         if (scoreValue != null)
         {
             scoreValue.text = TextTypingSession.CurrentScore.ToString();
+            Debug.Log($"[ScoreTextTyping] scoreValue text={scoreValue.text}");
         }
 
         if (minScoreValue != null)
@@ -29,7 +30,15 @@ public class ResultadoNivelUI : MonoBehaviour
 
         if (perfectValue != null)
         {
-            perfectValue.text = $"+{Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}";
+            bool perfect = TextTypingSession.WasPerfectRun;
+            int perfectBonus = 0;
+
+            if (perfect)
+            {
+                perfectBonus = IsIsland2() ? 55 : 50;
+            }
+
+            perfectValue.text = $"+{perfectBonus}";
         }
 
 
@@ -41,7 +50,7 @@ public class ResultadoNivelUI : MonoBehaviour
         Debug.Log($"[ScoreTextTyping] islandId={islandId} levelId={TextTypingSession.LastLevelId}");
         Debug.Log($"[ScoreTextTyping] perfectBonus={Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}");
         Debug.Log($"[ScoreTextTyping] totalYatzisEarned={Mathf.Max(0, TextTypingSession.AwardedYatzis)}");
-        Debug.Log($"[ScoreTextTyping] perfectValue text=+{Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}");
+        Debug.Log($"[ScoreTextTyping] perfectValue text={perfectValue.text}");
         Debug.Log($"[ScoreTextTyping] monedasValue text={Mathf.Max(0, TextTypingSession.AwardedYatzis)}");
 
         Debug.Log($"[TextTypingWin] Earned yatzis: {TextTypingSession.AwardedYatzis}");
@@ -54,6 +63,11 @@ public class ResultadoNivelUI : MonoBehaviour
         Debug.Log($"[TextTypingResultSuccess] Yatzis awarded(current run)={TextTypingSession.AwardedYatzis} total(account)={TextTypingSession.TotalYatzis} persisted={TextTypingSession.RewardSavedInBackend}");
         Debug.Log($"[TextTypingResultSuccess] Save progress completed. passed={TextTypingSession.Passed}");
         Debug.Log($"[TextTypingResultSuccess] Unlock next level evaluation for levelId={TextTypingSession.LastLevelId}");
+    }
+
+    private static bool IsIsland2()
+    {
+        return TextTypingSession.ResolveIslandId() == 2;
     }
 
     public void IrAMapa()

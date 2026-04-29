@@ -13,8 +13,22 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
 
     private void Start()
     {
+        int score = TextTypingSession.CurrentScore;
+        int yatzisGanados = TextTypingSession.AwardedYatzis;
+
+        bool perfect = TextTypingSession.Mistakes == 0;
+        int perfectBonus = perfect ? (IsIsland2() ? 55 : 50) : 0;
+
         if (scoreValue != null)
-            scoreValue.text = TextTypingSession.CurrentScore.ToString();
+            scoreValue.text = score.ToString();
+
+        // Usa este campo para BONO PERFECTO
+        if (yatzisGanadosValue != null)
+            yatzisGanadosValue.text = $"+{perfectBonus}";
+
+        // Usa este campo para YATZIS ganados
+        if (yatzisTotalesValue != null)
+            yatzisTotalesValue.text = yatzisGanados.ToString();
 
         if (minScoreValue != null)
             minScoreValue.text = TextTypingSession.MinimumScore.ToString();
@@ -25,35 +39,17 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
         if (estadoValue != null)
             estadoValue.text = TextTypingSession.Passed ? "Completado" : "No completado";
 
-        if (yatzisGanadosValue != null)
-            yatzisGanadosValue.text = $"+{TextTypingSession.AwardedYatzis}";
+        Debug.Log($"[TextTypingWin] Score={score} PerfectBonus=+{perfectBonus} YatzisGanados={yatzisGanados}");
+    }
 
-
-        if (yatzisTotalesValue != null)
-            yatzisTotalesValue.text = TextTypingSession.AwardedYatzis.ToString();
-
-        Debug.Log($"[TextTypingResultUI] Source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} sourceIslandScene={TextTypingSession.SourceIslandSceneName}");
-        Debug.Log($"[TextTypingResultUI] Final score={TextTypingSession.CurrentScore}");
-        Debug.Log($"[TextTypingResultUI] Previous personal best={TextTypingSession.PreviousPersonalBest}");
-        Debug.Log($"[TextTypingResultUI] New personal best={TextTypingSession.PersonalBest}");
-        Debug.Log($"[TextTypingResultUI] Yatzis awarded(current run)={TextTypingSession.AwardedYatzis} total(account)={TextTypingSession.TotalYatzis} persisted={TextTypingSession.RewardSavedInBackend}");
+    private bool IsIsland2()
+    {
+        string source = $"{TextTypingSession.SourceIslandSceneName} {TextTypingSession.LastLevelSceneName}".ToLower();
+        return source.Contains("isla2") || source.Contains("island2") || source.Contains("2");
     }
 
     public void IrAMapa()
     {
-        string returnScene = TextTypingSession.ResolveReturnScene();
-        if (TextTypingSession.Passed)
-        {
-            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = true;
-            GameSceneTransitionContext.PassedLevelId = TextTypingSession.LastLevelId;
-        }
-        else
-        {
-            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = false;
-            GameSceneTransitionContext.PassedLevelId = -1;
-            Debug.Log("[IslandLevelManager] Failed flow detected: no unlock, no passed audio");
-        }
-        Debug.Log($"[TextTypingResultUI] Map return sourceIslandScene={TextTypingSession.SourceIslandSceneName} sourceLevelScene={TextTypingSession.LastLevelSceneName} returnPosition={TextTypingSession.ReturnPosition} returnRotation={TextTypingSession.ReturnRotation.eulerAngles} sceneLoadedByMapReturn={returnScene}");
-        SceneManager.LoadScene(returnScene);
+        SceneManager.LoadScene(TextTypingSession.ResolveReturnScene());
     }
 }

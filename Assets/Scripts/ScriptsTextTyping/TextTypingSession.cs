@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public static class TextTypingSession
 {
-    private const int BaseRewardYatzis = 100;
     public static int EdadJugador = 0;
     public static int PlayerAge
     {
@@ -20,11 +19,23 @@ public static class TextTypingSession
     public static int PreviousPersonalBest = 0;
 
     public static int CalculatedYatzis = 0;
+    public static int BaseYatzisEarned = 0;
     public static int AwardedYatzis = 0;
     public static int TotalYatzis = 0;
     public static bool RewardSavedInBackend = false;
     public static int PerfectBonusYatzis = 0;
     public static int ScoreBonusYatzis = 0;
+    public static bool IsPerfect = false;
+    public static bool WasPerfectRun = true;
+    public static int MistakesCount = 0;
+    // Backward-compatible alias for legacy scripts that still use TextTypingSession.Mistakes.
+    public static int Mistakes
+    {
+        get => MistakesCount;
+        set => MistakesCount = Mathf.Max(0, value);
+    }
+    public static int IslandId = 1;
+    public static int SlotNumber = 1;
 
     public static bool Passed = false;
     public static bool WasPlayed = false;
@@ -112,17 +123,6 @@ public static class TextTypingSession
         }
     }
 
-    public static bool IsIslandOne()
-    {
-        return string.IsNullOrWhiteSpace(SourceIslandSceneName)
-            || SourceIslandSceneName.Trim().StartsWith("Isla1");
-    }
-
-    public static int GetIslandPerfectBonus()
-    {
-        return IsIslandOne() ? 50 : 55;
-    }
-
     public static int GetPerfectBonusForIsland(int islandId)
     {
         switch (islandId)
@@ -130,6 +130,16 @@ public static class TextTypingSession
             case 1: return 50;
             case 2: return 55;
             default: return 50;
+        }
+    }
+
+    public static int GetMaxBaseYatzisForIsland(int islandId)
+    {
+        switch (islandId)
+        {
+            case 1: return 200;
+            case 2: return 220;
+            default: return 200;
         }
     }
 
@@ -149,16 +159,12 @@ public static class TextTypingSession
         return 1;
     }
 
-    public static int GetIslandRewardCap()
+    public static int CalculateBaseYatzisFromScore(int scoreFinal, float referenceMaxScore, int islandId)
     {
-        return IsIslandOne() ? 200 : 220;
-    }
-
-    public static int CalculateAttemptRewardDisplay(bool isPerfect)
-    {
-        int perfect = isPerfect ? GetIslandPerfectBonus() : 0;
-        int scoreBonus = Mathf.Max(0, CalculatedYatzis);
-        int total = BaseRewardYatzis + perfect + scoreBonus;
-        return Mathf.Min(total, GetIslandRewardCap());
+        float safeReference = referenceMaxScore > 0f ? referenceMaxScore : 1f;
+        float percentage = Mathf.Clamp01(Mathf.Max(0, scoreFinal) / safeReference);
+        int maxBaseYatzis = GetMaxBaseYatzisForIsland(islandId);
+        int baseYatzisEarned = Mathf.RoundToInt(percentage * maxBaseYatzis);
+        return Mathf.Clamp(baseYatzisEarned, 0, maxBaseYatzis);
     }
 }

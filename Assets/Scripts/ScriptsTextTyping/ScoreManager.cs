@@ -25,6 +25,7 @@ public class ScoreManager : MonoBehaviour
         streak = 0;
         currentMultiplier = 1;
         mistakes = 0;
+        TextTypingSession.WasPerfectRun = true;
         UpdateUI();
     }
 
@@ -49,6 +50,7 @@ public class ScoreManager : MonoBehaviour
         streak = 0;
         currentMultiplier = 1;
         mistakes++;
+        TextTypingSession.WasPerfectRun = false;
 
         UpdateUI();
 
