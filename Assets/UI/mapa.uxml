@@ -8,10 +8,7 @@
             <ui:VisualElement name="VisualElement" style="margin-top: 0; padding-left: 200px;">
                 <ui:Button text="" name="nieve" class="isla" style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Mapas/navegaci%C3%B3n/monta%C3%B1as%20541x488.png?fileID=2800000&amp;guid=810788a3a1febbb4cbae9d776af424e4&amp;type=3#montañas 541x488&quot;); padding-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; margin-left: 0; width: 450px; height: 450px; aspect-ratio: 1;"/>
             </ui:VisualElement>
-            <ui:VisualElement name="VisualElement" style="align-self: flex-end; height: 2000px;">
-                <ui:Button text="Button" name="ciudad" class="isla" style="top: 0; bottom: auto; background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Mapas/navegaci%C3%B3n/ciudad%20541x488.png?fileID=2800000&amp;guid=ca9daa6608e847e43be71d408f9fdc20&amp;type=3#ciudad 541x488&quot;); margin-left: 0; margin-bottom: 0; margin-right: 300px; margin-top: 0; padding-top: 0; padding-left: 0; padding-bottom: 0; padding-right: 0;"/>
-            </ui:VisualElement>
-            <ui:Image style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Mapas/navegaci%C3%B3n/camino%202%20693x139.png?fileID=2800000&amp;guid=7477e31e5c269384ea3dfd7f81bc61df&amp;type=3#camino 2 693x139&quot;); width: 770px; height: 800px; left: 500px; bottom: 150px;"/>
+            <ui:Image style="background-image: none; width: 770px; height: 800px; left: 500px; bottom: 150px;"/>
             <ui:Image style="background-image: url(&quot;project://database/Assets/Imagenes%20Somnia/Mapas/navegaci%C3%B3n/camino%201%20336x96.png?fileID=2800000&amp;guid=55d8b6fc4bff7f94cae854e90f5e8abb&amp;type=3#camino 1 336x96&quot;); height: 110px; aspect-ratio: 1; position: absolute; left: 530px; bottom: auto; top: 105px; width: 320px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
