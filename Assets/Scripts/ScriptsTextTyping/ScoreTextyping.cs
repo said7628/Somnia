@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class ResultadoNivelUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreValue;
-    [SerializeField] private TMP_Text bonusValue;
-    [SerializeField] private TMP_Text coinsValue;
+    [SerializeField] private TMP_Text perfectValue;
+    [SerializeField] private TMP_Text monedasValue;
     [SerializeField] private TMP_Text minScoreValue;
     [SerializeField] private TMP_Text estadoValue;
 
@@ -14,7 +14,7 @@ public class ResultadoNivelUI : MonoBehaviour
     {
         if (scoreValue != null)
         {
-            scoreValue.text = TextTypingSession.CurrentScore.ToString();
+            scoreValue.text = TextTypingSession.AwardedYatzis.ToString();
         }
 
         if (minScoreValue != null)
@@ -27,16 +27,19 @@ public class ResultadoNivelUI : MonoBehaviour
             estadoValue.text = TextTypingSession.Passed ? "Completado" : "No completado";
         }
 
-        if (bonusValue != null)
+        if (perfectValue != null)
         {
-            bonusValue.text = $"+{TextTypingSession.AwardedYatzis}";
+            perfectValue.text = $"+{Mathf.Max(0, TextTypingSession.PerfectBonusYatzis)}";
         }
 
 
-        if (coinsValue != null)
+        if (monedasValue != null)
         {
-            coinsValue.text = TextTypingSession.AwardedYatzis.ToString();
+            monedasValue.text = Mathf.Max(0, TextTypingSession.TotalYatzis).ToString();
         }
+
+        Debug.Log($"[TextTypingWin] Earned yatzis: {TextTypingSession.AwardedYatzis}");
+        Debug.Log($"[TextTypingWin] Perfect bonus: {TextTypingSession.PerfectBonusYatzis}");
 
         Debug.Log($"[TextTypingResultSuccess] Source level scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} sourceIslandScene={TextTypingSession.SourceIslandSceneName}");
         Debug.Log($"[TextTypingResultSuccess] Final score={TextTypingSession.CurrentScore}");

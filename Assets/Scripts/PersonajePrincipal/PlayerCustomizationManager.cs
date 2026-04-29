@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerCustomizationManager : MonoBehaviour
 {
     public static PlayerCustomizationManager Instance;
+    public System.Action<int, int, int> OnEquipmentApplied;
 
     [Header("Selección actual")]
     public int selectedFaceColor = 0;
@@ -57,14 +58,21 @@ public class PlayerCustomizationManager : MonoBehaviour
     };
 
     private IGameDataService gameDataService;
+    public bool IsEquipmentReady { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        bool allowInspectorOnly = usarValoresDelInspector && Application.isEditor && Debug.isDebugBuild;
+        if (allowInspectorOnly)
+        {
+            Debug.Log("Usando valores del Inspector (solo debug editor)");
+            return;
+        }
+
         if (usarValoresDelInspector)
         {
-            Debug.Log("Usando valores del Inspector");
-            return;
+            Debug.Log("[PlayerCustomization] Ignorando valores del Inspector en runtime para priorizar equipamiento de sesion/backend.");
         }
 
         LoadData();
@@ -74,7 +82,9 @@ public class PlayerCustomizationManager : MonoBehaviour
     {
         ApplyToPlayer();
 
-        if (SceneManager.GetActiveScene().name.StartsWith("Isla"))
+        string activeScene = SceneManager.GetActiveScene().name;
+        bool isGameplayScene = activeScene.StartsWith("Isla") || activeScene.StartsWith("TextTyping");
+        if (isGameplayScene)
         {
             await LoadGameplayEquipmentAsync();
         }
@@ -135,7 +145,10 @@ public class PlayerCustomizationManager : MonoBehaviour
         ApplyColor(colorItemId);
         ApplyEyes(eyesItemId);
         ApplyOutfit(outfitItemId);
+        IsEquipmentReady = true;
+        TextTypingSession.SetEquippedItems(selectedFaceColorItemId, selectedEyesItemId, selectedOutfitItemId);
         ApplyToPlayer();
+        OnEquipmentApplied?.Invoke(selectedFaceColorItemId, selectedEyesItemId, selectedOutfitItemId);
     }
 
     public void ApplyColor(int idItem)
@@ -163,20 +176,56 @@ public class PlayerCustomizationManager : MonoBehaviour
     {
         Debug.Log("[PlayerCustomization] Loading equipped cosmetics for gameplay");
 
+        int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
+        bool isTextTyping = SceneManager.GetActiveScene().name.StartsWith("TextTyping");
+        if (isTextTyping)
+        {
+            Debug.Log($"[TextTypingEquipment] Current slot resolved={slot}");
+            Debug.Log($"[TextTypingEquipment] Loading equipment for TextTyping slot={slot}");
+        }
+
+        if (TryApplySessionEquipmentForTextTyping(isTextTyping))
+        {
+            // Keep trying backend load afterwards to ensure authoritative slot equipment.
+        }
+
         bool resolved = await ResolveGameDataServiceAsync();
         if (!resolved)
         {
             Debug.LogWarning("[PlayerCustomization] No se pudo resolver GameDataService. Se usan IDs actuales en memoria.");
-            ApplyToPlayer();
+            if (isTextTyping)
+            {
+                Debug.LogWarning("[TextTypingEquipment][WARN] No backend equipment found, using session equipment if available");
+                if (!TryApplySessionEquipmentForTextTyping(true))
+                {
+                    Debug.LogWarning("[TextTypingEquipment][WARN] No equipment available, using base fallback color=1 eyes=11 outfit=18");
+                    ApplyEquipment(DefaultColorItemId, DefaultEyesItemId, DefaultOutfitItemId);
+                }
+            }
+            else
+            {
+                ApplyEquipment(DefaultColorItemId, DefaultEyesItemId, DefaultOutfitItemId);
+            }
             return;
         }
 
-        int slot = Mathf.Max(1, GameSessionManager.Instance?.CurrentSlotNumber ?? 1);
         var response = await gameDataService.GetEquippedItemsAsync(slot);
         if (!response.success || response.data == null)
         {
             Debug.LogWarning($"[PlayerCustomization] No se pudo cargar equipamiento desde backend (slot={slot}): {response.message}");
-            ApplyToPlayer();
+            if (isTextTyping)
+            {
+                Debug.LogWarning("[TextTypingEquipment][WARN] No backend equipment found, using session equipment if available");
+                if (!TryApplySessionEquipmentForTextTyping(true))
+                {
+                    Debug.LogWarning("[TextTypingEquipment][WARN] No equipment available, using base fallback color=1 eyes=11 outfit=18");
+                    ApplyEquipment(DefaultColorItemId, DefaultEyesItemId, DefaultOutfitItemId);
+                }
+            }
+            else
+            {
+                ApplyEquipment(DefaultColorItemId, DefaultEyesItemId, DefaultOutfitItemId);
+            }
             return;
         }
 
@@ -184,8 +233,40 @@ public class PlayerCustomizationManager : MonoBehaviour
         int eyesId = response.data.id_item_cara;
         int outfitId = response.data.id_item_outfit;
         Debug.Log($"[PlayerCustomization] Equipment from backend color={colorId} eyes={eyesId} outfit={outfitId}");
+        if (isTextTyping)
+        {
+            Debug.Log($"[TextTypingEquipment] Backend equipment color={colorId} eyes={eyesId} outfit={outfitId}");
+            Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerCustomizationManager color={colorId} eyes={eyesId} outfit={outfitId}");
+        }
 
         ApplyEquipment(colorId, eyesId, outfitId);
+
+        if (isTextTyping)
+        {
+            Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerVisual color={selectedFaceColorItemId} eyes={selectedEyesItemId} outfit={selectedOutfitItemId}");
+        }
+    }
+
+    private bool TryApplySessionEquipmentForTextTyping(bool isTextTyping)
+    {
+        if (!isTextTyping)
+        {
+            return false;
+        }
+
+        int color = TextTypingSession.EquippedColorItemId;
+        int eyes = TextTypingSession.EquippedEyesItemId;
+        int outfit = TextTypingSession.EquippedOutfitItemId;
+        bool hasSessionEquipment = color > 0 && eyes > 0 && outfit > 0;
+        if (!hasSessionEquipment)
+        {
+            return false;
+        }
+
+        Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerCustomizationManager color={color} eyes={eyes} outfit={outfit}");
+        ApplyEquipment(color, eyes, outfit);
+        Debug.Log($"[TextTypingEquipment] Applying equipment to PlayerVisual color={color} eyes={eyes} outfit={outfit}");
+        return true;
     }
 
     private async Task<bool> ResolveGameDataServiceAsync()

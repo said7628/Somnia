@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
@@ -72,6 +73,10 @@ public class PlayerVisual : MonoBehaviour
     [Header("Outfit Animators By Item Id")]
     [SerializeField] private OutfitAnimatorByItemId[] outfitClipsByItemId;
 
+    [Header("WebGL Sprite Rendering")]
+    [SerializeField] private Material webGLSafeSpriteMaterial;
+    [SerializeField] private bool forceWebGLSafeSpriteRenderingInEditor;
+
     private readonly Dictionary<int, ColorAnimatorByItemId> colorMap = new();
     private readonly Dictionary<int, EyesAnimatorByItemId> eyesMap = new();
     private readonly Dictionary<int, OutfitAnimatorByItemId> outfitMap = new();
@@ -80,17 +85,81 @@ public class PlayerVisual : MonoBehaviour
     private int selectedColorItemId = 1;
     private int selectedEyesItemId = 11;
     private int selectedOutfitItemId = 18;
+    private Material runtimeWebGLSafeMaterial;
 
     private void Awake()
     {
         BuildMaps();
         EnsureEyesLayering();
+        EnsureWebGLSafeSpriteRendering();
     }
 
     private void Start()
     {
         data = FindObjectOfType<PlayerCustomizationManager>();
-        ApplyCustomization();
+        StartCoroutine(ApplyCustomizationWhenReady());
+        EnsureWebGLSafeSpriteRendering();
+        StartCoroutine(ReapplyWebGLSafeSpriteRenderingAfterFirstFrame());
+    }
+
+    private void OnDestroy()
+    {
+        if (data != null)
+        {
+            data.OnEquipmentApplied -= HandleEquipmentApplied;
+        }
+    }
+
+    private IEnumerator ApplyCustomizationWhenReady()
+    {
+        if (data == null)
+        {
+            data = FindObjectOfType<PlayerCustomizationManager>();
+        }
+
+        if (data == null)
+        {
+            Debug.LogWarning("[PlayerVisual.LoadOrder][WARN] Equipment not ready, using base fallback ids");
+            ApplyEquipment(1, 11, 18);
+            yield break;
+        }
+
+        Debug.Log("[PlayerVisual.LoadOrder] Waiting for PlayerCustomizationManager equipment");
+        data.OnEquipmentApplied -= HandleEquipmentApplied;
+        data.OnEquipmentApplied += HandleEquipmentApplied;
+
+        if (data.IsEquipmentReady)
+        {
+            Debug.Log($"[PlayerVisual.LoadOrder] Equipment ready color={data.selectedFaceColorItemId} eyes={data.selectedEyesItemId} outfit={data.selectedOutfitItemId}");
+            Debug.Log("[PlayerVisual.LoadOrder] Applying equipment after backend load");
+            ApplyEquipment(data.selectedFaceColorItemId, data.selectedEyesItemId, data.selectedOutfitItemId);
+            yield break;
+        }
+
+        float timeout = 5f;
+        while (!data.IsEquipmentReady && timeout > 0f)
+        {
+            timeout -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (data.IsEquipmentReady)
+        {
+            Debug.Log($"[PlayerVisual.LoadOrder] Equipment ready color={data.selectedFaceColorItemId} eyes={data.selectedEyesItemId} outfit={data.selectedOutfitItemId}");
+            Debug.Log("[PlayerVisual.LoadOrder] Applying equipment after backend load");
+            ApplyEquipment(data.selectedFaceColorItemId, data.selectedEyesItemId, data.selectedOutfitItemId);
+            yield break;
+        }
+
+        Debug.LogWarning("[PlayerVisual.LoadOrder][WARN] Equipment not ready, using base fallback ids");
+        ApplyEquipment(1, 11, 18);
+    }
+
+    private void HandleEquipmentApplied(int colorId, int eyesId, int outfitId)
+    {
+        Debug.Log($"[PlayerVisual.LoadOrder] Equipment ready color={colorId} eyes={eyesId} outfit={outfitId}");
+        Debug.Log("[PlayerVisual.LoadOrder] Applying equipment after backend load");
+        ApplyEquipment(colorId, eyesId, outfitId);
     }
 
     public void ApplyCustomization()
@@ -120,6 +189,8 @@ public class PlayerVisual : MonoBehaviour
         ApplyColorByItemId(colorId);
         ApplyEyesByItemId(eyesId);
         ApplyOutfitByItemId(outfitId);
+        EnsureWebGLSafeSpriteRendering();
+        LogRendererDiagnostics();
 
         SetMovementState(false, Vector2.down);
     }
@@ -427,12 +498,167 @@ public class PlayerVisual : MonoBehaviour
             eyesWhiteRenderer.sortingLayerID = eyesRenderer.sortingLayerID;
         }
 
-        if (eyesWhiteRenderer.sortingOrder >= eyesRenderer.sortingOrder)
+        eyesWhiteRenderer.sortingOrder = 101;
+        eyesRenderer.sortingOrder = 102;
+
+        if (faceAnimator != null)
         {
-            eyesWhiteRenderer.sortingOrder = eyesRenderer.sortingOrder - 1;
+            SpriteRenderer faceRenderer = faceAnimator.GetComponent<SpriteRenderer>();
+            if (faceRenderer != null)
+            {
+                faceRenderer.sortingOrder = 100;
+            }
+        }
+
+        if (outfitAnimator != null)
+        {
+            SpriteRenderer outfitRenderer = outfitAnimator.GetComponent<SpriteRenderer>();
+            if (outfitRenderer != null)
+            {
+                outfitRenderer.sortingOrder = 103;
+            }
         }
 
         Debug.Log("[PlayerVisual] EyesWhite below Eyes");
+    }
+
+    private void EnsureWebGLSafeSpriteRendering()
+    {
+        bool shouldApplyWebGLSafePath = Application.platform == RuntimePlatform.WebGLPlayer || forceWebGLSafeSpriteRenderingInEditor;
+        if (!shouldApplyWebGLSafePath)
+        {
+            return;
+        }
+
+        Debug.Log("[PlayerVisual.WebGLFix] Applying WebGL-safe sprite rendering");
+
+        Material safeMaterial = ResolveWebGLSafeMaterial();
+        if (safeMaterial == null)
+        {
+            Debug.LogError("[PlayerVisual.WebGLFix][ERROR] Missing shader/material fallback");
+            return;
+        }
+
+        ApplyWebGLSafeMaterial(faceAnimator, "Face", 100);
+        ApplyWebGLSafeMaterial(eyesWhiteAnimator, "Eyes Blancos", 101);
+        ApplyWebGLSafeMaterial(eyesNormalAnimator, "Eyes", 102);
+        ApplyWebGLSafeMaterial(outfitAnimator, "Outfit", 103);
+
+        Material ResolveWebGLSafeMaterial()
+        {
+            if (webGLSafeSpriteMaterial != null)
+            {
+                return webGLSafeSpriteMaterial;
+            }
+
+            if (runtimeWebGLSafeMaterial != null)
+            {
+                return runtimeWebGLSafeMaterial;
+            }
+
+            Shader spriteShader = Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");
+            if (spriteShader == null)
+            {
+                spriteShader = Shader.Find("Sprites/Default");
+            }
+            if (spriteShader == null)
+            {
+                return null;
+            }
+
+            runtimeWebGLSafeMaterial = new Material(spriteShader)
+            {
+                name = "[PlayerVisual] WebGL Safe Sprite Material"
+            };
+            return runtimeWebGLSafeMaterial;
+        }
+
+        void ApplyWebGLSafeMaterial(Animator targetAnimator, string layerName, int sortingOrder)
+        {
+            if (targetAnimator == null)
+            {
+                return;
+            }
+
+            SpriteRenderer renderer = targetAnimator.GetComponent<SpriteRenderer>();
+            if (renderer == null)
+            {
+                return;
+            }
+
+            renderer.enabled = true;
+            if (renderer.color.a <= 0f)
+            {
+                Color c = renderer.color;
+                c.a = 1f;
+                renderer.color = c;
+                Debug.LogWarning($"[PlayerVisual.WebGLFix][WARN] Renderer had alpha 0, forced alpha 1 renderer={renderer.name}");
+            }
+            renderer.color = Color.white;
+            renderer.drawMode = SpriteDrawMode.Simple;
+            renderer.maskInteraction = SpriteMaskInteraction.None;
+            renderer.sortingOrder = sortingOrder;
+            renderer.material = safeMaterial;
+            if (renderer.sprite == null)
+            {
+                Debug.LogError($"[PlayerVisual.WebGLFix][ERROR] Missing sprite on renderer={renderer.name}");
+            }
+            string spriteName = renderer.sprite != null ? renderer.sprite.name : "null";
+            string textureName = renderer.sprite != null && renderer.sprite.texture != null ? renderer.sprite.texture.name : "null";
+            string materialName = renderer.sharedMaterial != null ? renderer.sharedMaterial.name : "null";
+            string safeShader = renderer.sharedMaterial != null && renderer.sharedMaterial.shader != null ? renderer.sharedMaterial.shader.name : "null";
+            Debug.Log($"[PlayerVisual.WebGLFix] Renderer={renderer.name} sprite={spriteName} texture={textureName} material={materialName} shader={safeShader} color={renderer.color} order={renderer.sortingOrder} drawMode={renderer.drawMode} bounds={renderer.bounds}");
+        }
+    }
+
+    private System.Collections.IEnumerator ReapplyWebGLSafeSpriteRenderingAfterFirstFrame()
+    {
+        yield return null;
+        EnsureEyesLayering();
+        EnsureWebGLSafeSpriteRendering();
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Debug.Log("[PlayerVisual.WebGLFix] Re-applied after animator first frame");
+        }
+    }
+
+    private void LogRendererDiagnostics()
+    {
+        LogRenderer(faceAnimator, "Face");
+        LogRenderer(outfitAnimator, "Outfit");
+        LogRenderer(eyesNormalAnimator, "Eyes");
+        LogRenderer(eyesWhiteAnimator, "EyesWhite");
+
+        static void LogRenderer(Animator targetAnimator, string layerName)
+        {
+            if (targetAnimator == null)
+            {
+                Debug.LogWarning($"[PlayerVisual.WebGLDebug] layer={layerName} missing animator reference");
+                return;
+            }
+
+            SpriteRenderer renderer = targetAnimator.GetComponent<SpriteRenderer>();
+            if (renderer == null)
+            {
+                Debug.LogWarning($"[PlayerVisual.WebGLDebug] layer={layerName} missing SpriteRenderer on {targetAnimator.name}");
+                return;
+            }
+
+            string spriteName = renderer.sprite != null ? renderer.sprite.name : "null";
+            string materialName = renderer.sharedMaterial != null ? renderer.sharedMaterial.name : "null";
+            string shaderName = renderer.sharedMaterial != null && renderer.sharedMaterial.shader != null
+                ? renderer.sharedMaterial.shader.name
+                : "null";
+            string controllerName = targetAnimator.runtimeAnimatorController != null
+                ? targetAnimator.runtimeAnimatorController.name
+                : "null";
+
+            Debug.Log(
+                $"[PlayerVisual.WebGLDebug] layer={layerName} renderer={renderer.name} sprite={spriteName} material={materialName} " +
+                $"shader={shaderName} sortingLayer={renderer.sortingLayerName} sortingOrder={renderer.sortingOrder} " +
+                $"color={renderer.color} alpha={renderer.color.a:F2} enabled={renderer.enabled} controller={controllerName}"
+            );
+        }
     }
 
     private void BuildMaps()

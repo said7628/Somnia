@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public static class TextTypingSession
 {
+    private const int BaseRewardYatzis = 100;
     public static int EdadJugador = 0;
     public static int PlayerAge
     {
@@ -22,6 +23,8 @@ public static class TextTypingSession
     public static int AwardedYatzis = 0;
     public static int TotalYatzis = 0;
     public static bool RewardSavedInBackend = false;
+    public static int PerfectBonusYatzis = 0;
+    public static int ScoreBonusYatzis = 0;
 
     public static bool Passed = false;
     public static bool WasPlayed = false;
@@ -34,6 +37,17 @@ public static class TextTypingSession
     public static Vector3 ReturnPosition = Vector3.zero;
     public static Quaternion ReturnRotation = Quaternion.identity;
     public static bool HasReturnTransform = false;
+
+    public static int EquippedColorItemId = 0;
+    public static int EquippedEyesItemId = 0;
+    public static int EquippedOutfitItemId = 0;
+
+    public static void SetEquippedItems(int colorItemId, int eyesItemId, int outfitItemId)
+    {
+        EquippedColorItemId = colorItemId;
+        EquippedEyesItemId = eyesItemId;
+        EquippedOutfitItemId = outfitItemId;
+    }
 
     public static void TrackLevelContext(int levelId, string sceneName)
     {
@@ -96,5 +110,29 @@ public static class TextTypingSession
             case 6: return "TextTyping6";
             default: return "TextTyping";
         }
+    }
+
+    public static bool IsIslandOne()
+    {
+        return string.IsNullOrWhiteSpace(SourceIslandSceneName)
+            || SourceIslandSceneName.Trim().StartsWith("Isla1");
+    }
+
+    public static int GetIslandPerfectBonus()
+    {
+        return IsIslandOne() ? 50 : 55;
+    }
+
+    public static int GetIslandRewardCap()
+    {
+        return IsIslandOne() ? 200 : 220;
+    }
+
+    public static int CalculateAttemptRewardDisplay(bool isPerfect)
+    {
+        int perfect = isPerfect ? GetIslandPerfectBonus() : 0;
+        int scoreBonus = Mathf.Max(0, CalculatedYatzis);
+        int total = BaseRewardYatzis + perfect + scoreBonus;
+        return Mathf.Min(total, GetIslandRewardCap());
     }
 }

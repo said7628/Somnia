@@ -22,25 +22,21 @@ public class ResultFallidoManager : MonoBehaviour
         if (botonReintentar != null) botonReintentar.onClick.AddListener(ReintentarUltimoNivel);
         if (botonMenu != null) botonMenu.onClick.AddListener(IrAMenu);
 
-        int playerAge = TextTypingSession.EdadJugador > 0 ? TextTypingSession.EdadJugador : 11;
-        int requiredMinimumScore = TextTypingPlayerRules.ObtenerPuntajeMinimoPorEdad(playerAge);
-        TextTypingSession.MinimumScore = requiredMinimumScore;
-
         int finalScore = Mathf.Max(0, TextTypingSession.CurrentScore);
+        int requiredMinimumScore = Mathf.Max(0, TextTypingSession.MinimumScore);
 
         if (scoreValue != null)
         {
-            scoreValue.text = requiredMinimumScore.ToString();
+            scoreValue.text = finalScore.ToString();
         }
 
-        bool passed = TextTypingPlayerRules.PasoNivel(playerAge, finalScore);
+        bool passed = finalScore >= requiredMinimumScore;
         TextTypingSession.Passed = passed;
 
         Debug.Log($"[TextTypingResultFail] Loaded with source scene={TextTypingSession.LastLevelSceneName} levelId={TextTypingSession.LastLevelId} score={finalScore}");
-        Debug.Log($"[TextTypingResultFail] player age={playerAge}");
-        Debug.Log($"[TextTypingResultFail] required minimum score for fail screen={requiredMinimumScore}");
-        Debug.Log($"[TextTypingResultFail] pass/fail recomputed from age+score={(passed ? "PASS" : "FAIL")}");
-        Debug.Log($"[TextTypingResultFail] fail screen displayed minimum required score={(scoreValue != null ? scoreValue.text : requiredMinimumScore.ToString())}");
+        Debug.Log($"[TextTypingFail] Attempt score: {finalScore}");
+        Debug.Log($"[TextTypingFail] Attempt score displayed: {(scoreValue != null ? scoreValue.text : finalScore.ToString())}");
+        Debug.Log($"[LevelValidation] score={finalScore} required={requiredMinimumScore} completed={passed}");
     }
 
     private void IrAMapa()

@@ -14,6 +14,7 @@ public class ScoreManager : MonoBehaviour
     private int score;
     private int streak;
     private int currentMultiplier = 1;
+    private int mistakes;
 
     private static readonly int TriggerCorrecto = Animator.StringToHash("cambioMultiplicador");
     private static readonly int TriggerFallo = Animator.StringToHash("falloMultiplicador");
@@ -23,6 +24,7 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         streak = 0;
         currentMultiplier = 1;
+        mistakes = 0;
         UpdateUI();
     }
 
@@ -46,6 +48,7 @@ public class ScoreManager : MonoBehaviour
         score = Mathf.Max(0, score - PenaltyPerWrongAnswer);
         streak = 0;
         currentMultiplier = 1;
+        mistakes++;
 
         UpdateUI();
 
@@ -95,5 +98,10 @@ public class ScoreManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+
+    public int GetMistakes()
+    {
+        return mistakes;
     }
 }

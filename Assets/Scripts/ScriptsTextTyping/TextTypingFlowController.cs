@@ -100,6 +100,8 @@ public class TextTypingFlowController : MonoBehaviour
         TextTypingSession.WasPlayed = true;
         TextTypingSession.PlayerAge = playerAge;
         TextTypingSession.CalculatedYatzis = TextTypingYatzisCalculator.CalcularComponenteExtraRedondeada(scoreFinal, playerAge);
+        TextTypingSession.PerfectBonusYatzis = 0;
+        TextTypingSession.ScoreBonusYatzis = Mathf.Max(0, TextTypingSession.CalculatedYatzis);
         TextTypingSession.AwardedYatzis = 0;
         TextTypingSession.TotalYatzis = 0;
         TextTypingSession.RewardSavedInBackend = false;
@@ -107,6 +109,13 @@ public class TextTypingFlowController : MonoBehaviour
         int previousBest = Mathf.Max(0, TextTypingSession.PersonalBest);
         int newBest = Mathf.Max(previousBest, scoreFinal);
         bool completedAfterSave = passed;
+        bool isPerfectRun = scoreManager != null && scoreManager.GetMistakes() <= 0;
+        int perfectBonus = isPerfectRun ? TextTypingSession.GetIslandPerfectBonus() : 0;
+        TextTypingSession.PerfectBonusYatzis = perfectBonus;
+        int localDisplayReward = passed ? TextTypingSession.CalculateAttemptRewardDisplay(isPerfectRun) : 0;
+        TextTypingSession.AwardedYatzis = localDisplayReward;
+
+        Debug.Log($"[LevelValidation] score={scoreFinal} required={minimumScore} completed={passed}");
 
         if (saveProgressToBackend)
         {
@@ -118,9 +127,14 @@ public class TextTypingFlowController : MonoBehaviour
             newBest = saveResult.NewMaxScore;
             completedAfterSave = saveResult.CompletedAfterSave;
 
-            TextTypingSession.AwardedYatzis = scoreRewardResult.AwardedYatzis;
             TextTypingSession.TotalYatzis = scoreRewardResult.TotalYatzis;
             TextTypingSession.RewardSavedInBackend = scoreRewardResult.Success;
+
+            if (scoreRewardResult.Success)
+            {
+                // Keep local reward calculation for run UI and cap rules; backend remains source of truth for total balance.
+                Debug.Log($"[TextTypingFlow] Backend reward acknowledged yatzis_ganados={scoreRewardResult.AwardedYatzis} local_display={TextTypingSession.AwardedYatzis}");
+            }
 
             Debug.Log($"[TextTypingFlow] Progress save status success={saveResult.Success} slot={slot} levelId={levelId}");
             Debug.Log($"[TextTypingFlow] Reward save status success={scoreRewardResult.Success} awarded={scoreRewardResult.AwardedYatzis} total={scoreRewardResult.TotalYatzis} backendMultiplier={scoreRewardResult.BackendMultiplier}");
