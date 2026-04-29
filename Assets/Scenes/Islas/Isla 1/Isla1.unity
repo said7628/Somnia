@@ -192,6 +192,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!1 &17504841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6605022073821454398, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 17504840}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &40276840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,24 +1272,35 @@ MonoBehaviour:
   - dbLevelId: 1
     sceneName: '"Tienda"'
     levelRoot: {fileID: 1499707361}
-    blockedVisual: {fileID: 0}
+    blockedVisual: {fileID: 2144267255}
     unlockedVisual: {fileID: 0}
     playedVisual: {fileID: 0}
+    levelParticles: {fileID: 0}
   - dbLevelId: 2
     sceneName: '"TextTyping5"'
     levelRoot: {fileID: 1370482824}
-    blockedVisual: {fileID: 0}
+    blockedVisual: {fileID: 2131909792}
     unlockedVisual: {fileID: 0}
     playedVisual: {fileID: 0}
+    levelParticles: {fileID: 0}
   - dbLevelId: 3
     sceneName: '""'
-    levelRoot: {fileID: 0}
+    levelRoot: {fileID: 17504841}
     blockedVisual: {fileID: 0}
     unlockedVisual: {fileID: 0}
     playedVisual: {fileID: 0}
+    levelParticles: {fileID: 0}
   lockLevelsWithoutScene: 1
   verboseLogs: 1
   toastMessage: {fileID: 1325891925}
+  lockedLevelAudio: {fileID: 8300000, guid: 63abcebd563534f40824d137d7390551, type: 3}
+  levelPassedAudio: {fileID: 8300000, guid: 58861961f9a9b6f4cb6737b5d8ae53fd, type: 3}
+  audioSource: {fileID: 0}
+  lockedColor: {r: 1, g: 0, b: 0, a: 1}
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  completedColor: {r: 1, g: 0.75, b: 0.1, a: 1}
+  unlockCelebrateDuration: 1.1
+  unlockCelebrateBurstCount: 20
   yatzisTotalText: {fileID: 754175333}
   yatzisTextObjectName: Yatzis
 --- !u!4 &247802131
@@ -1700,6 +1716,7 @@ GameObject:
   - component: {fileID: 501208656}
   - component: {fileID: 501208655}
   - component: {fileID: 501208657}
+  - component: {fileID: 501208658}
   m_Layer: 0
   m_Name: EntryTienda
   m_TagString: Untagged
@@ -1828,6 +1845,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 10.769516, y: 9.021517}
   m_EdgeRadius: 0
+--- !u!114 &501208658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501208654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620992b4346c79e4e961c26b0ceec754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TiendaTrigger
+  playerTag: Player
+  tiendaSceneName: Tienda
+  verboseLogs: 1
 --- !u!1 &517766214
 GameObject:
   m_ObjectHideFlags: 0
@@ -6867,6 +6899,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!1 &2131909792 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6605022073821454398, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 2131909791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2144267254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6940,6 +6977,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!1 &2144267255 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6605022073821454398, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 2144267254}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3509858243012470541
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
         if (yatzisGanadosValue != null)
             yatzisGanadosValue.text = $"+{TextTypingSession.AwardedYatzis}";
 
-     
+
         if (yatzisTotalesValue != null)
             yatzisTotalesValue.text = TextTypingSession.AwardedYatzis.ToString();
 
@@ -42,6 +42,17 @@ public class ResultadoNivelUITextTyping : MonoBehaviour
     public void IrAMapa()
     {
         string returnScene = TextTypingSession.ResolveReturnScene();
+        if (TextTypingSession.Passed)
+        {
+            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = true;
+            GameSceneTransitionContext.PassedLevelId = TextTypingSession.LastLevelId;
+        }
+        else
+        {
+            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = false;
+            GameSceneTransitionContext.PassedLevelId = -1;
+            Debug.Log("[IslandLevelManager] Failed flow detected: no unlock, no passed audio");
+        }
         Debug.Log($"[TextTypingResultUI] Map return sourceIslandScene={TextTypingSession.SourceIslandSceneName} sourceLevelScene={TextTypingSession.LastLevelSceneName} returnPosition={TextTypingSession.ReturnPosition} returnRotation={TextTypingSession.ReturnRotation.eulerAngles} sceneLoadedByMapReturn={returnScene}");
         SceneManager.LoadScene(returnScene);
     }

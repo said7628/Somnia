@@ -32,7 +32,7 @@ public class ResultadoNivelUI : MonoBehaviour
             bonusValue.text = $"+{TextTypingSession.AwardedYatzis}";
         }
 
-   
+
         if (coinsValue != null)
         {
             coinsValue.text = TextTypingSession.AwardedYatzis.ToString();
@@ -50,6 +50,17 @@ public class ResultadoNivelUI : MonoBehaviour
     public void IrAMapa()
     {
         string returnScene = TextTypingSession.ResolveReturnScene();
+        if (TextTypingSession.Passed)
+        {
+            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = true;
+            GameSceneTransitionContext.PassedLevelId = TextTypingSession.LastLevelId;
+        }
+        else
+        {
+            GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = false;
+            GameSceneTransitionContext.PassedLevelId = -1;
+            Debug.Log("[IslandLevelManager] Failed flow detected: no unlock, no passed audio");
+        }
         Debug.Log($"[TextTypingResultSuccess] Map return sourceIslandScene={TextTypingSession.SourceIslandSceneName} sourceLevelScene={TextTypingSession.LastLevelSceneName} returnPosition={TextTypingSession.ReturnPosition} returnRotation={TextTypingSession.ReturnRotation.eulerAngles} sceneLoadedByMapReturn={returnScene}");
         SceneManager.LoadScene(returnScene);
     }

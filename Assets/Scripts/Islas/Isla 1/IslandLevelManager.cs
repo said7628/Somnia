@@ -11,6 +11,7 @@ using Somnia.UnityClient;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class IslandLevelManager : MonoBehaviour
@@ -36,6 +37,9 @@ public class IslandLevelManager : MonoBehaviour
         [Header("Opcional: visual de jugado/completado")]
         public GameObject playedVisual;
 
+        [Header("Opcional: particulas del nivel")]
+        public ParticleSystem levelParticles;
+
         [NonSerialized] public bool isUnlocked;
         [NonSerialized] public bool isPlayed;
         [NonSerialized] public bool isCompleted;
@@ -50,6 +54,17 @@ public class IslandLevelManager : MonoBehaviour
     [SerializeField] private bool lockLevelsWithoutScene = true;
     [SerializeField] private bool verboseLogs = true;
     [SerializeField] private ToastMessage toastMessage;
+    [Header("Audio")]
+    [SerializeField] private AudioClip lockedLevelAudio;
+    [SerializeField] private AudioClip levelPassedAudio;
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Particulas")]
+    [SerializeField] private Color lockedColor = Color.red;
+    [SerializeField] private Color currentColor = Color.white;
+    [SerializeField] private Color completedColor = new Color(1f, 0.75f, 0.1f);
+    [SerializeField] private float unlockCelebrateDuration = 1.1f;
+    [SerializeField] private int unlockCelebrateBurstCount = 20;
     [Header("UI Yatzis (Isla1)")]
     [SerializeField] private TextMeshProUGUI yatzisTotalText;
     [SerializeField] private string yatzisTextObjectName = "Yatzis";
@@ -60,6 +75,7 @@ public class IslandLevelManager : MonoBehaviour
     private bool isLoading;
     private bool isInitialized;
     private EconomyModule economyModule;
+    private int currentAvailableLevelId = -1;
 
     private readonly HashSet<int> playedLevels = new HashSet<int>();
     private readonly HashSet<int> completedLevels = new HashSet<int>();
@@ -98,6 +114,7 @@ public class IslandLevelManager : MonoBehaviour
         Log("Current slot resolved for island flow=" + currentSlot);
         Log("Active scene on island start=" + SceneManager.GetActiveScene().name);
         TryResolveToast();
+        EnsureAudioSource();
         RefreshYatzisText();
 
         bool resolved = await ResolveGameDataServiceWithRecoveryAsync();
@@ -218,11 +235,14 @@ public class IslandLevelManager : MonoBehaviour
                     if (p == null) continue;
 
                     playedLevels.Add(p.id_nivel);
+                    bool isCompleted = p.completo == 1;
 
-                    if (p.completo == 1)
+                    if (isCompleted)
                     {
                         completedLevels.Add(p.id_nivel);
                     }
+
+                    Log($"Progress loaded level={p.id_nivel} played=True completed={isCompleted}");
                 }
             }
 
@@ -293,7 +313,9 @@ public class IslandLevelManager : MonoBehaviour
 
         if (!level.isUnlocked)
         {
-            Log("blocked level attempted -> levelId=" + dbLevelId);
+            Log("Locked level attempted id=" + dbLevelId);
+            Debug.Log("[IslandLevelManager] Playing locked level audio");
+            PlayOneShot(lockedLevelAudio);
             ShowToast("Nivel bloqueado, completa el nivel anterior para acceder a este.");
             return;
         }
@@ -464,38 +486,34 @@ public class IslandLevelManager : MonoBehaviour
             level.isUnlocked = false;
         }
 
-        // Logica especifica que me pediste:
-        // Nivel 1 siempre desbloqueado
-        LevelEntry level1 = GetLevel(1);
-        if (level1 == null && levels.Length > 0)
+        if (levels[0] != null)
         {
-            level1 = levels[0];
+            levels[0].isUnlocked = true;
         }
 
-        if (level1 != null)
+        for (int i = 1; i < levels.Length; i++)
         {
-            level1.isUnlocked = true;
+            LevelEntry previous = levels[i - 1];
+            LevelEntry current = levels[i];
+            if (previous == null || current == null)
+            {
+                continue;
+            }
+
+            bool previousCompleted = completedLevels.Contains(previous.dbLevelId);
+            current.isUnlocked = previousCompleted;
+            Log($"Unlock check level={current.dbLevelId} previous={previous.dbLevelId} previousCompleted={previousCompleted} unlocked={current.isUnlocked}");
         }
 
-        // Nivel 2 solo si el nivel 1 fue aprobado
-        LevelEntry level2 = GetLevel(2);
-        if (level2 == null && levels.Length > 1)
+        currentAvailableLevelId = -1;
+        for (int i = 0; i < levels.Length; i++)
         {
-            level2 = levels[1];
-        }
-
-        if (level2 != null && level1 != null)
-        {
-            bool level1Completed = completedLevels.Contains(level1.dbLevelId);
-            level2.isUnlocked = level1Completed;
-            Log("unlock evaluation for level 2 -> level1Id=" + level1.dbLevelId + " completed=" + level1Completed);
-            Log("final locked/unlocked state for level 2 -> " + (level2.isUnlocked ? "UNLOCKED" : "LOCKED"));
-        }
-
-        // Nivel 3 bloqueado por ahora
-        if (levels.Length > 2 && levels[2] != null)
-        {
-            levels[2].isUnlocked = false;
+            LevelEntry level = levels[i];
+            if (level != null && level.isUnlocked && !level.isCompleted)
+            {
+                currentAvailableLevelId = level.dbLevelId;
+                break;
+            }
         }
 
         if (lockLevelsWithoutScene)
@@ -539,7 +557,115 @@ public class IslandLevelManager : MonoBehaviour
             {
                 level.playedVisual.SetActive(level.isPlayed || level.isCompleted);
             }
+
+            ApplyParticleState(level);
         }
+
+        TryPlayLevelPassedFeedback();
+    }
+
+
+    private void EnsureAudioSource()
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+    }
+
+    private void PlayOneShot(AudioClip clip)
+    {
+        if (clip == null) return;
+        EnsureAudioSource();
+        audioSource.PlayOneShot(clip);
+    }
+
+    private void ApplyParticleState(LevelEntry level)
+    {
+        if (level.levelParticles == null) return;
+
+        Color color = lockedColor;
+        string state = "Locked";
+        if (level.isCompleted)
+        {
+            color = completedColor;
+            state = "Completed";
+        }
+        else if (level.dbLevelId == currentAvailableLevelId)
+        {
+            color = currentColor;
+            state = "Current";
+        }
+
+        var main = level.levelParticles.main;
+        main.startColor = color;
+        ParticleSystemRenderer particleRenderer = level.levelParticles.GetComponent<ParticleSystemRenderer>();
+        if (particleRenderer != null && particleRenderer.material != null && particleRenderer.material.HasProperty("_Color"))
+        {
+            particleRenderer.material.color = color;
+        }
+        Debug.Log($"[IslandLevelManager] Particle state level={level.dbLevelId} state={state} color={color}");
+    }
+
+    private void TryPlayLevelPassedFeedback()
+    {
+        if (!GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad) return;
+
+        Debug.Log("[IslandLevelManager] Playing level passed audio");
+        PlayOneShot(levelPassedAudio);
+
+        int passedLevelId = GameSceneTransitionContext.PassedLevelId;
+        GameSceneTransitionContext.PlayLevelPassedAudioOnNextIslandLoad = false;
+        GameSceneTransitionContext.PassedLevelId = -1;
+
+        LevelEntry passed = GetLevel(passedLevelId);
+        LevelEntry next = GetNextLevelEntry(passedLevelId);
+        Debug.Log($"[IslandLevelManager] Unlock celebration passedLevel={passedLevelId} nextLevel={(next != null ? next.dbLevelId : -1)}");
+        StartCoroutine(AnimateLevelUnlock(passed, next));
+    }
+
+    private LevelEntry GetNextLevelEntry(int dbLevelId)
+    {
+        if (levels == null) return null;
+        for (int i = 0; i < levels.Length - 1; i++)
+        {
+            if (levels[i] != null && levels[i].dbLevelId == dbLevelId) return levels[i + 1];
+        }
+        return null;
+    }
+
+    private IEnumerator AnimateLevelUnlock(LevelEntry passed, LevelEntry next)
+    {
+        TriggerBurst(passed?.levelParticles);
+        TriggerBurst(next?.levelParticles);
+
+        float elapsed = 0f;
+        float duration = Mathf.Max(0.1f, unlockCelebrateDuration);
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            if (passed?.levelParticles != null)
+            {
+                var m = passed.levelParticles.main;
+                m.startColor = Color.Lerp(currentColor, completedColor, t);
+            }
+            if (next?.levelParticles != null)
+            {
+                var m2 = next.levelParticles.main;
+                m2.startColor = Color.Lerp(lockedColor, currentColor, t);
+            }
+            yield return null;
+        }
+    }
+
+    private void TriggerBurst(ParticleSystem ps)
+    {
+        if (ps == null) return;
+        ps.Emit(Mathf.Max(1, unlockCelebrateBurstCount));
     }
 
     private LevelEntry GetLevel(int dbLevelId)
