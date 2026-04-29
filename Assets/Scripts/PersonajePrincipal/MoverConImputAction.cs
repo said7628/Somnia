@@ -22,11 +22,16 @@ public class MoverConImputAction : MonoBehaviour
     [Header("Detección de suelo")]
     [SerializeField] private Transform detectorSuelo;
     [SerializeField] private float radioDetectorSuelo = 0.2f;
+    [SerializeField] private LayerMask groundLayers;
     [SerializeField] private int maxJumps = 2;
+    [SerializeField] private float groundedVelocityThreshold = 0.05f;
 
     private Rigidbody2D rb;
+    private Collider2D playerCollider;
+    private Collider2D detectorSueloCollider;
     private PlayerVisual playerVisual;
     private int jumpsRemaining;
+    private bool wasGrounded;
 
     private void OnEnable()
     {
@@ -43,8 +48,10 @@ public class MoverConImputAction : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
         playerVisual = GetComponent<PlayerVisual>();
         jumpsRemaining = maxJumps;
+        wasGrounded = false;
 
         ApplyIdleVisual();
 
@@ -112,13 +119,13 @@ public class MoverConImputAction : MonoBehaviour
 
     private void HandlePlatformer(Vector2 moveInput)
     {
-        bool isGrounded = EstaTocandoSuelo();
-        Debug.Log($"[PlatformerMovement] isGrounded={isGrounded} jumpsRemaining={jumpsRemaining}");
+        bool isGrounded = CheckGrounded();
+        Debug.Log($"[PlatformerMovement] isGrounded={isGrounded} wasGrounded={wasGrounded} jumpsRemaining={jumpsRemaining}");
 
-        if (isGrounded && jumpsRemaining != maxJumps)
+        if (isGrounded && !wasGrounded && rb.linearVelocity.y <= groundedVelocityThreshold)
         {
             jumpsRemaining = maxJumps;
-            Debug.Log("[PlatformerMovement] Grounded, jumps reset");
+            Debug.Log("[PlatformerMovement] Landed, jumps reset");
         }
 
         float horizontal = Mathf.Clamp(moveInput.x, -1f, 1f);
@@ -136,6 +143,8 @@ public class MoverConImputAction : MonoBehaviour
             TryJump();
         }
 
+        wasGrounded = isGrounded;
+
         bool isMovingHorizontally = Mathf.Abs(horizontal) > 0.01f;
 
         playerVisual?.SetMovementState(
@@ -144,42 +153,89 @@ public class MoverConImputAction : MonoBehaviour
         );
     }
 
-    private bool EstaTocandoSuelo()
+    private bool CheckGrounded()
     {
         if (detectorSuelo == null)
         {
-            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo missing");
+            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo is missing");
             return false;
         }
 
         Debug.Log($"[PlatformerMovement] detectorSuelo={detectorSuelo.name} position={detectorSuelo.position} radius={radioDetectorSuelo}");
+        Debug.Log($"[PlatformerMovement] Ground check using DetectorSuelo collider={detectorSueloCollider != null}");
 
+        if (detectorSueloCollider != null)
+        {
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.useTriggers = false;
+
+            if (groundLayers.value != 0)
+            {
+                filter.SetLayerMask(groundLayers);
+                filter.useLayerMask = true;
+            }
+
+            Collider2D[] overlapResults = new Collider2D[8];
+            int count = detectorSueloCollider.Overlap(filter, overlapResults);
+
+            for (int i = 0; i < count; i++)
+            {
+                Collider2D hit = overlapResults[i];
+
+                if (!IsValidGroundHit(hit))
+                {
+                    continue;
+                }
+
+                Debug.Log($"[PlatformerMovement] Ground hit={hit.name} layer={LayerMask.LayerToName(hit.gameObject.layer)}");
+                return true;
+            }
+        }
+
+        int fallbackMask = groundLayers.value == 0 ? Physics2D.DefaultRaycastLayers : groundLayers;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(
             detectorSuelo.position,
-            radioDetectorSuelo
+            radioDetectorSuelo,
+            fallbackMask
         );
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider == null)
+            if (!IsValidGroundHit(collider))
             {
                 continue;
             }
 
-            if (collider.attachedRigidbody != null && collider.attachedRigidbody.gameObject == gameObject)
-            {
-                continue;
-            }
-
-            if (collider.gameObject == gameObject)
-            {
-                continue;
-            }
-
+            Debug.Log($"[PlatformerMovement] Ground hit={collider.name} layer={LayerMask.LayerToName(collider.gameObject.layer)}");
             return true;
         }
 
         return false;
+    }
+
+    private bool IsValidGroundHit(Collider2D collider)
+    {
+        if (collider == null || collider.isTrigger)
+        {
+            return false;
+        }
+
+        if (collider.transform == transform || collider.transform.IsChildOf(transform))
+        {
+            return false;
+        }
+
+        if (playerCollider != null && collider == playerCollider)
+        {
+            return false;
+        }
+
+        if (collider.attachedRigidbody != null && collider.attachedRigidbody.gameObject == gameObject)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void TryJump()
@@ -212,6 +268,10 @@ public class MoverConImputAction : MonoBehaviour
         {
             rb = GetComponent<Rigidbody2D>();
         }
+        if (playerCollider == null)
+        {
+            playerCollider = GetComponent<Collider2D>();
+        }
 
         if (rb == null)
         {
@@ -220,10 +280,15 @@ public class MoverConImputAction : MonoBehaviour
 
         if (detectorSuelo == null)
         {
-            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo missing");
+            Debug.Log("[PlatformerMovement][ERROR] DetectorSuelo is missing");
+        }
+        else
+        {
+            detectorSueloCollider = detectorSuelo.GetComponent<Collider2D>();
         }
 
         jumpsRemaining = maxJumps;
+        wasGrounded = false;
     }
 
     private void ApplyIdleVisual()
