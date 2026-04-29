@@ -12,6 +12,10 @@ public class EnemigoGarraCiclica : MonoBehaviour
     [SerializeField] private string animacionAfuera = "Afuera";
     [SerializeField] private string animacionGuardar = "Guardar";
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sonidoSalirDelSuelo;
+
     [Header("Colliders de daño")]
     [SerializeField] private Collider2D[] collidersDano;
 
@@ -43,6 +47,12 @@ public class EnemigoGarraCiclica : MonoBehaviour
             yield return new WaitForSeconds(tiempoOculta);
 
             animador.Play(animacionSalir);
+
+            if (audioSource != null && sonidoSalirDelSuelo != null)
+            {
+                audioSource.PlayOneShot(sonidoSalirDelSuelo);
+            }
+
             puedeHacerDano = true;
             EncenderCollidersDano();
 
