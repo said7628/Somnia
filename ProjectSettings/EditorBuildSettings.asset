@@ -71,6 +71,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Plataforma/Plataforma1.unity
     guid: 744874a4f158e6c4c9fddcfe70b0d733
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/Plataforma2.unity
+    guid: 6f8f159700f22774ca42c1be9e43ebaa
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/Plataforma3.unity
+    guid: 969f4384c5c77ad46adc3694d22e2e53
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/Plataforma4.unity
+    guid: 16baf0511cbdcab478ecc835623523c2
+  - enabled: 1
+    path: Assets/Scenes/Plataforma/Plataforma5.unity
+    guid: afba927bc5f405a46b95a2d463fc4991
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b89a814b66ebcb840b5a8ba76d0a8848, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
