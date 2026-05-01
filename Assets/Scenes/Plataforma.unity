@@ -347,10 +347,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plataforma2a3
       objectReference: {fileID: 0}
-    - target: {fileID: 2640890066351686285, guid: 6b1f0d6efdf37ae4fa1ef5a94904f562, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4726674531241019749, guid: 6b1f0d6efdf37ae4fa1ef5a94904f562, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -448,10 +444,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Plataforma '
       objectReference: {fileID: 0}
-    - target: {fileID: 2849556348370528758, guid: 1c042b2a3b81fdf42a5ea1592d148d47, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8939855030946167971, guid: 1c042b2a3b81fdf42a5ea1592d148d47, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -548,10 +540,6 @@ PrefabInstance:
     - target: {fileID: 4056616670095552282, guid: 9152eb55a559823478a149f2084c73f7, type: 3}
       propertyPath: m_Name
       value: Plataforma1a2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4056616670095552282, guid: 9152eb55a559823478a149f2084c73f7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4721920391989904440, guid: 9152eb55a559823478a149f2084c73f7, type: 3}
       propertyPath: m_Pivot.x
@@ -830,10 +818,6 @@ PrefabInstance:
     - target: {fileID: 5523179312767954739, guid: 8afb5b6639614884e9d9a982fc3c388d, type: 3}
       propertyPath: m_Name
       value: Plataforma3a4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5523179312767954739, guid: 8afb5b6639614884e9d9a982fc3c388d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -86,5 +86,11 @@ public class ControlCaminito : MonoBehaviour
         }
 
         botonFinal.transform.localScale = escalaFinal;
+
+        HoverBotonFinal hover = botonFinal.GetComponent<HoverBotonFinal>();
+        if (hover != null)
+        {
+            hover.ActualizarEscalaOriginal();
+        }
     }
 }

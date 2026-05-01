@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2631016148090382482}
   - component: {fileID: 8790524037817003888}
   - component: {fileID: 8852610647992194890}
+  - component: {fileID: 8544409932978419037}
   m_Layer: 5
   m_Name: Tacha1
   m_TagString: Untagged
@@ -119,7 +120,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8790524037817003888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7357860134461382905}
+        m_TargetAssemblyTypeName: CambiarEscenasBotones, Assembly-CSharp
+        m_MethodName: IrEscena1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8544409932978419037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571216370714969038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704d263757a8a554eabbd1a2e06b8052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverBotonFinal
+  scaleMultiplier: 1.1
+  speed: 10
 --- !u!1 &2849556348370528758
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +159,7 @@ GameObject:
   - component: {fileID: 9059743525623947492}
   - component: {fileID: 1291123269256603327}
   - component: {fileID: 8732602168831726181}
+  - component: {fileID: 7357860134461382905}
   m_Layer: 5
   m_Name: 'Plataforma '
   m_TagString: Untagged
@@ -225,6 +253,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7357860134461382905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849556348370528758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4078cd06b5a6643479dab7832dd55f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CambiarEscenasBotones
+  escena1: Plataforma1
+  escena2: Plataforma2
+  escena3: Plataforma3
+  escena4: Plataforma4
+  escena5: Plataforma5
+  Isla1: Isla1
 --- !u!1 &3356831902305648421
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +283,7 @@ GameObject:
   - component: {fileID: 7887980101300568000}
   - component: {fileID: 3637964422057613720}
   - component: {fileID: 3028404189816362927}
+  - component: {fileID: 4896499277622030179}
   m_Layer: 5
   m_Name: Cerrar
   m_TagString: Untagged
@@ -344,7 +391,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3637964422057613720}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7357860134461382905}
+        m_TargetAssemblyTypeName: CambiarEscenasBotones, Assembly-CSharp
+        m_MethodName: IrIsla
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4896499277622030179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356831902305648421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704d263757a8a554eabbd1a2e06b8052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverBotonFinal
+  scaleMultiplier: 1.1
+  speed: 10
 --- !u!1 &4046093519473941083
 GameObject:
   m_ObjectHideFlags: 0
