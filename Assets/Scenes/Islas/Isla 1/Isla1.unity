@@ -1327,7 +1327,7 @@ MonoBehaviour:
     playedVisual: {fileID: 0}
     levelParticles: {fileID: 2131909793}
   - dbLevelId: 3
-    sceneName: '"Plataforma1"'
+    sceneName: '"Plataforma"'
     levelRoot: {fileID: 0}
     blockedVisual: {fileID: 0}
     unlockedVisual: {fileID: 0}
