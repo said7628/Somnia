@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SistemaDialogoCanvas : MonoBehaviour
 {
@@ -79,6 +80,9 @@ public class SistemaDialogoCanvas : MonoBehaviour
     private bool escribiendo = false;
     private bool esperandoRespuesta = false;
     private bool dialogoActivo = false;
+
+    public event Action OnDialogFinished;
+    public bool IsDialogActive => dialogoActivo;
 
     private void Start()
     {
@@ -323,6 +327,11 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
         canvasDialogo.SetActive(false);
 
-        SceneManager.LoadScene(escenaAlTerminar);
+        OnDialogFinished?.Invoke();
+
+        if (!string.IsNullOrWhiteSpace(escenaAlTerminar))
+        {
+            SceneManager.LoadScene(escenaAlTerminar);
+        }
     }
 }
