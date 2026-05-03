@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -80,6 +81,16 @@ public class SistemaDialogoCanvas : MonoBehaviour
     private bool escribiendo = false;
     private bool esperandoRespuesta = false;
     private bool dialogoActivo = false;
+    private bool autoActivacionHabilitada = true;
+
+    private static readonly Dictionary<string, int> PlataformaSceneToLevelId = new Dictionary<string, int>
+    {
+        { "Plataforma1", 7 },
+        { "Plataforma2", 8 },
+        { "Plataforma3", 9 },
+        { "Plataforma4", 10 },
+        { "Plataforma5", 11 }
+    };
 
     public event Action OnDialogFinished;
     public bool IsDialogActive => dialogoActivo;
@@ -112,6 +123,11 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!autoActivacionHabilitada)
+        {
+            return;
+        }
+
         if (collision.CompareTag(tagJugador) && !dialogoActivo)
         {
             ActivarDialogo();
@@ -120,6 +136,12 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
     public void ActivarDialogo()
     {
+        if (dialogoActivo)
+        {
+            Debug.LogWarning("[SistemaDialogoCanvas][WARN] Dialog start ignored because already active");
+            return;
+        }
+
         dialogoActivo = true;
         indiceActual = 0;
 
@@ -310,6 +332,56 @@ public class SistemaDialogoCanvas : MonoBehaviour
         }
     }
 
+
+
+    public void SetAutoActivationEnabled(bool enabled)
+    {
+        autoActivacionHabilitada = enabled;
+    }
+
+    public void StopDialogCompletely()
+    {
+        Debug.Log("[SistemaDialogoCanvas] StopDialogCompletely called");
+
+        if (rutinaEscritura != null)
+        {
+            StopCoroutine(rutinaEscritura);
+            rutinaEscritura = null;
+        }
+
+        if (audioEscritura != null)
+        {
+            audioEscritura.Stop();
+            Debug.Log("[SistemaDialogoCanvas] Typewriter audio stopped");
+        }
+
+        escribiendo = false;
+        esperandoRespuesta = false;
+        dialogoActivo = false;
+
+        if (dialogoText != null)
+        {
+            dialogoText.text = "";
+        }
+
+        if (opciones != null)
+        {
+            opciones.SetActive(false);
+        }
+
+        if (siguiente != null)
+        {
+            siguiente.gameObject.SetActive(false);
+        }
+
+        if (canvasDialogo != null)
+        {
+            canvasDialogo.SetActive(false);
+        }
+
+        ReanudarJuego();
+    }
+
     private void TerminarDialogo()
     {
         if (audioEscritura != null)
@@ -331,7 +403,60 @@ public class SistemaDialogoCanvas : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(escenaAlTerminar))
         {
+            TryPreparePlataformaCompletionSession();
             SceneManager.LoadScene(escenaAlTerminar);
         }
     }
+
+    private void TryPreparePlataformaCompletionSession()
+    {
+        if (!string.Equals(escenaAlTerminar, "ScorePlataforma", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        string sourceScene = SceneManager.GetActiveScene().name;
+        if (!PlataformaSceneToLevelId.TryGetValue(sourceScene, out int levelId))
+        {
+            Debug.LogWarning($"[PlataformaComplete][WARN] No levelId mapping for scene={sourceScene}");
+            return;
+        }
+
+        int slot = ResolveCurrentSlotNumber();
+        if (slot <= 0)
+        {
+            Debug.LogError("[PlataformaComplete][ERROR] Could not resolve current slot");
+            return;
+        }
+        VidaPersonaje vida = FindFirstObjectByType<VidaPersonaje>();
+        int vidasActuales = vida != null ? Mathf.Max(0, vida.VidasActuales) : 0;
+        int vidasMaximas = vida != null ? Mathf.Max(0, vida.VidasMaximas) : 0;
+
+        PlataformaSession.SlotNumber = slot;
+        PlataformaSession.LevelId = levelId;
+        PlataformaSession.SourceLevelScene = sourceScene;
+        PlataformaSession.ReturnScene = "Isla1";
+        PlataformaSession.LivesRemaining = vidasActuales;
+        PlataformaSession.MaxLives = vidasMaximas;
+        PlataformaSession.Completed = true;
+        PlataformaSession.RewardAlreadySaved = false;
+
+        Debug.Log($"[PlataformaComplete] sourceScene={sourceScene}");
+        Debug.Log($"[PlataformaComplete] levelId={levelId} slot={slot}");
+        Debug.Log($"[PlataformaComplete] livesRemaining={vidasActuales} maxLives={vidasMaximas}");
+        Debug.Log("[PlataformaComplete] Loading ScorePlataforma");
+    }
+
+
+
+    private int ResolveCurrentSlotNumber()
+    {
+        if (TextTypingSession.SlotNumber > 0)
+        {
+            return TextTypingSession.SlotNumber;
+        }
+
+        return 0;
+    }
+
 }

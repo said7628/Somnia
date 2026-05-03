@@ -19,6 +19,9 @@ public class VidaPersonaje : MonoBehaviour
     private bool estaInvulnerable;
     private bool juegoTerminado;
 
+    public int VidasActuales => vidasActuales;
+    public int VidasMaximas => vidasMaximas;
+
     private void Start()
     {
         Time.timeScale = 1f;

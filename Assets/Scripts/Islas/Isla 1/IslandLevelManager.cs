@@ -22,6 +22,9 @@ public class IslandLevelManager : MonoBehaviour
         [Header("ID del nivel en la tabla niveles")]
         public int dbLevelId;
 
+        [Header("ID previo requerido (0 = usar el elemento anterior en la lista)")]
+        public int requiredPreviousLevelId;
+
         [Header("Escena que se debe cargar")]
         public string sceneName;
 
@@ -330,9 +333,26 @@ public class IslandLevelManager : MonoBehaviour
         await MarkLevelAsPlayedAsync(dbLevelId);
         PersistCurrentIslandScene();
 
+        TextTypingSession.SlotNumber = currentSlot;
         TextTypingSession.LevelId = dbLevelId;
         TextTypingSession.LevelName = level.sceneName;
-        Log("Entering level -> slot=" + currentSlot + " levelId=" + dbLevelId + " scene=" + level.sceneName);
+        TextTypingSession.LastLevelId = dbLevelId;
+        TextTypingSession.LastLevelSceneName = level.sceneName;
+        TextTypingSession.SourceIslandSceneName = "Isla1";
+
+        Log("Enter level id=" + dbLevelId + " scene=" + level.sceneName + " slot=" + currentSlot);
+
+        bool isPlataformaScene = !string.IsNullOrWhiteSpace(level.sceneName) && level.sceneName.StartsWith("Plataforma", StringComparison.OrdinalIgnoreCase);
+        if (isPlataformaScene)
+        {
+            PlataformaSession.SlotNumber = currentSlot;
+            PlataformaSession.LevelId = dbLevelId;
+            PlataformaSession.SourceLevelScene = level.sceneName;
+            PlataformaSession.ReturnScene = "Isla1";
+            PlataformaSession.Completed = false;
+            PlataformaSession.RewardAlreadySaved = false;
+            Log("PlataformaSession set levelId=" + dbLevelId + " scene=" + level.sceneName + " returnScene=Isla1");
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Vector3 returnPosition = player != null ? player.transform.position : Vector3.zero;
@@ -500,9 +520,10 @@ public class IslandLevelManager : MonoBehaviour
                 continue;
             }
 
-            bool previousCompleted = completedLevels.Contains(previous.dbLevelId);
+            int requiredPrevious = current.requiredPreviousLevelId > 0 ? current.requiredPreviousLevelId : previous.dbLevelId;
+            bool previousCompleted = completedLevels.Contains(requiredPrevious);
             current.isUnlocked = previousCompleted;
-            Log($"Unlock check level={current.dbLevelId} previous={previous.dbLevelId} previousCompleted={previousCompleted} unlocked={current.isUnlocked}");
+            Log($"Unlock check level={current.dbLevelId} requiredPrevious={requiredPrevious} previousCompleted={previousCompleted} unlocked={current.isUnlocked}");
         }
 
         currentAvailableLevelId = -1;

@@ -26,6 +26,10 @@ public class Isla1TutorialController : MonoBehaviour
 
         if (hasSeenTutorial)
         {
+            Debug.Log("[Isla1Tutorial] Tutorial already seen, skipping auto-start");
+            Debug.Log("[Isla1Tutorial] Ensuring tutorial dialog/audio is stopped");
+            tutorialDialogo.SetAutoActivationEnabled(false);
+            tutorialDialogo.StopDialogCompletely();
             DisableTutorialTriggerCollider();
         }
     }
@@ -59,6 +63,10 @@ public class Isla1TutorialController : MonoBehaviour
         }
 
         Debug.Log("[Isla1Tutorial] Q pressed, replaying tutorial");
+        if (tutorialDialogo != null)
+        {
+            tutorialDialogo.SetAutoActivationEnabled(false);
+        }
         TryStartTutorial();
     }
 

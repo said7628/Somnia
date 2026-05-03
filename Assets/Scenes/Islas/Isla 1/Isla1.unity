@@ -192,11 +192,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
---- !u!198 &17504842 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
-  m_PrefabInstance: {fileID: 17504840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &40276840
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +813,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!198 &83014291 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 83014290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &103570222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IslandLevelManager
   levels:
   - dbLevelId: 1
+    requiredPreviousLevelId: 0
     sceneName: '"TextTyping"'
     levelRoot: {fileID: 1499707361}
     blockedVisual: {fileID: 0}
@@ -1397,19 +1398,53 @@ MonoBehaviour:
     playedVisual: {fileID: 0}
     levelParticles: {fileID: 2144267256}
   - dbLevelId: 2
+    requiredPreviousLevelId: 1
     sceneName: '"TextTyping5"'
     levelRoot: {fileID: 1370482824}
     blockedVisual: {fileID: 0}
     unlockedVisual: {fileID: 0}
     playedVisual: {fileID: 0}
     levelParticles: {fileID: 2131909793}
-  - dbLevelId: 3
-    sceneName: '"Plataforma"'
-    levelRoot: {fileID: 0}
+  - dbLevelId: 7
+    requiredPreviousLevelId: 2
+    sceneName: '"Plataforma1"'
+    levelRoot: {fileID: 372867526}
     blockedVisual: {fileID: 0}
     unlockedVisual: {fileID: 0}
     playedVisual: {fileID: 0}
-    levelParticles: {fileID: 17504842}
+    levelParticles: {fileID: 1013559619}
+  - dbLevelId: 8
+    requiredPreviousLevelId: 7
+    sceneName: '"Plataforma2"'
+    levelRoot: {fileID: 1677857036}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+    levelParticles: {fileID: 1102616020}
+  - dbLevelId: 9
+    requiredPreviousLevelId: 8
+    sceneName: '"Plataforma3"'
+    levelRoot: {fileID: 1494135321}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+    levelParticles: {fileID: 83014291}
+  - dbLevelId: 10
+    requiredPreviousLevelId: 9
+    sceneName: '"Plataforma4"'
+    levelRoot: {fileID: 1834440268}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+    levelParticles: {fileID: 2024894537}
+  - dbLevelId: 11
+    requiredPreviousLevelId: 10
+    sceneName: '"Plataforma5"'
+    levelRoot: {fileID: 1894513418}
+    blockedVisual: {fileID: 0}
+    unlockedVisual: {fileID: 0}
+    playedVisual: {fileID: 0}
+    levelParticles: {fileID: 2133087983}
   lockLevelsWithoutScene: 1
   verboseLogs: 1
   toastMessage: {fileID: 1325891925}
@@ -3202,7 +3237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
-  dbLevelId: 3
+  dbLevelId: 11
   interactKey: 19
   playerTag: Player
   acceptChildrenTagMatch: 1
@@ -4044,7 +4079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
-  dbLevelId: 3
+  dbLevelId: 10
   interactKey: 19
   playerTag: Player
   acceptChildrenTagMatch: 1
@@ -4946,7 +4981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
-  dbLevelId: 3
+  dbLevelId: 7
   interactKey: 19
   playerTag: Player
   acceptChildrenTagMatch: 1
@@ -5088,7 +5123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
-  dbLevelId: 3
+  dbLevelId: 8
   interactKey: 19
   playerTag: Player
   acceptChildrenTagMatch: 1
@@ -5700,6 +5735,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!198 &1013559619 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 17504840}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1033299761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6147,6 +6187,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!198 &1102616020 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 1102616019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1120898002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10237,7 +10282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8280f40bfcbe2c94d8c27da1733ffebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelTrigger
-  dbLevelId: 3
+  dbLevelId: 9
   interactKey: 19
   playerTag: Player
   acceptChildrenTagMatch: 1
@@ -10443,7 +10488,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -10550,6 +10595,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!198 &2024894537 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 2024894536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2110897390
 GameObject:
   m_ObjectHideFlags: 0
@@ -10901,6 +10951,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+--- !u!198 &2133087983 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7922814296854879280, guid: eb11085f952a9854084fb4ca22a41dfa, type: 3}
+  m_PrefabInstance: {fileID: 2133087982}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2144267254
 PrefabInstance:
   m_ObjectHideFlags: 0
