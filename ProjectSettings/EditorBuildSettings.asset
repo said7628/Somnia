@@ -86,6 +86,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Plataforma.unity
     guid: 4c08bd691f541e84a8edb1ebea0a87b9
+  - enabled: 1
+    path: Assets/Scenes/Islas/isla 2/Isla2.unity
+    guid: 31ccead1f340eaf4594c9648dd0b9116
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b89a814b66ebcb840b5a8ba76d0a8848, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
